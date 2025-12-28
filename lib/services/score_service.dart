@@ -41,6 +41,24 @@ class ScoreService {
     return false;
   }
 
+  // Get best score for Timed Blitz
+  static Future<int> getBlitzBestScore() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('${_prefix}timed_blitz') ?? 0;
+  }
+
+  // Save best score for Timed Blitz
+  static Future<bool> saveBlitzBestScore(int score) async {
+    final prefs = await SharedPreferences.getInstance();
+    final currentBest = prefs.getInt('${_prefix}timed_blitz') ?? 0;
+
+    if (score > currentBest) {
+      await prefs.setInt('${_prefix}timed_blitz', score);
+      return true;
+    }
+    return false;
+  }
+
   // Clear all scores (for testing/reset)
   static Future<void> clearAllScores() async {
     final prefs = await SharedPreferences.getInstance();

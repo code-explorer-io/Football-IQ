@@ -12,6 +12,7 @@ import '../widgets/form_guide.dart';
 import 'club_selection_screen.dart';
 import 'survival_mode_screen.dart';
 import 'higher_or_lower_screen.dart';
+import 'timed_blitz_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -139,8 +140,16 @@ class _GameModeCard extends StatelessWidget {
           builder: (context) => HigherOrLowerIntroScreen(mode: mode),
         ),
       );
+    } else if (mode.id == 'timed_blitz') {
+      // Timed Blitz has its own screen
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TimedBlitzIntroScreen(mode: mode),
+        ),
+      );
     } else {
-      // Standard quiz modes (PL Legends, Iconic Moments)
+      // Standard quiz modes (PL Legends)
       Navigator.push(
         context,
         MaterialPageRoute(

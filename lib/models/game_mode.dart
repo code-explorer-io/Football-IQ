@@ -64,13 +64,13 @@ final List<GameMode> gameModes = [
     dataFile: 'assets/data/survival_mode.json',
   ),
   GameMode(
-    id: 'iconic_moments',
-    name: 'Iconic Moments',
-    description: 'Where were you when this happened?',
-    icon: Icons.emoji_events,
-    color: const Color(0xFF2E7D32), // Green
+    id: 'timed_blitz',
+    name: 'Timed Blitz',
+    description: '60 seconds - how many can you get?',
+    icon: Icons.timer,
+    color: const Color(0xFFD32F2F), // Red
     isLocked: false,
     requiresClubSelection: false,
-    dataFile: 'assets/data/iconic_moments.json',
+    dataFile: 'assets/data/survival_mode.json', // Reuses survival questions
   ),
 ];
