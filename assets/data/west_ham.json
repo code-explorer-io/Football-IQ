@@ -1,0 +1,282 @@
+[
+  {
+    "id": "whu_001",
+    "question": "What is the name of West Ham's home stadium?",
+    "options": ["London Stadium", "Upton Park", "Emirates Stadium", "Stamford Bridge"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "whu_002",
+    "question": "What colour are West Ham's home shirts?",
+    "options": ["Claret and blue", "Red and white", "Blue and white", "All white"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "whu_003",
+    "question": "What is West Ham's nickname?",
+    "options": ["The Hammers", "The Gunners", "The Blues", "The Reds"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "whu_004",
+    "question": "In which part of London is West Ham based?",
+    "options": ["East London", "North London", "South London", "West London"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "whu_005",
+    "question": "What symbol appears on West Ham's badge?",
+    "options": ["Crossed hammers", "A cannon", "A lion", "An eagle"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "whu_006",
+    "question": "What was West Ham's former home ground called before the London Stadium?",
+    "options": ["Boleyn Ground", "White Hart Lane", "Highbury", "The Den"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "whu_007",
+    "question": "Which England World Cup-winning captain played for West Ham?",
+    "options": ["Bobby Moore", "Bobby Charlton", "Gordon Banks", "Geoff Hurst"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "whu_008",
+    "question": "What is the famous West Ham anthem sung by fans?",
+    "options": ["I'm Forever Blowing Bubbles", "You'll Never Walk Alone", "Blue Moon", "Glory Glory"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "whu_009",
+    "question": "In which year did West Ham move to the London Stadium?",
+    "options": ["2016", "2012", "2018", "2014"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "whu_010",
+    "question": "Which league do West Ham play in?",
+    "options": ["Premier League", "Championship", "League One", "La Liga"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "whu_011",
+    "question": "Who scored a hat-trick in the 1966 World Cup Final while playing for West Ham?",
+    "options": ["Geoff Hurst", "Bobby Moore", "Martin Peters", "Bobby Charlton"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "whu_012",
+    "question": "Which London club is considered West Ham's biggest rival?",
+    "options": ["Millwall", "Arsenal", "Chelsea", "Tottenham"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "whu_013",
+    "question": "What is the capacity of the London Stadium?",
+    "options": ["Around 62,500", "Around 40,000", "Around 75,000", "Around 55,000"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "whu_014",
+    "question": "Which West Ham legend has a statue outside the London Stadium?",
+    "options": ["Bobby Moore", "Trevor Brooking", "Billy Bonds", "Frank Lampard"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "whu_015",
+    "question": "What year was West Ham United founded?",
+    "options": ["1895", "1902", "1888", "1910"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "whu_016",
+    "question": "Who managed West Ham to the 2016 FA Cup Final?",
+    "options": ["Slaven Bilic", "Sam Allardyce", "David Moyes", "Manuel Pellegrini"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "whu_017",
+    "question": "Which West Ham player won the Ballon d'Or?",
+    "options": ["Bobby Moore", "Geoff Hurst", "None - no West Ham player has won it", "Martin Peters"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "whu_018",
+    "question": "In which year did West Ham win their last FA Cup?",
+    "options": ["1980", "1975", "1964", "1986"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "whu_019",
+    "question": "Who scored the winning goal in the 1980 FA Cup Final?",
+    "options": ["Trevor Brooking", "Billy Bonds", "Alan Devonshire", "David Cross"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "whu_020",
+    "question": "Which manager took West Ham to the UEFA Europa Conference League trophy?",
+    "options": ["David Moyes", "Manuel Pellegrini", "Slaven Bilic", "Sam Allardyce"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "whu_021",
+    "question": "Who is West Ham's all-time top goalscorer?",
+    "options": ["Vic Watson", "Geoff Hurst", "Tony Cottee", "Paolo Di Canio"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "whu_022",
+    "question": "Which Italian striker was known for his spectacular scissor kick goal against Wimbledon?",
+    "options": ["Paolo Di Canio", "Marco Boogers", "Florin Raducioiu", "Benni Carbone"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "whu_023",
+    "question": "How many times have West Ham won the FA Cup?",
+    "options": ["3", "2", "4", "1"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "whu_024",
+    "question": "Which club did Declan Rice join from West Ham in 2023?",
+    "options": ["Arsenal", "Manchester City", "Chelsea", "Manchester United"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "whu_025",
+    "question": "Who was West Ham's manager during the 2011-12 Championship promotion season?",
+    "options": ["Sam Allardyce", "Avram Grant", "Gianfranco Zola", "Slaven Bilic"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "whu_026",
+    "question": "Which West Ham academy graduate became Chelsea and England's record goalscorer?",
+    "options": ["Frank Lampard", "Joe Cole", "Rio Ferdinand", "Michael Carrick"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "whu_027",
+    "question": "Against which team did West Ham play their final game at Upton Park?",
+    "options": ["Manchester United", "Liverpool", "Swansea City", "Newcastle United"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "whu_028",
+    "question": "Which Argentine midfielder joined West Ham from Lazio and became a fan favourite?",
+    "options": ["Javier Mascherano", "Carlos Tevez", "Pablo Zabaleta", "Manuel Lanzini"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "whu_029",
+    "question": "In what year did West Ham win the UEFA Europa Conference League?",
+    "options": ["2023", "2022", "2021", "2024"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "whu_030",
+    "question": "Which defender captained West Ham over 650 times?",
+    "options": ["Billy Bonds", "Bobby Moore", "Alvin Martin", "Steve Potts"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "whu_031",
+    "question": "Who did West Ham beat in the 2023 Europa Conference League Final?",
+    "options": ["Fiorentina", "Roma", "Villarreal", "Sevilla"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "whu_032",
+    "question": "What was the original name of West Ham United when founded?",
+    "options": ["Thames Ironworks FC", "East London FC", "Hammers United", "Canning Town FC"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "whu_033",
+    "question": "Which West Ham goalkeeper saved a penalty in the 1980 FA Cup Final?",
+    "options": ["Phil Parkes", "Ludek Miklosko", "David James", "Shaka Hislop"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "whu_034",
+    "question": "Who was West Ham's top scorer in the 1985-86 season?",
+    "options": ["Tony Cottee", "Frank McAvennie", "Alan Dickens", "Paul Goddard"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "whu_035",
+    "question": "In which year did West Ham finish third in the First Division, their highest ever league position?",
+    "options": ["1986", "1980", "1975", "1992"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "whu_036",
+    "question": "Which manager was in charge when West Ham were relegated in 2003?",
+    "options": ["Glenn Roeder", "Harry Redknapp", "Alan Pardew", "Alan Curbishley"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "whu_037",
+    "question": "Who scored West Ham's first ever goal at the London Stadium in a competitive match?",
+    "options": ["Michail Antonio", "Dimitri Payet", "Andy Carroll", "Mark Noble"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "whu_038",
+    "question": "How many appearances did Mark Noble make for West Ham in his career?",
+    "options": ["Over 550", "Over 400", "Over 600", "Over 500"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "whu_039",
+    "question": "Which West Ham player scored the 'Goal of the Season' with a bicycle kick against Manchester City in 2017?",
+    "options": ["Andy Carroll", "Michail Antonio", "Manuel Lanzini", "Dimitri Payet"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "whu_040",
+    "question": "Who was West Ham's first ever £1 million signing?",
+    "options": ["Tony Cottee", "Phil Parkes", "Paul Ince", "Stuart Slater"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  }
+]

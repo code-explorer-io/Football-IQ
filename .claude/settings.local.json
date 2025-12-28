@@ -3,7 +3,12 @@
     "allow": [
       "Bash(git init:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(del \"Football_Club_Quiz_PRD_Flutter_v1.0.md\")",
+      "Bash(del \"Four-Part-Framework.md\")",
+      "Bash(del \"CHECKLIST.md\")",
+      "Bash(flutter doctor:*)",
+      "Bash(C:\\\\flutter\\\\flutter\\\\bin\\\\flutter doctor:*)"
     ]
   }
 }
