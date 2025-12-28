@@ -49,7 +49,7 @@
 
 ---
 
-## Phase 3: Polish - IN PROGRESS
+## Phase 3: Polish - COMPLETE
 
 | Task | Status |
 |------|--------|
@@ -65,19 +65,54 @@
 | Stats display on home screen | Done |
 | App icon designed | Not done |
 
-**New features added:**
+**Features added:**
 - Football IQ rating (0-99, like FIFA)
 - Form guide showing last 5 results
 - 20+ achievements with football themes
 - Confetti for perfect scores & new bests
-- Premium "pub quiz" visual style
+- Premium "pub quiz" visual style (not childish)
+
+**Game modes finalized (5 total):**
+1. Quiz Your Club - Club-specific questions
+2. PL Legends - Premier League legends trivia
+3. Survival Mode - One wrong = game over
+4. Higher or Lower - Compare player stats
+5. Timed Blitz - 60 seconds, answer as many as possible
 
 ---
 
-## Phase 4: Test - NOT STARTED
+## Phase 4: Test - IN PROGRESS
 
-- [ ] Works on small phones
-- [ ] Works on tablets
-- [ ] No crashes in 20 quizzes
-- [ ] Friend can complete without help
-- [ ] All questions reviewed for accuracy
+| Task | Status |
+|------|--------|
+| Works on small phones | Not tested |
+| Works on tablets | Not tested |
+| No crashes in 20 quizzes | Not tested |
+| Friend can complete without help | Pending - need testers |
+| All questions reviewed for accuracy | Not done |
+
+---
+
+## Distribution Status
+
+| Platform | Status |
+|----------|--------|
+| Google Play Developer Account | Paid $25, awaiting approval |
+| Google Play Internal Testing | Pending account approval |
+| Apple Developer Account | Not signed up yet ($99) |
+| Codemagic (iOS cloud builds) | Not set up yet |
+| TestFlight | Pending Apple account |
+
+---
+
+## Next Steps (Tomorrow)
+
+1. Check if Google Play approved
+2. If approved: Set up Internal Testing track, add tester emails
+3. Sign up for Apple Developer ($99)
+4. Set up Codemagic account, connect GitHub
+5. Configure Codemagic for iOS builds to TestFlight
+
+---
+
+*Last updated: 2024-12-28*

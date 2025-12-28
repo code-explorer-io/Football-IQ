@@ -1,149 +1,125 @@
 # Claude Session Context
 
-> Read this file at the start of each session to understand the project.
+> **READ THIS FILE FIRST** at the start of each session.
 
 ---
 
-## Project Summary
+## Quick Summary
 
-**Football IQ** is a mobile quiz app for football fans. Users pick their club and answer trivia questions to prove their knowledge.
+**Football IQ** - Premium football quiz app. "Sports betting app confidence, not childish."
 
-**Key differentiators:**
-- Club-first (not generic football trivia)
-- Zero ads (trust signal vs ad-heavy competitors)
-- One-time purchase (no subscriptions)
-- Premium feel with clean UX
+**Current state:** V1 complete, ready for distribution to testers.
+
+**Immediate goal:** Get app into hands of Android and iOS friends for testing.
 
 ---
 
-## Tech Stack
+## The Docs Folder
 
-| Component | Choice |
-|-----------|--------|
-| Framework | Flutter |
-| State | Provider (to be added in Phase 2) |
-| Data | Local JSON files |
-| Purchases | Google Play Billing (to be added) |
-
----
-
-## Current Phase: Foundation (Phase 1)
-
-**Goal:** Can you tap through the entire flow?
-
-### Completed
-- [x] Flutter project runs without errors
-- [x] Splash screen
-- [x] Home screen with 3 club cards
-- [x] Quiz intro screen
-- [x] Question screen with 4 answers
-- [x] Results screen with verdict
-- [x] Navigation flow works end-to-end
-- [x] Question JSON format defined
-- [x] 40 questions per club (120 total)
-
-### Foundation DONE when:
-> You can tap through Home -> Club -> Quiz -> Questions -> Results -> Home even if it looks ugly.
-
-**Status: Essentially complete. Ready for Phase 2.**
+| File | Purpose |
+|------|---------|
+| `CLAUDE_CONTEXT.md` | This file - read first for quick context |
+| `PHASE_STATUS.md` | Detailed phase progress and next steps |
+| `../FOOTBALL_IQ.md` | Full PRD with all decisions, monetization, content strategy |
 
 ---
 
-## Project Structure
+## App Overview
 
-```
-Football-IQ/
-├── lib/
-│   ├── main.dart           # App entry, theme, routing
-│   ├── models/
-│   │   ├── club.dart       # Club model with colors
-│   │   └── question.dart   # Question model with fromJson
-│   └── screens/
-│       ├── splash_screen.dart
-│       ├── home_screen.dart      # Club selection
-│       ├── quiz_intro_screen.dart
-│       ├── question_screen.dart  # Quiz gameplay
-│       └── results_screen.dart   # Score + verdict
-├── assets/data/
-│   ├── west_ham.json       # 40 questions (FREE tier)
-│   ├── manchester_city.json # 40 questions (PAID)
-│   └── arsenal.json        # 40 questions (PAID)
-├── docs/
-│   └── CLAUDE_CONTEXT.md   # This file
-└── FOOTBALL_IQ.md          # Master document (full PRD)
-```
+### Game Modes (5 total)
+1. **Quiz Your Club** - Club-specific questions (Arsenal, Man City, West Ham)
+2. **PL Legends** - Premier League legends trivia
+3. **Survival Mode** - One wrong answer ends the game
+4. **Higher or Lower** - Compare player stats
+5. **Timed Blitz** - 60 seconds, answer as many as possible
+
+### Key Features
+- Football IQ Rating (0-99, like FIFA player ratings)
+- Form Guide (W/D/L boxes showing last 5 results)
+- 20+ Achievements (football-themed: Clean Sheet, Hat Trick, etc.)
+- Haptic feedback, confetti celebrations
+- Dark theme (#1A1A2E), premium pub quiz aesthetic
+
+### Tech Stack
+- Flutter/Dart
+- SharedPreferences (local persistence)
+- No backend for V1
 
 ---
 
-## Key Files to Read
+## Distribution Plan
 
-1. **FOOTBALL_IQ.md** - Full PRD with all decisions, phases, monetization
-2. **lib/models/club.dart** - Club definitions (West Ham free, others locked)
-3. **lib/screens/question_screen.dart** - Core quiz logic
-
----
-
-## Monetization
-
-| Tier | Access |
+### Android
+| Item | Status |
 |------|--------|
-| Free | West Ham only, full functionality, zero ads |
-| Paid (£2.49) | All clubs unlocked, one-time purchase |
+| Google Play Developer Account | Paid $25, **awaiting approval** |
+| Distribution method | Internal Testing track (once approved) |
+| How testers get app | Email invite → Play Store link |
+
+### iOS (No Mac needed!)
+| Item | Status |
+|------|--------|
+| Apple Developer Account | **Need to sign up** ($99/year) |
+| Build method | **Codemagic** (cloud CI/CD with Mac servers) |
+| Distribution | TestFlight |
+| How it works | Push to GitHub → Codemagic builds → TestFlight |
 
 ---
 
-## Next Phase: Functionality (Phase 2)
+## Key Decisions Made
 
-**Goal:** Does the main thing actually work?
-
-- [ ] 10 random questions (no repeats within quiz)
-- [ ] Correct/incorrect feedback
-- [ ] Cannot change answer after selecting
-- [ ] Score calculated correctly
-- [ ] Best score saved locally (SharedPreferences)
-- [ ] Best score persists after app close
-- [ ] 40+ questions per club available
+| Decision | Why |
+|----------|-----|
+| Skip APK route | Wait for Google Play approval - cleaner for testers |
+| Codemagic for iOS | No Mac needed, builds in cloud |
+| "Timed Blitz" not "Iconic Moments" | Adds different energy (speed) vs same-vibe trivia |
+| 3 answer options | Faster to read in timed modes |
+| Premium pub quiz aesthetic | Adult, confident, not childish |
 
 ---
 
-## Commands
+## File Structure (Key Files)
 
-```bash
-# Run in Chrome (web)
-flutter run -d chrome
-
-# Run on Android device/emulator
-flutter run -d android
-
-# Get dependencies
-flutter pub get
-
-# Check Flutter setup
-flutter doctor
+```
+lib/
+  models/game_mode.dart         # Game mode definitions
+  screens/
+    home_screen.dart            # Main menu with stats
+    timed_blitz_screen.dart     # 60 second blitz mode
+    survival_mode_screen.dart   # Endless until wrong
+    higher_or_lower_screen.dart # Stat comparisons
+  services/
+    score_service.dart          # Best scores, streaks
+    stats_service.dart          # Football IQ, form guide
+    achievement_service.dart    # 20+ achievements
+  theme/app_theme.dart          # Colors, typography
+assets/data/
+    survival_mode.json          # Also used by Timed Blitz
+    premier_league_legends.json
+    higher_or_lower.json
+    arsenal.json / manchester_city.json / west_ham.json
 ```
 
 ---
 
-## Decision Log
+## Tomorrow's Tasks
 
-| Decision | Rationale |
-|----------|-----------|
-| Android first | Sean has Android device, simpler for v1 |
-| Zero ads | Differentiator vs competitors |
-| £2.49 one-time | Impulse-buy territory |
-| Provider for state | Simpler than GetX/Bloc for this scale |
-| Local JSON | No server costs, offline-first |
+1. Check if Google Play developer account approved
+2. If approved: Set up Internal Testing, add tester email addresses
+3. Sign up for Apple Developer ($99)
+4. Create Codemagic account at codemagic.io
+5. Connect GitHub repo to Codemagic
+6. Configure Codemagic to build iOS and push to TestFlight
 
 ---
 
-## Roles
+## User Context
 
-| Sean (Product Owner) | Claude (Developer) |
-|---------------------|-------------------|
-| Vision & decisions | All code |
-| Review questions | Generate draft questions |
-| Test on device | Build & debug |
-| Approve phase completion | Follow the framework |
+- Sean has Windows PC, no Mac
+- Android phone for testing
+- Friends on both Android and iOS need to test
+- Google Play account pending
+- Willing to invest $99 for Apple Developer
 
 ---
 
