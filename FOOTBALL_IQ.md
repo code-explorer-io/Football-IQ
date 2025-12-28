@@ -13,6 +13,8 @@
 6. [Competitor Analysis](#6-competitor-analysis)
 7. [Content Strategy](#7-content-strategy)
 8. [Release Plan](#8-release-plan)
+9. [Current Status](#current-status)
+10. [Nice-to-Have Ideas](#10-nice-to-have-ideas-brainstorm)
 
 ---
 
@@ -307,18 +309,86 @@ assets/
 | v0.4 | In-app purchase + paywall |
 | v1.0 | Production release |
 
+### Content Pipeline Strategy
+**Build ahead, release strategically.**
+
+| Phase | What users see | What we have ready |
+|-------|----------------|-------------------|
+| Launch | 1 game mode (Quiz Your Club) | 3-4 modes built and tested |
+| Week 2 | "New! Barclays Men" | Already done, just switched on |
+| Week 4 | "New! Iconic Moments" | Already done |
+| Week 6 | "New! Kit Sponsors" | Already done |
+
+**Why this works:**
+- App Store loves updates — regular releases push rankings
+- Re-engagement — "New mode dropped" brings users back
+- Perceived momentum — app feels alive and growing
+- Quality control — not rushing while live
+- Flexible timing — release when ready, no pressure
+
+**Technical implementation:**
+Each game mode controlled by config flag. Flip to `true` → appears in app.
+
+### Game Modes (Planned)
+| Mode | Description | Status |
+|------|-------------|--------|
+| Quiz Your Club | Deep knowledge about your team | v1.0 |
+| Barclays Men | Name the Premier League legends | Backlog |
+| Iconic Moments | Questions about famous matches | Backlog |
+| Kit Sponsors | Guess the shirt sponsor by year | Backlog |
+| Nostalgia Round | "Which year did..." format | Backlog |
+
 ### Pre-Launch Setup
 - [x] GitHub repo created
-- [ ] Google Play Developer account ($25)
+- [x] Google Play Developer account ($25)
 - [ ] Privacy policy (free GitHub Pages)
 - [ ] App icon designed
 - [ ] Store listing screenshots
 
-### Testing Strategy
-1. **You** — Test on emulator + your phone
-2. **Beta testers** — Friends test via internal track
-3. **Closed beta** — Wider group via Google Play
-4. **Production** — Staged rollout (10% → 50% → 100%)
+### Testing Strategy (Google Play)
+| Track | Audience | Review | Use case |
+|-------|----------|--------|----------|
+| Internal testing | Up to 100 (email invite) | None - instant | First 2-3 friends |
+| Closed testing | Invite-only groups | Light (~hours) | 5-10 testers |
+| Open testing | Anyone with link | Full review | 50+ testers |
+| Production | Everyone | Full review | Public launch |
+
+### iOS Deployment (Post-Android)
+- Apple Developer account ($99/year)
+- Build via Codemagic (cloud Mac service)
+- Distribute via TestFlight
+- No Mac hardware required
+
+### Store Listing
+
+**Short description (80 chars):**
+```
+Think you know football? Test yourself.
+```
+
+**Full description:**
+```
+How much do you really know about football?
+
+Football IQ tests your knowledge with questions that separate the casuals from the diehards. No generic trivia - just real football knowledge.
+
+MULTIPLE GAME MODES
+• Quiz Your Club - Pick your team, prove your knowledge
+• Barclays Men - Name the legends of the Premier League era
+• More modes coming soon
+
+PICK YOUR CLUB
+Choose from West Ham, Manchester City, Arsenal and more. Questions cover history, legends, memorable matches, and records.
+
+TEST YOURSELF
+• 10 questions per quiz
+• Mixed difficulty
+• Track your best scores
+
+NO ADS. EVER.
+
+Built by fans, for fans.
+```
 
 ---
 
@@ -330,9 +400,11 @@ assets/
 | Monetization strategy | Complete |
 | Technical decisions | Complete |
 | Phase checklists | Complete |
-| Google Play account | Not started |
+| Google Play account | Complete |
+| Flutter + Android Studio | Complete |
+| Questions drafted | Complete (120 questions) |
+| Android emulator | In progress |
 | Flutter project | Not started |
-| Questions drafted | Not started |
 
 ---
 
@@ -358,3 +430,59 @@ assets/
 | 2024-12-28 | £2.49 unlock price | Impulse-buy sweet spot |
 | 2024-12-28 | Provider for state | Simpler than GetX/Bloc |
 | 2024-12-28 | Local JSON | No server costs, offline-first |
+| 2024-12-28 | Content pipeline | Build modes ahead, release strategically |
+| 2024-12-28 | iOS via Codemagic | No Mac needed, cloud builds |
+
+---
+
+## 10. Nice-to-Have Ideas (Brainstorm)
+
+*Future features to explore. Not committed, just captured.*
+
+### Engagement Features
+| Idea | Description | Complexity |
+|------|-------------|------------|
+| **Daily Streak** | Duolingo-style streak counter, play daily to maintain | Low |
+| **Fact of the Day** | Random football fact on home screen, refreshes daily | Low |
+| **Weekly Challenge** | New themed quiz each week (e.g., "90s Strikers Week") | Medium |
+
+### Social Features
+| Idea | Description | Complexity |
+|------|-------------|------------|
+| **Share Score Card** | Generate image of results for Instagram/WhatsApp | Medium |
+| **Head-to-Head** | Challenge a friend, compare scores on same questions | High |
+| **Leaderboards** | Global/friends ranking per club | High (needs server) |
+
+### Game Modes (Wild Ideas)
+| Idea | Description | Complexity |
+|------|-------------|------------|
+| **Blitz Mode** | 30 seconds, answer as many as possible | Medium |
+| **Survival Mode** | One wrong answer and you're out | Low |
+| **Audio Round** | Play commentary clips, identify the moment | High |
+| **Picture Round** | Blurred player photos, guess who | Medium |
+| **Transfer Chain** | "Player X went from ___ to ___ to ___" | Medium |
+| **Derby Day** | Questions only about rivalry matches | Low |
+| **World Cup Mode** | International tournament questions | Low (content) |
+| **Retro Kits** | Show old kit, guess year/sponsor | Medium |
+
+### Monetization Ideas
+| Idea | Description | Complexity |
+|------|-------------|------------|
+| **Club Packs** | Buy individual clubs instead of all | Low |
+| **Season Pass** | Annual unlock for all new content | Medium |
+| **Merch Integration** | Link to club stores from results | Low |
+
+### Viral Mechanics
+| Idea | Description | Complexity |
+|------|-------------|------------|
+| **"I scored X on Y club"** | Shareable results with club branding | Medium |
+| **Rival Roast** | Score well on rival club, get banter text to share | Low |
+| **Prove Your Mate Wrong** | Send challenge link to specific quiz | Medium |
+
+### Polish Ideas
+| Idea | Description | Complexity |
+|------|-------------|------------|
+| **Club Themes** | Colours change based on selected club | Medium |
+| **Achievement Badges** | "Completed all clubs", "10 streak", etc. | Medium |
+| **Sound Effects** | Crowd roar for correct, groan for wrong | Low |
+| **Haptic Feedback** | Vibration on answer selection | Low |

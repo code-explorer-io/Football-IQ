@@ -1,281 +1,281 @@
 [
   {
     "id": "ars_001",
-    "question": "What is the name of Arsenal's home stadium?",
-    "options": ["Emirates Stadium", "Highbury", "Wembley", "London Stadium"],
-    "answerIndex": 0,
+    "question": "What is Arsenal's home stadium called?",
+    "options": ["Highbury", "Emirates Stadium", "Wembley Stadium"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "ars_002",
-    "question": "What colour are Arsenal's home shirts?",
-    "options": ["Red and white", "Blue and white", "All red", "Red and black"],
-    "answerIndex": 0,
+    "question": "What are Arsenal's traditional home colours?",
+    "options": ["Blue and white", "Red and white", "All red"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "ars_003",
-    "question": "What is Arsenal's nickname?",
-    "options": ["The Gunners", "The Hammers", "The Citizens", "The Blues"],
-    "answerIndex": 0,
+    "question": "What nickname is Arsenal commonly known by?",
+    "options": ["The Reds", "The Gunners", "The Cannons"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "ars_004",
-    "question": "Which symbol appears on Arsenal's badge?",
-    "options": ["A cannon", "A hammer", "A lion", "An eagle"],
-    "answerIndex": 0,
+    "question": "Which club is Arsenal's main local rival?",
+    "options": ["West Ham United", "Chelsea", "Tottenham Hotspur"],
+    "answerIndex": 2,
     "difficulty": "easy"
   },
   {
     "id": "ars_005",
-    "question": "In which part of London is Arsenal based?",
-    "options": ["North London", "East London", "South London", "West London"],
-    "answerIndex": 0,
+    "question": "Which French manager managed Arsenal for 22 years?",
+    "options": ["Gerard Houllier", "Arsene Wenger", "Didier Deschamps"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "ars_006",
-    "question": "What was Arsenal's home stadium before the Emirates?",
-    "options": ["Highbury", "White Hart Lane", "Stamford Bridge", "Upton Park"],
-    "answerIndex": 0,
+    "question": "In what year did Arsenal go an entire Premier League season unbeaten?",
+    "options": ["2002", "2004", "2006"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "ars_007",
-    "question": "Which manager led Arsenal's 'Invincibles' season?",
-    "options": ["Arsene Wenger", "George Graham", "Unai Emery", "Mikel Arteta"],
-    "answerIndex": 0,
+    "question": "What symbol appears on the Arsenal crest?",
+    "options": ["A lion", "A cannon", "An eagle"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "ars_008",
-    "question": "Which club is considered Arsenal's biggest rival?",
-    "options": ["Tottenham Hotspur", "Chelsea", "Manchester United", "Liverpool"],
-    "answerIndex": 0,
+    "question": "Who is Arsenal's all-time top scorer?",
+    "options": ["Ian Wright", "Thierry Henry", "Robin van Persie"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "ars_009",
-    "question": "In which year did Arsenal move to the Emirates Stadium?",
-    "options": ["2006", "2004", "2008", "2010"],
-    "answerIndex": 0,
+    "question": "What was Arsenal's stadium before the Emirates called?",
+    "options": ["Wembley", "Highbury", "White Hart Lane"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "ars_010",
-    "question": "How many league titles have Arsenal won in their history?",
-    "options": ["13", "10", "15", "18"],
-    "answerIndex": 0,
+    "question": "In which part of London is Arsenal based?",
+    "options": ["South London", "North London", "West London"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "ars_011",
-    "question": "Which French striker is Arsenal's all-time record goalscorer?",
-    "options": ["Thierry Henry", "Patrick Vieira", "Robert Pires", "Nicolas Anelka"],
+    "question": "Which Spanish manager took over Arsenal in 2019?",
+    "options": ["Mikel Arteta", "Unai Emery", "Mauricio Pochettino"],
     "answerIndex": 0,
     "difficulty": "easy"
   },
   {
     "id": "ars_012",
-    "question": "What is the capacity of the Emirates Stadium?",
-    "options": ["Around 60,000", "Around 75,000", "Around 45,000", "Around 55,000"],
-    "answerIndex": 0,
+    "question": "How many times have Arsenal won the FA Cup?",
+    "options": ["10 times", "14 times", "16 times"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "ars_013",
-    "question": "Which country is manager Mikel Arteta from?",
-    "options": ["Spain", "Portugal", "France", "Argentina"],
-    "answerIndex": 0,
+    "question": "Which Dutch legend wore the number 10 shirt and was known for his skill and vision?",
+    "options": ["Marc Overmars", "Dennis Bergkamp", "Robin van Persie"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "ars_014",
-    "question": "What year was Arsenal founded?",
-    "options": ["1886", "1892", "1880", "1900"],
-    "answerIndex": 0,
+    "question": "What is the North London Derby?",
+    "options": ["Arsenal vs Chelsea", "Arsenal vs Tottenham", "Arsenal vs West Ham"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "ars_015",
-    "question": "Which trophy did Arsenal win a record 14 times?",
-    "options": ["FA Cup", "League Cup", "Community Shield", "Premier League"],
-    "answerIndex": 0,
+    "question": "What is Arsenal's Invincibles team famous for?",
+    "options": ["Winning the Champions League", "Going unbeaten in a Premier League season", "Winning five trophies in one season"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "ars_016",
-    "question": "In which season did Arsenal go unbeaten in the Premier League?",
-    "options": ["2003-04", "2001-02", "1997-98", "2005-06"],
-    "answerIndex": 0,
+    "question": "Who captained the Invincibles to their unbeaten season?",
+    "options": ["Tony Adams", "Patrick Vieira", "Thierry Henry"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "ars_017",
-    "question": "Who was Arsenal's captain during the Invincibles season?",
-    "options": ["Patrick Vieira", "Thierry Henry", "Tony Adams", "Dennis Bergkamp"],
-    "answerIndex": 0,
+    "question": "Which team finally ended Arsenal's 49-match unbeaten Premier League run?",
+    "options": ["Chelsea", "Manchester United", "Liverpool"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "ars_018",
-    "question": "How many games did Arsenal go unbeaten in the Invincibles run (including previous season)?",
-    "options": ["49", "38", "50", "42"],
-    "answerIndex": 0,
+    "question": "In what year did Arsenal move to the Emirates Stadium?",
+    "options": ["2004", "2006", "2008"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "ars_019",
-    "question": "Which Dutch forward was known as the 'Non-Flying Dutchman'?",
-    "options": ["Dennis Bergkamp", "Marc Overmars", "Robin van Persie", "Giovanni van Bronckhorst"],
-    "answerIndex": 0,
+    "question": "Who scored Arsenal's first competitive goal at the Emirates Stadium?",
+    "options": ["Thierry Henry", "Olafur Ingi Skulason", "Gilberto Silva"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "ars_020",
-    "question": "Who scored Arsenal's last ever goal at Highbury?",
-    "options": ["Thierry Henry", "Dennis Bergkamp", "Robert Pires", "Jose Antonio Reyes"],
-    "answerIndex": 0,
+    "question": "Which Arsenal goalkeeper was known as 'Safe Hands'?",
+    "options": ["Jens Lehmann", "David Seaman", "Manuel Almunia"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "ars_021",
-    "question": "Which club did Arsenal sign Bukayo Saka from?",
-    "options": ["Arsenal Academy - he came through youth system", "Chelsea", "Southampton", "Watford"],
-    "answerIndex": 0,
+    "question": "Who scored the winning goal in Arsenal's 2014 FA Cup Final victory over Hull City?",
+    "options": ["Olivier Giroud", "Aaron Ramsey", "Santi Cazorla"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "ars_022",
-    "question": "Who scored the winning goal in the 2014 FA Cup Final against Hull?",
-    "options": ["Aaron Ramsey", "Olivier Giroud", "Santi Cazorla", "Mesut Ozil"],
+    "question": "Which Arsenal legend scored a memorable solo goal against Manchester United in a 1999 FA Cup semi-final?",
+    "options": ["Dennis Bergkamp", "Patrick Vieira", "Ryan Giggs"],
     "answerIndex": 0,
     "difficulty": "medium"
   },
   {
     "id": "ars_023",
-    "question": "Which manager succeeded Arsene Wenger?",
-    "options": ["Unai Emery", "Mikel Arteta", "Freddie Ljungberg", "Steve Bould"],
-    "answerIndex": 0,
+    "question": "Who was Arsenal's first captain to lift the Premier League trophy?",
+    "options": ["Patrick Vieira", "Tony Adams", "David O'Leary"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "ars_024",
-    "question": "How many consecutive seasons did Arsene Wenger finish in the top 4?",
-    "options": ["20", "18", "22", "15"],
-    "answerIndex": 0,
+    "question": "Which Arsenal defender was nicknamed 'Mr Arsenal'?",
+    "options": ["Lee Dixon", "Tony Adams", "Martin Keown"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "ars_025",
-    "question": "Which German midfielder signed for a then-club record £42.5m in 2013?",
-    "options": ["Mesut Ozil", "Lukas Podolski", "Per Mertesacker", "Thomas Muller"],
-    "answerIndex": 0,
+    "question": "In what year did Arsenal win the League and FA Cup Double under Arsene Wenger for the first time?",
+    "options": ["1997", "1998", "1999"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "ars_026",
-    "question": "Who was known as 'Mr Arsenal' and made over 500 appearances?",
-    "options": ["Tony Adams", "David O'Leary", "Lee Dixon", "Liam Brady"],
-    "answerIndex": 0,
+    "question": "Which Arsenal player scored a hat-trick in a 7-0 Champions League victory over Slavia Prague?",
+    "options": ["Thierry Henry", "Robin van Persie", "Cesc Fabregas"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "ars_027",
-    "question": "Which team ended Arsenal's 49-game unbeaten run?",
-    "options": ["Manchester United", "Liverpool", "Chelsea", "Leeds United"],
-    "answerIndex": 0,
+    "question": "Which club did Arsenal sign Thierry Henry from?",
+    "options": ["Monaco", "Juventus", "Barcelona"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "ars_028",
-    "question": "Who did Arsenal beat 7-0 in the 2023 Emirates Stadium North London Derby?",
-    "options": ["No one - this didn't happen", "Tottenham Hotspur", "West Ham", "Chelsea"],
-    "answerIndex": 0,
+    "question": "Who is Arsenal's all-time appearance holder?",
+    "options": ["Tony Adams", "David O'Leary", "Lee Dixon"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "ars_029",
-    "question": "Which Brazilian defender joined from Chelsea and became captain?",
-    "options": ["David Luiz", "Gabriel Magalhaes", "Gilberto Silva", "Willian"],
-    "answerIndex": 0,
+    "question": "Which Arsenal player won the PFA Young Player of the Year award in 2022?",
+    "options": ["Martin Odegaard", "Bukayo Saka", "Gabriel Jesus"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "ars_030",
-    "question": "In which year did Arsenal win the league and cup double under Arsene Wenger for the first time?",
-    "options": ["1998", "2002", "1996", "2004"],
-    "answerIndex": 0,
+    "question": "Who was Arsenal's manager immediately before Arsene Wenger?",
+    "options": ["George Graham", "Bruce Rioch", "Don Howe"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "ars_031",
-    "question": "What was Arsenal's original name when founded in 1886?",
-    "options": ["Dial Square", "Royal Arsenal", "Woolwich Arsenal", "North London FC"],
+    "question": "In what year was Arsenal Football Club founded?",
+    "options": ["1886", "1892", "1898"],
     "answerIndex": 0,
     "difficulty": "hard"
   },
   {
     "id": "ars_032",
-    "question": "Which Arsenal goalkeeper was nicknamed 'Safe Hands'?",
-    "options": ["David Seaman", "Jens Lehmann", "Pat Jennings", "Bob Wilson"],
-    "answerIndex": 0,
+    "question": "What was Arsenal's original name when founded?",
+    "options": ["Royal Arsenal", "Woolwich Arsenal", "Dial Square"],
+    "answerIndex": 2,
     "difficulty": "hard"
   },
   {
     "id": "ars_033",
-    "question": "Who scored the famous '89' title-winning goal against Liverpool?",
-    "options": ["Michael Thomas", "Alan Smith", "David Rocastle", "Paul Merson"],
-    "answerIndex": 0,
+    "question": "Who was the first player to score 100 Premier League goals for Arsenal?",
+    "options": ["Dennis Bergkamp", "Ian Wright", "Thierry Henry"],
+    "answerIndex": 2,
     "difficulty": "hard"
   },
   {
     "id": "ars_034",
-    "question": "Which manager led Arsenal to their first ever league title in 1931?",
-    "options": ["Herbert Chapman", "George Allison", "Tom Whittaker", "Leslie Knighton"],
-    "answerIndex": 0,
+    "question": "Which team did Arsenal beat in the 2006 Champions League semi-final?",
+    "options": ["Real Madrid", "Villarreal", "AC Milan"],
+    "answerIndex": 1,
     "difficulty": "hard"
   },
   {
     "id": "ars_035",
-    "question": "How many goals did Thierry Henry score for Arsenal in all competitions?",
-    "options": ["228", "175", "200", "250"],
-    "answerIndex": 0,
+    "question": "Who scored Arsenal's goal in the 2006 Champions League Final?",
+    "options": ["Thierry Henry", "Sol Campbell", "Robert Pires"],
+    "answerIndex": 1,
     "difficulty": "hard"
   },
   {
     "id": "ars_036",
-    "question": "Which player holds the record for most Arsenal appearances?",
-    "options": ["David O'Leary", "Tony Adams", "George Armstrong", "Lee Dixon"],
-    "answerIndex": 0,
+    "question": "Who managed Arsenal to their first league title in 1931?",
+    "options": ["Tom Whittaker", "Herbert Chapman", "George Allison"],
+    "answerIndex": 1,
     "difficulty": "hard"
   },
   {
     "id": "ars_037",
-    "question": "In which year did Arsenal move from Woolwich to Highbury?",
-    "options": ["1913", "1905", "1920", "1910"],
-    "answerIndex": 0,
+    "question": "Which Arsenal player scored the winning goal in the 1989 title decider at Anfield?",
+    "options": ["Alan Smith", "Michael Thomas", "Paul Merson"],
+    "answerIndex": 1,
     "difficulty": "hard"
   },
   {
     "id": "ars_038",
-    "question": "Who scored a hat-trick in Arsenal's 4-4 draw with Tottenham in 2008?",
-    "options": ["Emmanuel Adebayor", "Robin van Persie", "Theo Walcott", "Nicklas Bendtner"],
-    "answerIndex": 0,
+    "question": "What was the score in Arsenal's famous 'Anfield 89' title-winning match against Liverpool?",
+    "options": ["1-0", "2-0", "2-1"],
+    "answerIndex": 1,
     "difficulty": "hard"
   },
   {
     "id": "ars_039",
-    "question": "Which Arsenal player was nicknamed 'The Romford Pele'?",
-    "options": ["Ray Parlour", "Paul Merson", "Lee Dixon", "Perry Groves"],
-    "answerIndex": 0,
+    "question": "Who holds the record for most goals in a single season for Arsenal?",
+    "options": ["Thierry Henry", "Ted Drake", "Ian Wright"],
+    "answerIndex": 1,
     "difficulty": "hard"
   },
   {
     "id": "ars_040",
-    "question": "Who was the first player to score a Premier League hat-trick for Arsenal?",
-    "options": ["Ian Wright", "Kevin Campbell", "Alan Smith", "Anders Limpar"],
+    "question": "In which season did Arsenal first win the League and FA Cup Double?",
+    "options": ["1970-71", "1988-89", "1997-98"],
     "answerIndex": 0,
     "difficulty": "hard"
   }

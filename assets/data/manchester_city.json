@@ -1,282 +1,282 @@
 [
   {
     "id": "mci_001",
-    "question": "What is the name of Manchester City's home stadium?",
-    "options": ["Etihad Stadium", "Old Trafford", "Emirates Stadium", "Anfield"],
-    "answerIndex": 0,
+    "question": "What is Manchester City's home stadium called?",
+    "options": ["Old Trafford", "Etihad Stadium", "Emirates Stadium"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "mci_002",
-    "question": "What colour are Manchester City's home shirts?",
-    "options": ["Sky blue", "Red", "White", "Navy blue"],
-    "answerIndex": 0,
+    "question": "What are Manchester City's home colours?",
+    "options": ["Red and white", "Navy blue", "Sky blue"],
+    "answerIndex": 2,
     "difficulty": "easy"
   },
   {
     "id": "mci_003",
-    "question": "What is Manchester City's nickname?",
-    "options": ["The Citizens", "The Red Devils", "The Gunners", "The Blues"],
-    "answerIndex": 0,
+    "question": "Which manager led Manchester City to their first Premier League title in 2012?",
+    "options": ["Pep Guardiola", "Roberto Mancini", "Manuel Pellegrini"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "mci_004",
-    "question": "Who is Manchester City's all-time record goalscorer?",
-    "options": ["Sergio Aguero", "Eric Brook", "Erling Haaland", "David Silva"],
-    "answerIndex": 0,
+    "question": "What nickname is Manchester City commonly known by?",
+    "options": ["The Citizens", "The Sky Blues", "Both A and B"],
+    "answerIndex": 2,
     "difficulty": "easy"
   },
   {
     "id": "mci_005",
-    "question": "Which country is manager Pep Guardiola from?",
-    "options": ["Spain", "Portugal", "Italy", "Germany"],
-    "answerIndex": 0,
+    "question": "Which club is Manchester City's main local rival?",
+    "options": ["Liverpool", "Manchester United", "Leeds United"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "mci_006",
-    "question": "Which famous song do Manchester City fans sing?",
-    "options": ["Blue Moon", "You'll Never Walk Alone", "Glory Glory", "Bubbles"],
-    "answerIndex": 0,
+    "question": "Who scored the famous 93:20 goal to win the 2012 Premier League title?",
+    "options": ["Carlos Tevez", "Sergio Aguero", "David Silva"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "mci_007",
-    "question": "In which year did Manchester City win their first Premier League title?",
-    "options": ["2012", "2014", "2010", "2008"],
-    "answerIndex": 0,
+    "question": "In what year did Manchester City win the treble (Premier League, FA Cup, Champions League)?",
+    "options": ["2022", "2023", "2024"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "mci_008",
-    "question": "What was Manchester City's home stadium before the Etihad?",
-    "options": ["Maine Road", "White Hart Lane", "Highbury", "The City Ground"],
-    "answerIndex": 0,
+    "question": "Which Spanish manager has won multiple Premier League titles with Manchester City?",
+    "options": ["Rafael Benitez", "Pep Guardiola", "Unai Emery"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "mci_009",
-    "question": "Which club is Manchester City's main rival?",
-    "options": ["Manchester United", "Liverpool", "Chelsea", "Arsenal"],
+    "question": "What was Manchester City's stadium before the Etihad called?",
+    "options": ["Maine Road", "City Ground", "Eastlands"],
     "answerIndex": 0,
     "difficulty": "easy"
   },
   {
     "id": "mci_010",
-    "question": "Who owns Manchester City?",
-    "options": ["City Football Group / Sheikh Mansour", "The Glazers", "Roman Abramovich", "Stan Kroenke"],
-    "answerIndex": 0,
+    "question": "Which country owns Manchester City through the City Football Group?",
+    "options": ["Saudi Arabia", "Qatar", "United Arab Emirates"],
+    "answerIndex": 2,
     "difficulty": "easy"
   },
   {
     "id": "mci_011",
-    "question": "Which Norwegian striker joined City in 2022?",
-    "options": ["Erling Haaland", "Martin Odegaard", "Joshua King", "Alexander Sorloth"],
+    "question": "Who is Manchester City's all-time top scorer?",
+    "options": ["Sergio Aguero", "Eric Brook", "Tommy Johnson"],
     "answerIndex": 0,
     "difficulty": "easy"
   },
   {
     "id": "mci_012",
-    "question": "What year was Manchester City founded?",
-    "options": ["1880", "1894", "1902", "1875"],
-    "answerIndex": 0,
+    "question": "Which Belgian midfielder is known as one of the best playmakers in the world at Manchester City?",
+    "options": ["Eden Hazard", "Kevin De Bruyne", "Axel Witsel"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "mci_013",
-    "question": "Which Belgian midfielder was known as 'The Ginger Prince' at City?",
-    "options": ["Kevin De Bruyne", "Eden Hazard", "Vincent Kompany", "Romelu Lukaku"],
-    "answerIndex": 0,
+    "question": "What is the approximate capacity of the Etihad Stadium?",
+    "options": ["45,000", "53,000", "60,000"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "mci_014",
-    "question": "What is the capacity of the Etihad Stadium?",
-    "options": ["Around 53,000", "Around 75,000", "Around 40,000", "Around 62,000"],
-    "answerIndex": 0,
+    "question": "Which team did Manchester City beat in the 2023 Champions League final?",
+    "options": ["Real Madrid", "Inter Milan", "Bayern Munich"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "mci_015",
-    "question": "Which trophy did Manchester City win in 2023 for the first time?",
-    "options": ["Champions League", "FA Cup", "League Cup", "Europa League"],
-    "answerIndex": 0,
+    "question": "What song do Manchester City fans sing that shares its name with a 1930s hit?",
+    "options": ["Hey Jude", "Blue Moon", "Sweet Caroline"],
+    "answerIndex": 1,
     "difficulty": "easy"
   },
   {
     "id": "mci_016",
-    "question": "Who scored the famous 'AGUEROOOO' goal in 2012?",
-    "options": ["Sergio Aguero", "Carlos Tevez", "Mario Balotelli", "Yaya Toure"],
-    "answerIndex": 0,
+    "question": "Who scored the winning goal in the 2023 Champions League final?",
+    "options": ["Erling Haaland", "Rodri", "Bernardo Silva"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "mci_017",
-    "question": "Against which team did Aguero score the 93:20 goal?",
-    "options": ["Queens Park Rangers", "Manchester United", "Sunderland", "Newcastle United"],
-    "answerIndex": 0,
+    "question": "In what year did Manchester City last win the league before 2012?",
+    "options": ["1958", "1968", "1978"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "mci_018",
-    "question": "Who was Manchester City's captain when they won the 2023 treble?",
-    "options": ["Ilkay Gundogan", "Kevin De Bruyne", "Kyle Walker", "Ruben Dias"],
-    "answerIndex": 0,
+    "question": "Which club did Manchester City sign Sergio Aguero from?",
+    "options": ["Independiente", "Atletico Madrid", "Barcelona"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "mci_019",
-    "question": "Which manager led Manchester City to the 2011 FA Cup victory?",
-    "options": ["Roberto Mancini", "Manuel Pellegrini", "Pep Guardiola", "Mark Hughes"],
+    "question": "Who was Manchester City's first signing after the 2008 takeover?",
+    "options": ["Robinho", "Carlos Tevez", "Emmanuel Adebayor"],
     "answerIndex": 0,
     "difficulty": "medium"
   },
   {
     "id": "mci_020",
-    "question": "How many Premier League titles did Manchester City win between 2017-2024?",
-    "options": ["6", "5", "7", "4"],
-    "answerIndex": 0,
+    "question": "What is the name of the derby between Manchester City and Manchester United?",
+    "options": ["North West Derby", "Manchester Derby", "Mancunian Derby"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "mci_021",
-    "question": "Which club did Vincent Kompany join as a manager after leaving City?",
-    "options": ["Anderlecht", "Bayern Munich", "Burnley", "Club Brugge"],
-    "answerIndex": 0,
+    "question": "Which Manchester City legend had a statue unveiled outside the Etihad depicting his famous title-winning goal?",
+    "options": ["David Silva", "Vincent Kompany", "Sergio Aguero"],
+    "answerIndex": 2,
     "difficulty": "medium"
   },
   {
     "id": "mci_022",
-    "question": "Who scored a hat-trick in the 2011 FA Cup Final for Manchester City?",
-    "options": ["Yaya Toure", "Carlos Tevez", "Mario Balotelli", "No one - City won 1-0"],
-    "answerIndex": 3,
+    "question": "How many consecutive Premier League titles did Manchester City win from 2017-2019?",
+    "options": ["One", "Two", "Three"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "mci_023",
-    "question": "Which Spanish midfielder played over 400 games for Manchester City?",
-    "options": ["David Silva", "Juan Mata", "Cesc Fabregas", "Santi Cazorla"],
-    "answerIndex": 0,
+    "question": "Which team beat Manchester City in the 2021 Champions League final?",
+    "options": ["Real Madrid", "Chelsea", "Liverpool"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "mci_024",
-    "question": "In which year was the Abu Dhabi takeover of Manchester City?",
-    "options": ["2008", "2006", "2010", "2012"],
-    "answerIndex": 0,
+    "question": "Who holds the record for most assists in a Premier League season for Manchester City?",
+    "options": ["David Silva", "Kevin De Bruyne", "Riyad Mahrez"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "mci_025",
-    "question": "Which goalkeeper made the most Premier League appearances for Manchester City?",
-    "options": ["Joe Hart", "Ederson", "David Seaman", "Shay Given"],
-    "answerIndex": 0,
+    "question": "Which former Manchester City captain became manager of Burnley and Bayern Munich?",
+    "options": ["Richard Dunne", "Vincent Kompany", "Joleon Lescott"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "mci_026",
-    "question": "Who did Manchester City beat in the 2023 Champions League Final?",
-    "options": ["Inter Milan", "Real Madrid", "Bayern Munich", "AC Milan"],
-    "answerIndex": 0,
+    "question": "What was the score in the famous Manchester Derby victory for City at Old Trafford in 2011?",
+    "options": ["5-1", "6-1", "6-0"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "mci_027",
-    "question": "Which defender scored the winning goal in the 2023 Champions League Final?",
-    "options": ["Rodri", "Ruben Dias", "John Stones", "Nathan Ake"],
-    "answerIndex": 0,
+    "question": "Which Manchester City player won the African Player of the Year award multiple times?",
+    "options": ["Riyad Mahrez", "Yaya Toure", "Emmanuel Adebayor"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "mci_028",
-    "question": "What record did Manchester City set in 2017-18?",
-    "options": ["100 Premier League points", "Most consecutive wins", "Most goals in a season", "Fewest goals conceded"],
-    "answerIndex": 0,
+    "question": "How many points did Manchester City achieve in their record-breaking 2017-18 Premier League season?",
+    "options": ["98", "100", "102"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "mci_029",
-    "question": "Which Ivorian midfielder won three Premier League titles with City?",
-    "options": ["Yaya Toure", "Didier Drogba", "Kolo Toure", "Gervinho"],
-    "answerIndex": 0,
+    "question": "Which goalkeeper saved three penalties in the 2016 League Cup final shootout for City?",
+    "options": ["Joe Hart", "Willy Caballero", "Claudio Bravo"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "mci_030",
-    "question": "Who was Manchester City's manager immediately before Pep Guardiola?",
-    "options": ["Manuel Pellegrini", "Roberto Mancini", "Mark Hughes", "Brian Kidd"],
-    "answerIndex": 0,
+    "question": "Who was Manchester City's manager when they won the 2011 FA Cup?",
+    "options": ["Mark Hughes", "Roberto Mancini", "Sven-Goran Eriksson"],
+    "answerIndex": 1,
     "difficulty": "medium"
   },
   {
     "id": "mci_031",
-    "question": "What is the original name Manchester City was founded under in 1880?",
-    "options": ["St. Mark's (West Gorton)", "Gorton FC", "Manchester Athletic", "East Manchester FC"],
-    "answerIndex": 0,
+    "question": "In what year did Manchester City move from Maine Road to their current stadium?",
+    "options": ["2001", "2003", "2005"],
+    "answerIndex": 1,
     "difficulty": "hard"
   },
   {
     "id": "mci_032",
-    "question": "In which year did Manchester City last win the old First Division title before 2012?",
-    "options": ["1968", "1976", "1954", "1972"],
-    "answerIndex": 0,
+    "question": "Who scored Manchester City's first Premier League hat-trick?",
+    "options": ["Uwe Rosler", "Niall Quinn", "Georgi Kinkladze"],
+    "answerIndex": 1,
     "difficulty": "hard"
   },
   {
     "id": "mci_033",
-    "question": "Which Manchester City player wore the number 10 shirt before Aguero?",
-    "options": ["Edin Dzeko", "Emmanuel Adebayor", "Robinho", "Craig Bellamy"],
-    "answerIndex": 2,
+    "question": "Which Manchester City player scored the equaliser in the 1999 Division Two play-off final against Gillingham?",
+    "options": ["Kevin Horlock", "Paul Dickov", "Shaun Goater"],
+    "answerIndex": 0,
     "difficulty": "hard"
   },
   {
     "id": "mci_034",
-    "question": "Who was Manchester City's top scorer in the 1967-68 title-winning season?",
-    "options": ["Francis Lee", "Mike Summerbee", "Colin Bell", "Neil Young"],
-    "answerIndex": 3,
+    "question": "How many consecutive Premier League wins is Manchester City's record?",
+    "options": ["16", "18", "21"],
+    "answerIndex": 1,
     "difficulty": "hard"
   },
   {
     "id": "mci_035",
-    "question": "In which division were Manchester City playing in 1998-99?",
-    "options": ["Third tier (Division Two)", "Second tier", "Premier League", "Fourth tier"],
-    "answerIndex": 0,
+    "question": "Which legendary Manchester City player was known as 'The King of the Kippax'?",
+    "options": ["Francis Lee", "Colin Bell", "Mike Summerbee"],
+    "answerIndex": 1,
     "difficulty": "hard"
   },
   {
     "id": "mci_036",
-    "question": "Who scored City's first goal at the Etihad Stadium?",
-    "options": ["Nicolas Anelka", "Robbie Fowler", "Darius Vassell", "Shaun Wright-Phillips"],
-    "answerIndex": 0,
+    "question": "In what season did Manchester City get relegated to the third tier of English football?",
+    "options": ["1996-97", "1997-98", "1998-99"],
+    "answerIndex": 2,
     "difficulty": "hard"
   },
   {
     "id": "mci_037",
-    "question": "Which goalkeeper saved three penalties in the 2016 League Cup Final shootout?",
-    "options": ["Willy Caballero", "Joe Hart", "Claudio Bravo", "Ederson"],
-    "answerIndex": 0,
+    "question": "Who managed Manchester City to the 1968 league title?",
+    "options": ["Malcolm Allison", "Joe Mercer", "Tony Book"],
+    "answerIndex": 1,
     "difficulty": "hard"
   },
   {
     "id": "mci_038",
-    "question": "How many consecutive Premier League titles did City win from 2017-2022?",
-    "options": ["4", "5", "3", "6"],
-    "answerIndex": 0,
+    "question": "Which player scored on his Manchester City debut against Liverpool in August 2008 after signing from Real Madrid?",
+    "options": ["Craig Bellamy", "Robinho", "Jo"],
+    "answerIndex": 1,
     "difficulty": "hard"
   },
   {
     "id": "mci_039",
-    "question": "Which City legend was known as 'The King of the Kippax'?",
-    "options": ["Colin Bell", "Francis Lee", "Mike Summerbee", "Bert Trautmann"],
-    "answerIndex": 0,
+    "question": "What was the fee Manchester City paid for Rodri in 2019?",
+    "options": ["Around £50 million", "Around £63 million", "Around £75 million"],
+    "answerIndex": 1,
     "difficulty": "hard"
   },
   {
     "id": "mci_040",
-    "question": "Who scored Manchester City's first ever Premier League hat-trick?",
-    "options": ["Niall Quinn", "Uwe Rosler", "Georgi Kinkladze", "Paul Walsh"],
-    "answerIndex": 0,
+    "question": "Who scored four goals in Manchester City's 6-1 win at Old Trafford in 2011?",
+    "options": ["Sergio Aguero", "Edin Dzeko", "Mario Balotelli"],
+    "answerIndex": 1,
     "difficulty": "hard"
   }
 ]
