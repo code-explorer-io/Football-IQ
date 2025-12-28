@@ -1,0 +1,322 @@
+[
+  {
+    "id": "im_001",
+    "moment": "A 93rd minute goal wins the Premier League title on goal difference. Martin Tyler screams the scorer's name.",
+    "question": "Who scored?",
+    "options": ["Carlos Tevez", "Sergio Aguero", "Mario Balotelli"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "im_002",
+    "moment": "A Liverpool captain slips at a crucial moment, allowing the opposition to score and effectively end their title challenge.",
+    "question": "Who slipped?",
+    "options": ["Jamie Carragher", "Steven Gerrard", "Jordan Henderson"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "im_003",
+    "moment": "A French striker scores a stunning volley at Old Trafford, controlling the ball on his chest before firing home.",
+    "question": "Who scored this iconic goal against Manchester United?",
+    "options": ["Thierry Henry", "Dennis Bergkamp", "Eric Cantona"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "im_004",
+    "moment": "5000-1 outsiders win the Premier League title in one of sport's greatest ever stories.",
+    "question": "What season did Leicester City win the league?",
+    "options": ["2014-15", "2015-16", "2016-17"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "im_005",
+    "moment": "A goalkeeper runs the length of the pitch and scores a last-minute header to earn a crucial point.",
+    "question": "Who scored this famous goal?",
+    "options": ["Peter Schmeichel", "Alisson Becker", "Ederson"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "im_006",
+    "moment": "Arsenal go an entire Premier League season unbeaten, earning the nickname 'The Invincibles'.",
+    "question": "What season was this?",
+    "options": ["2002-03", "2003-04", "2004-05"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "im_007",
+    "moment": "A kung-fu kick into the crowd at Selhurst Park results in an 8-month ban.",
+    "question": "Who attacked a Crystal Palace fan?",
+    "options": ["Roy Keane", "Eric Cantona", "Vinnie Jones"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "im_008",
+    "moment": "A stunning overhead kick from the edge of the box against Manchester City is later voted the greatest Premier League goal.",
+    "question": "Who scored this bicycle kick?",
+    "options": ["Cristiano Ronaldo", "Wayne Rooney", "Robin van Persie"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "im_009",
+    "moment": "Manchester United come from behind to score two goals in injury time and win the Champions League final.",
+    "question": "Who scored the winning goal?",
+    "options": ["Teddy Sheringham", "Ole Gunnar Solskjaer", "David Beckham"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "im_010",
+    "moment": "A late penalty save denies Tottenham a Champions League final victory as Chelsea win on penalties.",
+    "question": "Actually, this was the 2019 final. Who did Liverpool beat?",
+    "options": ["Chelsea", "Tottenham", "Barcelona"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "im_011",
+    "moment": "A midfielder scores from inside his own half against Wimbledon, the ball sailing over the goalkeeper.",
+    "question": "Who scored this famous goal?",
+    "options": ["David Beckham", "Xabi Alonso", "Charlie Adam"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "im_012",
+    "moment": "A defender scores an own goal from 50 yards, lobbing his own goalkeeper in spectacular fashion.",
+    "question": "Who scored this unfortunate own goal for Sunderland?",
+    "options": ["Wes Brown", "Michael Ball", "Lee Dixon"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "im_013",
+    "moment": "Newcastle throw away a 12-point lead to let Manchester United win the title.",
+    "question": "Who was Newcastle's manager that season?",
+    "options": ["Bobby Robson", "Kevin Keegan", "Kenny Dalglish"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "im_014",
+    "moment": "'I would love it if we beat them' - a famous touchline interview during a title race.",
+    "question": "Who said this?",
+    "options": ["Alex Ferguson", "Kevin Keegan", "Arsene Wenger"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "im_015",
+    "moment": "A Dutch striker scores an incredible turn and finish at Newcastle, voted one of the greatest goals ever.",
+    "question": "Who scored this goal for Arsenal?",
+    "options": ["Marc Overmars", "Dennis Bergkamp", "Robin van Persie"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "im_016",
+    "moment": "Two managers get into a touchline fight and are both sent to the stands.",
+    "question": "Arsene Wenger clashed with which manager at Old Trafford?",
+    "options": ["Jose Mourinho", "Alex Ferguson", "Sam Allardyce"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "im_017",
+    "moment": "A striker stops play to allow an injured goalkeeper to receive treatment, earning widespread praise for sportsmanship.",
+    "question": "Who showed this fair play at Everton?",
+    "options": ["Thierry Henry", "Paolo Di Canio", "Alan Shearer"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "im_018",
+    "moment": "Manchester City score twice in added time to beat QPR and win their first Premier League title.",
+    "question": "Who scored City's first goal in that comeback?",
+    "options": ["Sergio Aguero", "Edin Dzeko", "Mario Balotelli"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "im_019",
+    "moment": "A 17-year-old announces himself with a hat-trick against Arsenal at Highbury.",
+    "question": "Who scored this debut hat-trick for Everton?",
+    "options": ["Michael Owen", "Wayne Rooney", "Robbie Fowler"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "im_020",
+    "moment": "Liverpool come back from 3-0 down at half-time to win the Champions League final on penalties.",
+    "question": "What year was this 'Miracle of Istanbul'?",
+    "options": ["2004", "2005", "2006"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "im_021",
+    "moment": "A manager is sacked the day after his team beats Manchester City 5-2.",
+    "question": "Who was sacked by Tottenham?",
+    "options": ["Mauricio Pochettino", "Jose Mourinho", "Antonio Conte"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "im_022",
+    "moment": "A defender heads in an injury-time equalizer to keep Arsenal's unbeaten run alive against Liverpool.",
+    "question": "Who scored this crucial goal at Anfield?",
+    "options": ["Sol Campbell", "Martin Keown", "Kolo Toure"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "im_023",
+    "moment": "Liverpool beat Barcelona 4-0 at Anfield to overturn a 3-0 first-leg deficit.",
+    "question": "Who assisted the crucial quick corner for the fourth goal?",
+    "options": ["Andy Robertson", "Trent Alexander-Arnold", "James Milner"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "im_024",
+    "moment": "A striker celebrates by revealing a 'Why Always Me?' t-shirt after scoring against Manchester United.",
+    "question": "Who wore this famous shirt?",
+    "options": ["Carlos Tevez", "Mario Balotelli", "Emmanuel Adebayor"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "im_025",
+    "moment": "Chelsea sack their manager despite being top of the league after winning the title the previous season.",
+    "question": "Who was sacked in December 2015?",
+    "options": ["Carlo Ancelotti", "Jose Mourinho", "Antonio Conte"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "im_026",
+    "moment": "A manager slides on his knees down the touchline at Old Trafford after his team scores a late winner.",
+    "question": "Who celebrated this way for Liverpool?",
+    "options": ["Brendan Rodgers", "Jurgen Klopp", "Rafael Benitez"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "im_027",
+    "moment": "A red card for a two-footed tackle ends a player's hopes of reaching the FA Cup final.",
+    "question": "Who was sent off for this tackle on Alf-Inge Haaland?",
+    "options": ["Patrick Vieira", "Roy Keane", "Paul Scholes"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "im_028",
+    "moment": "A goalkeeper scores a last-minute equalizer from a corner against Everton.",
+    "question": "Actually, who scored this goal for Liverpool in 2021?",
+    "options": ["Adrian", "Caoimhin Kelleher", "Alisson Becker"],
+    "answerIndex": 2,
+    "difficulty": "easy"
+  },
+  {
+    "id": "im_029",
+    "moment": "Manchester United win the treble - Premier League, FA Cup, and Champions League in the same season.",
+    "question": "What year was this historic achievement?",
+    "options": ["1998", "1999", "2000"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "im_030",
+    "moment": "A defender runs from his own half to score a famous solo goal at the 2014 World Cup.",
+    "question": "Who scored this goal for the USA?",
+    "options": ["Clint Dempsey", "Tim Howard", "This was actually James Rodriguez for Colombia"],
+    "answerIndex": 2,
+    "difficulty": "hard"
+  },
+  {
+    "id": "im_031",
+    "moment": "Blackburn Rovers win the Premier League title on the final day of the season.",
+    "question": "What year did Blackburn win the league?",
+    "options": ["1994", "1995", "1996"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "im_032",
+    "moment": "A striker scores five goals in nine minutes after coming on as a substitute in the Bundesliga.",
+    "question": "Who achieved this remarkable feat?",
+    "options": ["Erling Haaland", "Robert Lewandowski", "Pierre-Emerick Aubameyang"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "im_033",
+    "moment": "Liverpool end their 30-year wait for a league title.",
+    "question": "What season did Liverpool win the Premier League?",
+    "options": ["2018-19", "2019-20", "2020-21"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "im_034",
+    "moment": "A keeper makes a point-blank save in the last seconds of the FA Cup final to preserve victory.",
+    "question": "Who made this famous save for Manchester United vs Crystal Palace?",
+    "options": ["Peter Schmeichel", "Edwin van der Sar", "David de Gea"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "im_035",
+    "moment": "An Egyptian becomes the Premier League's record scorer in a 38-game season.",
+    "question": "How many goals did Salah score in 2017-18?",
+    "options": ["30", "32", "34"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "im_036",
+    "moment": "A defender pushes a referee and gets a long ban for the incident.",
+    "question": "Who pushed referee Paul Alcock?",
+    "options": ["Patrick Vieira", "Paolo Di Canio", "Roy Keane"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "im_037",
+    "moment": "A forward scores a hat-trick in the North London derby to take the match ball home.",
+    "question": "Who scored a hat-trick for Spurs vs Arsenal in 2022?",
+    "options": ["Harry Kane", "Son Heung-min", "Dejan Kulusevski"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "im_038",
+    "moment": "Two managers clash in the dugout, with one calling the other 'a specialist in failure'.",
+    "question": "Who did Jose Mourinho aim this insult at?",
+    "options": ["Pep Guardiola", "Arsene Wenger", "Jurgen Klopp"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "im_039",
+    "moment": "Manchester City win the treble - Premier League, FA Cup, and Champions League.",
+    "question": "What year did City complete this feat?",
+    "options": ["2022", "2023", "2024"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "im_040",
+    "moment": "A French striker retires after handling the ball in a World Cup playoff, denying Ireland a place at the tournament.",
+    "question": "Who committed this infamous handball?",
+    "options": ["Nicolas Anelka", "Thierry Henry", "David Trezeguet"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  }
+]

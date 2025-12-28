@@ -25,11 +25,11 @@
 
 ---
 
-## Phase 2: Functionality - NOT STARTED
+## Phase 2: Functionality - COMPLETE
 
 | Task | Status |
 |------|--------|
-| 10 random questions (no repeats) | Partially done (shuffles, takes 10) |
+| 10 random questions (no repeats) | Done |
 | Answer registers selection | Done |
 | Correct/incorrect feedback shown | Done |
 | Cannot change answer | Done |
@@ -37,25 +37,40 @@
 | Score calculated correctly | Done |
 | Questions load from JSON | Done |
 | 40+ questions per club | Done |
-| Best score per club saved | Not done |
-| Best score persists | Not done |
+| Best score per club saved | Done |
+| Best score persists | Done |
 | "Fan verdict" shown | Done |
 | "Play Again" works | Done |
 | "Change Club" works | Done |
 
-**Key remaining: SharedPreferences for best score persistence**
+**Phase 2 complete - all functionality implemented**
+
+**Ready for Phase 3**
 
 ---
 
-## Phase 3: Polish - NOT STARTED
+## Phase 3: Polish - IN PROGRESS
 
-- [ ] Consistent colour scheme
-- [ ] Club cards look appealing
-- [ ] Smooth transitions
-- [ ] Answer feedback animations
-- [ ] Progress bar polish
-- [ ] Results screen feels rewarding
-- [ ] App icon designed
+| Task | Status |
+|------|--------|
+| Consistent colour scheme (AppTheme) | Done |
+| Typography (Google Fonts) | Done |
+| Button press animations | Done |
+| Haptic feedback | Done |
+| Answer feedback animations | Done |
+| Confetti celebrations | Done |
+| Football IQ rating system | Done |
+| Form guide (W/D/L) | Done |
+| Achievement system | Done |
+| Stats display on home screen | Done |
+| App icon designed | Not done |
+
+**New features added:**
+- Football IQ rating (0-99, like FIFA)
+- Form guide showing last 5 results
+- 20+ achievements with football themes
+- Confetti for perfect scores & new bests
+- Premium "pub quiz" visual style
 
 ---
 

@@ -1,0 +1,242 @@
+[
+  {
+    "id": "hol_001",
+    "category": "Premier League goals",
+    "item1": { "name": "Alan Shearer", "value": 260 },
+    "item2": { "name": "Wayne Rooney", "value": 208 }
+  },
+  {
+    "id": "hol_002",
+    "category": "Premier League goals",
+    "item1": { "name": "Sergio Aguero", "value": 184 },
+    "item2": { "name": "Thierry Henry", "value": 175 }
+  },
+  {
+    "id": "hol_003",
+    "category": "Premier League assists",
+    "item1": { "name": "Ryan Giggs", "value": 162 },
+    "item2": { "name": "Cesc Fabregas", "value": 111 }
+  },
+  {
+    "id": "hol_004",
+    "category": "Premier League appearances",
+    "item1": { "name": "Gareth Barry", "value": 653 },
+    "item2": { "name": "Ryan Giggs", "value": 632 }
+  },
+  {
+    "id": "hol_005",
+    "category": "Premier League clean sheets",
+    "item1": { "name": "Petr Cech", "value": 202 },
+    "item2": { "name": "David James", "value": 169 }
+  },
+  {
+    "id": "hol_006",
+    "category": "Transfer fee (millions GBP)",
+    "item1": { "name": "Jack Grealish", "value": 100 },
+    "item2": { "name": "Romelu Lukaku", "value": 97 }
+  },
+  {
+    "id": "hol_007",
+    "category": "Premier League goals",
+    "item1": { "name": "Frank Lampard", "value": 177 },
+    "item2": { "name": "Harry Kane", "value": 213 }
+  },
+  {
+    "id": "hol_008",
+    "category": "England caps",
+    "item1": { "name": "Wayne Rooney", "value": 120 },
+    "item2": { "name": "David Beckham", "value": 115 }
+  },
+  {
+    "id": "hol_009",
+    "category": "Premier League titles won",
+    "item1": { "name": "Ryan Giggs", "value": 13 },
+    "item2": { "name": "John Terry", "value": 5 }
+  },
+  {
+    "id": "hol_010",
+    "category": "Manager Premier League wins",
+    "item1": { "name": "Alex Ferguson", "value": 528 },
+    "item2": { "name": "Arsene Wenger", "value": 476 }
+  },
+  {
+    "id": "hol_011",
+    "category": "Premier League goals in a season",
+    "item1": { "name": "Mohamed Salah (17/18)", "value": 32 },
+    "item2": { "name": "Erling Haaland (22/23)", "value": 36 }
+  },
+  {
+    "id": "hol_012",
+    "category": "Premier League goals",
+    "item1": { "name": "Robbie Fowler", "value": 163 },
+    "item2": { "name": "Jermain Defoe", "value": 162 }
+  },
+  {
+    "id": "hol_013",
+    "category": "Champions League goals",
+    "item1": { "name": "Cristiano Ronaldo", "value": 140 },
+    "item2": { "name": "Lionel Messi", "value": 129 }
+  },
+  {
+    "id": "hol_014",
+    "category": "World Cup goals",
+    "item1": { "name": "Miroslav Klose", "value": 16 },
+    "item2": { "name": "Ronaldo (Brazil)", "value": 15 }
+  },
+  {
+    "id": "hol_015",
+    "category": "Transfer fee (millions GBP)",
+    "item1": { "name": "Neymar", "value": 198 },
+    "item2": { "name": "Mbappe", "value": 0 }
+  },
+  {
+    "id": "hol_016",
+    "category": "Premier League red cards",
+    "item1": { "name": "Patrick Vieira", "value": 8 },
+    "item2": { "name": "Roy Keane", "value": 7 }
+  },
+  {
+    "id": "hol_017",
+    "category": "Premier League goals",
+    "item1": { "name": "Michael Owen", "value": 150 },
+    "item2": { "name": "Les Ferdinand", "value": 149 }
+  },
+  {
+    "id": "hol_018",
+    "category": "Premier League assists",
+    "item1": { "name": "Kevin De Bruyne", "value": 111 },
+    "item2": { "name": "David Silva", "value": 93 }
+  },
+  {
+    "id": "hol_019",
+    "category": "England goals",
+    "item1": { "name": "Wayne Rooney", "value": 53 },
+    "item2": { "name": "Harry Kane", "value": 66 }
+  },
+  {
+    "id": "hol_020",
+    "category": "Premier League hat-tricks",
+    "item1": { "name": "Alan Shearer", "value": 11 },
+    "item2": { "name": "Sergio Aguero", "value": 12 }
+  },
+  {
+    "id": "hol_021",
+    "category": "Club trophies won",
+    "item1": { "name": "Lionel Messi", "value": 44 },
+    "item2": { "name": "Dani Alves", "value": 43 }
+  },
+  {
+    "id": "hol_022",
+    "category": "Premier League goals",
+    "item1": { "name": "Didier Drogba", "value": 104 },
+    "item2": { "name": "Robin van Persie", "value": 144 }
+  },
+  {
+    "id": "hol_023",
+    "category": "Premier League appearances",
+    "item1": { "name": "Frank Lampard", "value": 609 },
+    "item2": { "name": "David James", "value": 572 }
+  },
+  {
+    "id": "hol_024",
+    "category": "Age when signed (years)",
+    "item1": { "name": "Jude Bellingham", "value": 19 },
+    "item2": { "name": "Wayne Rooney", "value": 16 }
+  },
+  {
+    "id": "hol_025",
+    "category": "Premier League seasons managed",
+    "item1": { "name": "Alex Ferguson", "value": 21 },
+    "item2": { "name": "Arsene Wenger", "value": 22 }
+  },
+  {
+    "id": "hol_026",
+    "category": "Premier League goals",
+    "item1": { "name": "Steven Gerrard", "value": 120 },
+    "item2": { "name": "Paul Scholes", "value": 107 }
+  },
+  {
+    "id": "hol_027",
+    "category": "Transfer fee (millions GBP)",
+    "item1": { "name": "Declan Rice", "value": 105 },
+    "item2": { "name": "Enzo Fernandez", "value": 107 }
+  },
+  {
+    "id": "hol_028",
+    "category": "Ballon d'Or wins",
+    "item1": { "name": "Lionel Messi", "value": 8 },
+    "item2": { "name": "Cristiano Ronaldo", "value": 5 }
+  },
+  {
+    "id": "hol_029",
+    "category": "Premier League own goals",
+    "item1": { "name": "Richard Dunne", "value": 10 },
+    "item2": { "name": "Martin Skrtel", "value": 7 }
+  },
+  {
+    "id": "hol_030",
+    "category": "Premier League goals",
+    "item1": { "name": "Dennis Bergkamp", "value": 87 },
+    "item2": { "name": "Eric Cantona", "value": 70 }
+  },
+  {
+    "id": "hol_031",
+    "category": "World Cup appearances",
+    "item1": { "name": "Lothar Matthaus", "value": 25 },
+    "item2": { "name": "Miroslav Klose", "value": 24 }
+  },
+  {
+    "id": "hol_032",
+    "category": "Premier League yellow cards",
+    "item1": { "name": "Gareth Barry", "value": 123 },
+    "item2": { "name": "Lee Bowyer", "value": 99 }
+  },
+  {
+    "id": "hol_033",
+    "category": "Career club goals",
+    "item1": { "name": "Cristiano Ronaldo", "value": 715 },
+    "item2": { "name": "Lionel Messi", "value": 712 }
+  },
+  {
+    "id": "hol_034",
+    "category": "Premier League goals",
+    "item1": { "name": "Romelu Lukaku", "value": 121 },
+    "item2": { "name": "Raheem Sterling", "value": 123 }
+  },
+  {
+    "id": "hol_035",
+    "category": "Manager Champions League wins",
+    "item1": { "name": "Carlo Ancelotti", "value": 4 },
+    "item2": { "name": "Pep Guardiola", "value": 2 }
+  },
+  {
+    "id": "hol_036",
+    "category": "Premier League penalties scored",
+    "item1": { "name": "Alan Shearer", "value": 56 },
+    "item2": { "name": "Frank Lampard", "value": 43 }
+  },
+  {
+    "id": "hol_037",
+    "category": "Premier League goals",
+    "item1": { "name": "Sadio Mane", "value": 90 },
+    "item2": { "name": "Roberto Firmino", "value": 75 }
+  },
+  {
+    "id": "hol_038",
+    "category": "FA Cup wins (club)",
+    "item1": { "name": "Arsenal", "value": 14 },
+    "item2": { "name": "Manchester United", "value": 12 }
+  },
+  {
+    "id": "hol_039",
+    "category": "Premier League goals",
+    "item1": { "name": "Teddy Sheringham", "value": 146 },
+    "item2": { "name": "Peter Crouch", "value": 108 }
+  },
+  {
+    "id": "hol_040",
+    "category": "International goals",
+    "item1": { "name": "Cristiano Ronaldo", "value": 130 },
+    "item2": { "name": "Ali Daei", "value": 109 }
+  }
+]

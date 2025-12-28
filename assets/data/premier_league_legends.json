@@ -1,0 +1,282 @@
+[
+  {
+    "id": "bm_001",
+    "question": "Which player has scored the most Premier League goals of all time?",
+    "options": ["Wayne Rooney", "Alan Shearer", "Sergio Aguero"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "bm_002",
+    "question": "Who holds the record for most Premier League assists?",
+    "options": ["Ryan Giggs", "Cesc Fabregas", "Frank Lampard"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "bm_003",
+    "question": "Which goalkeeper has the most Premier League clean sheets?",
+    "options": ["David Seaman", "Petr Cech", "Edwin van der Sar"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "bm_004",
+    "question": "Who scored the first ever Premier League goal in 1992?",
+    "options": ["Alan Shearer", "Brian Deane", "Teddy Sheringham"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "bm_005",
+    "question": "Which player has made the most Premier League appearances?",
+    "options": ["Ryan Giggs", "Gareth Barry", "Frank Lampard"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "bm_006",
+    "question": "Who is the only player to score a hat-trick against Sir Alex Ferguson's Manchester United at Old Trafford?",
+    "options": ["Thierry Henry", "Robbie Fowler", "Samuel Eto'o"],
+    "answerIndex": 2,
+    "difficulty": "hard"
+  },
+  {
+    "id": "bm_007",
+    "question": "Which player has won the most Premier League titles?",
+    "options": ["Paul Scholes", "Ryan Giggs", "Gary Neville"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "bm_008",
+    "question": "Who scored the 'Aguerooo' title-winning goal in 2012?",
+    "options": ["Carlos Tevez", "Sergio Aguero", "Mario Balotelli"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "bm_009",
+    "question": "Which defender has scored the most Premier League goals?",
+    "options": ["John Terry", "David Unsworth", "Leighton Baines"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "bm_010",
+    "question": "Who won the Premier League Golden Boot in the 2019-20 season?",
+    "options": ["Mohamed Salah", "Jamie Vardy", "Pierre-Emerick Aubameyang"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "bm_011",
+    "question": "Which player scored the fastest Premier League hat-trick (2 minutes 56 seconds)?",
+    "options": ["Robbie Fowler", "Sadio Mane", "Mohamed Salah"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "bm_012",
+    "question": "Who is known as 'The King' at Arsenal?",
+    "options": ["Dennis Bergkamp", "Thierry Henry", "Patrick Vieira"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "bm_013",
+    "question": "Which player was part of Liverpool's famous 'SAS' strike partnership with Luis Suarez?",
+    "options": ["Raheem Sterling", "Daniel Sturridge", "Philippe Coutinho"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "bm_014",
+    "question": "Who captained Chelsea to their first Premier League title in 2005?",
+    "options": ["Frank Lampard", "John Terry", "Claude Makelele"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "bm_015",
+    "question": "Which Newcastle legend wore the number 9 shirt and scored 206 goals for the club?",
+    "options": ["Les Ferdinand", "Alan Shearer", "Andy Cole"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "bm_016",
+    "question": "Who scored a famous chip against Wimbledon from the halfway line?",
+    "options": ["Eric Cantona", "David Beckham", "Xabi Alonso"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "bm_017",
+    "question": "Which player performed the 'Klinsmann dive' celebration after scoring?",
+    "options": ["Teddy Sheringham", "Jurgen Klinsmann", "Gianfranco Zola"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "bm_018",
+    "question": "Who is Manchester United's record goalscorer?",
+    "options": ["Bobby Charlton", "Wayne Rooney", "Denis Law"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "bm_019",
+    "question": "Which midfielder scored the famous 'long-range screamer' against Wimbledon for Man United?",
+    "options": ["Paul Scholes", "David Beckham", "Roy Keane"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "bm_020",
+    "question": "Who was known as 'Le God' at Southampton?",
+    "options": ["Marian Pahars", "Matt Le Tissier", "James Beattie"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "bm_021",
+    "question": "Which French striker was part of Arsenal's 'Invincibles' season?",
+    "options": ["Robert Pires", "Thierry Henry", "Sylvain Wiltord"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "bm_022",
+    "question": "Who scored the famous 'Hand of Clod' own goal in 2003?",
+    "options": ["David Seaman", "Ian Walker", "Jerzy Dudek"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "bm_023",
+    "question": "Which English striker won the Premier League with two different clubs?",
+    "options": ["Les Ferdinand", "Andy Cole", "Nicolas Anelka"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "bm_024",
+    "question": "Who was the first African to win the Premier League?",
+    "options": ["Kanu", "Lucas Radebe", "Tony Yeboah"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "bm_025",
+    "question": "Which player's statue stands outside the Emirates Stadium?",
+    "options": ["Dennis Bergkamp", "Thierry Henry", "Tony Adams"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "bm_026",
+    "question": "Who scored a famous volley against Leicester in 2002 for Arsenal?",
+    "options": ["Robert Pires", "Dennis Bergkamp", "Patrick Vieira"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "bm_027",
+    "question": "Which Frenchman was known as 'The Iceman' at Arsenal?",
+    "options": ["Thierry Henry", "Patrick Vieira", "Dennis Bergkamp"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "bm_028",
+    "question": "Who won back-to-back PFA Player of the Year awards in 2018 and 2019?",
+    "options": ["Mohamed Salah", "Virgil van Dijk", "Kevin De Bruyne"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "bm_029",
+    "question": "Which goalkeeper scored a header in the last minute against Everton?",
+    "options": ["Peter Schmeichel", "Brad Friedel", "Alisson Becker"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "bm_030",
+    "question": "Who was the first player to score 100 Premier League goals?",
+    "options": ["Les Ferdinand", "Alan Shearer", "Andy Cole"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "bm_031",
+    "question": "Which midfield maestro won the Premier League with both Manchester United and Manchester City?",
+    "options": ["Carlos Tevez", "Owen Hargreaves", "Michael Owen"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "bm_032",
+    "question": "Who performed the famous kung-fu kick on a Crystal Palace fan?",
+    "options": ["Roy Keane", "Eric Cantona", "Dennis Wise"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "bm_033",
+    "question": "Which Liverpool striker won the Premier League Golden Boot in 2013-14?",
+    "options": ["Daniel Sturridge", "Luis Suarez", "Raheem Sterling"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "bm_034",
+    "question": "Who scored 5 goals in one Premier League match for Tottenham against Southampton?",
+    "options": ["Harry Kane", "Gareth Bale", "Jermain Defoe"],
+    "answerIndex": 2,
+    "difficulty": "hard"
+  },
+  {
+    "id": "bm_035",
+    "question": "Which Chelsea legend is their all-time top scorer?",
+    "options": ["Didier Drogba", "Frank Lampard", "Kerry Dixon"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "bm_036",
+    "question": "Who was the first player to reach 200 Premier League assists?",
+    "options": ["Ryan Giggs", "Kevin De Bruyne", "Cesc Fabregas"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "bm_037",
+    "question": "Which striker scored a famous backheel flick goal for Arsenal against Newcastle?",
+    "options": ["Dennis Bergkamp", "Thierry Henry", "Robin van Persie"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "bm_038",
+    "question": "Who is the youngest player to score in the Premier League?",
+    "options": ["Wayne Rooney", "James Vaughan", "Michael Owen"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "bm_039",
+    "question": "Which player scored the most goals in a single Premier League season (34)?",
+    "options": ["Mohamed Salah", "Alan Shearer", "Andy Cole"],
+    "answerIndex": 2,
+    "difficulty": "hard"
+  },
+  {
+    "id": "bm_040",
+    "question": "Who won the first Premier League title with Manchester United in 1993?",
+    "options": ["Eric Cantona", "Mark Hughes", "Steve Bruce"],
+    "answerIndex": 2,
+    "difficulty": "hard"
+  }
+]

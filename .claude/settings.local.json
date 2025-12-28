@@ -8,7 +8,21 @@
       "Bash(del \"Four-Part-Framework.md\")",
       "Bash(del \"CHECKLIST.md\")",
       "Bash(flutter doctor:*)",
-      "Bash(C:\\\\flutter\\\\flutter\\\\bin\\\\flutter doctor:*)"
+      "Bash(C:\\\\flutter\\\\flutter\\\\bin\\\\flutter doctor:*)",
+      "Bash(git push)",
+      "Bash(C:\\\\flutter\\\\flutter\\\\bin\\\\flutter pub get)",
+      "Bash(flutter pub get:*)",
+      "Bash(where:*)",
+      "Bash(flutter run:*)",
+      "Bash(cat:*)",
+      "Bash(flutter devices:*)",
+      "Bash(git reset:*)",
+      "Bash(flutter pub outdated:*)",
+      "Bash(C:Flutterflutterbinflutter pub get)",
+      "Bash(/c/Flutter/flutter/bin/flutter pub get:*)",
+      "Bash(/c/Flutter/flutter/bin/flutter run:*)",
+      "Bash(/c/Flutter/flutter/bin/flutter analyze:*)",
+      "Bash(echo:*)"
     ]
   }
 }

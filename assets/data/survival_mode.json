@@ -1,0 +1,422 @@
+[
+  {
+    "id": "surv_001",
+    "question": "Which club has won the most Premier League titles?",
+    "options": ["Liverpool", "Manchester United", "Chelsea"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_002",
+    "question": "Who is the Premier League's all-time top scorer?",
+    "options": ["Wayne Rooney", "Alan Shearer", "Andrew Cole"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_003",
+    "question": "Which stadium is the home of Arsenal?",
+    "options": ["Stamford Bridge", "Emirates Stadium", "Etihad Stadium"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_004",
+    "question": "What year was the Premier League founded?",
+    "options": ["1990", "1992", "1994"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_005",
+    "question": "Who managed Arsenal's 'Invincibles' team?",
+    "options": ["George Graham", "Arsene Wenger", "Unai Emery"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_006",
+    "question": "Which country does Son Heung-min represent?",
+    "options": ["Japan", "South Korea", "China"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_007",
+    "question": "What is Manchester City's home stadium called?",
+    "options": ["Old Trafford", "Etihad Stadium", "City of Manchester Stadium"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_008",
+    "question": "Which club did Cristiano Ronaldo first play for in England?",
+    "options": ["Manchester City", "Manchester United", "Chelsea"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_009",
+    "question": "Who captained England to win the 1966 World Cup?",
+    "options": ["Geoff Hurst", "Bobby Moore", "Bobby Charlton"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_010",
+    "question": "What colour are Liverpool's home shirts?",
+    "options": ["Blue", "Red", "White"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_011",
+    "question": "Who won the Premier League Golden Boot in 2022-23?",
+    "options": ["Mohamed Salah", "Erling Haaland", "Harry Kane"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_012",
+    "question": "Which manager has won the most Premier League titles?",
+    "options": ["Jose Mourinho", "Pep Guardiola", "Alex Ferguson"],
+    "answerIndex": 2,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_013",
+    "question": "How many teams play in the Premier League each season?",
+    "options": ["18", "20", "22"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_014",
+    "question": "Which club did Jamie Vardy play for when winning the league?",
+    "options": ["Southampton", "Leicester City", "Nottingham Forest"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_015",
+    "question": "What nationality is Kevin De Bruyne?",
+    "options": ["Dutch", "Belgian", "German"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_016",
+    "question": "Who has made the most Premier League appearances?",
+    "options": ["Ryan Giggs", "Gareth Barry", "Frank Lampard"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_017",
+    "question": "Which goalkeeper has the most Premier League clean sheets?",
+    "options": ["Peter Cech", "David James", "Edwin van der Sar"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_018",
+    "question": "What is Tottenham's home stadium called?",
+    "options": ["White Hart Lane", "Tottenham Hotspur Stadium", "Wembley"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_019",
+    "question": "Which club did Thierry Henry score the most goals for?",
+    "options": ["Barcelona", "Arsenal", "Monaco"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_020",
+    "question": "Who scored the fastest Premier League hat-trick?",
+    "options": ["Robbie Fowler", "Sadio Mane", "Michael Owen"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_021",
+    "question": "Which club has spent the longest time in the top flight of English football?",
+    "options": ["Liverpool", "Everton", "Arsenal"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_022",
+    "question": "Who was the first African player to win the Premier League?",
+    "options": ["Didier Drogba", "Kanu", "Jay-Jay Okocha"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "surv_023",
+    "question": "What year did Manchester City first win the Premier League?",
+    "options": ["2010", "2012", "2014"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_024",
+    "question": "Which club did Frank Lampard score the most Premier League goals for?",
+    "options": ["West Ham", "Chelsea", "Manchester City"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_025",
+    "question": "Who was the first player to score 100 Premier League goals?",
+    "options": ["Les Ferdinand", "Alan Shearer", "Andy Cole"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_026",
+    "question": "Which club won the first ever Premier League title?",
+    "options": ["Arsenal", "Liverpool", "Manchester United"],
+    "answerIndex": 2,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_027",
+    "question": "What is the nickname of Newcastle United?",
+    "options": ["The Toon", "The Magpies", "Both are correct"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_028",
+    "question": "Who scored England's winner in the 1966 World Cup Final?",
+    "options": ["Bobby Moore", "Geoff Hurst", "Martin Peters"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_029",
+    "question": "How many points is a Premier League win worth?",
+    "options": ["2", "3", "4"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_030",
+    "question": "Which player has the most Premier League assists?",
+    "options": ["Ryan Giggs", "Cesc Fabregas", "David Beckham"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_031",
+    "question": "What nationality is Virgil van Dijk?",
+    "options": ["Belgian", "Dutch", "German"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_032",
+    "question": "Which club did Steven Gerrard play his entire Premier League career for?",
+    "options": ["Manchester United", "Liverpool", "Chelsea"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_033",
+    "question": "What is Chelsea's home stadium called?",
+    "options": ["Stamford Bridge", "Craven Cottage", "The Bridge"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_034",
+    "question": "Who was the Premier League's youngest ever scorer?",
+    "options": ["Wayne Rooney", "James Vaughan", "Cesc Fabregas"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "surv_035",
+    "question": "Which club plays at Anfield?",
+    "options": ["Everton", "Liverpool", "Manchester United"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_036",
+    "question": "How many times have Arsenal won the Premier League?",
+    "options": ["2", "3", "4"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_037",
+    "question": "Who is Manchester United's all-time top scorer?",
+    "options": ["Bobby Charlton", "Wayne Rooney", "Ryan Giggs"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_038",
+    "question": "Which English club was the first to win the European Cup?",
+    "options": ["Manchester United", "Liverpool", "Nottingham Forest"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_039",
+    "question": "What year did Jurgen Klopp join Liverpool?",
+    "options": ["2014", "2015", "2016"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_040",
+    "question": "Which player scored the most goals in a single Premier League season?",
+    "options": ["Mohamed Salah", "Erling Haaland", "Alan Shearer"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_041",
+    "question": "What is the record points total for a Premier League season?",
+    "options": ["98", "100", "102"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_042",
+    "question": "Which club did Patrick Vieira captain to a league title?",
+    "options": ["Arsenal", "Manchester City", "Inter Milan"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_043",
+    "question": "Who scored the first ever Premier League goal?",
+    "options": ["Alan Shearer", "Brian Deane", "Mark Hughes"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "surv_044",
+    "question": "Which country does Bruno Fernandes play for?",
+    "options": ["Brazil", "Portugal", "Spain"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_045",
+    "question": "What is the most goals scored by a team in a Premier League season?",
+    "options": ["103", "106", "108"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "surv_046",
+    "question": "Which club won the Premier League in 2020-21?",
+    "options": ["Liverpool", "Manchester City", "Chelsea"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_047",
+    "question": "Who is the oldest player to score in the Premier League?",
+    "options": ["Teddy Sheringham", "Ryan Giggs", "Zlatan Ibrahimovic"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "surv_048",
+    "question": "What nationality is Mohamed Salah?",
+    "options": ["Moroccan", "Egyptian", "Algerian"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_049",
+    "question": "Which club did Didier Drogba win the most trophies with?",
+    "options": ["Marseille", "Chelsea", "Galatasaray"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_050",
+    "question": "How many games are played in a Premier League season?",
+    "options": ["340", "360", "380"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_051",
+    "question": "Which club plays at Goodison Park?",
+    "options": ["Liverpool", "Everton", "West Ham"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_052",
+    "question": "Who managed Chelsea to their first Premier League title?",
+    "options": ["Carlo Ancelotti", "Jose Mourinho", "Claudio Ranieri"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_053",
+    "question": "What colour are Manchester City's home shirts?",
+    "options": ["Sky blue", "Royal blue", "Navy blue"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_054",
+    "question": "Which player has won the most Premier League titles?",
+    "options": ["Paul Scholes", "Ryan Giggs", "Gary Neville"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_055",
+    "question": "What year did Chelsea first win the Premier League?",
+    "options": ["2004", "2005", "2006"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_056",
+    "question": "Who holds the record for most goals in a calendar year?",
+    "options": ["Cristiano Ronaldo", "Lionel Messi", "Robert Lewandowski"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_057",
+    "question": "Which English club has won the most European Cups/Champions Leagues?",
+    "options": ["Manchester United", "Liverpool", "Nottingham Forest"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_058",
+    "question": "What is the lowest points total to win the Premier League?",
+    "options": ["75", "81", "86"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "surv_059",
+    "question": "Who did Leicester beat in the 2021 FA Cup Final?",
+    "options": ["Manchester United", "Chelsea", "Liverpool"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_060",
+    "question": "Which manager is known as 'The Special One'?",
+    "options": ["Pep Guardiola", "Jose Mourinho", "Carlo Ancelotti"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  }
+]
