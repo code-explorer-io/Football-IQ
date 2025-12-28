@@ -99,17 +99,17 @@
 |----------|--------|
 | Google Play Developer Account | Paid $25, awaiting approval |
 | Google Play Internal Testing | Pending account approval |
-| Apple Developer Account | Not signed up yet ($99) |
-| Codemagic (iOS cloud builds) | Not set up yet |
+| Apple Developer Account | Payment failing - support ticket #102788179146 submitted |
+| Codemagic (iOS cloud builds) | Pending Apple account |
 | TestFlight | Pending Apple account |
 
 ---
 
-## Next Steps (Tomorrow)
+## Next Steps
 
-1. Check if Google Play approved
-2. If approved: Set up Internal Testing track, add tester emails
-3. Sign up for Apple Developer ($99)
+1. Check Google Play approval status
+2. Wait for Apple support response (2 business days)
+3. Once Apple payment sorted → complete enrollment
 4. Set up Codemagic account, connect GitHub
 5. Configure Codemagic for iOS builds to TestFlight
 
