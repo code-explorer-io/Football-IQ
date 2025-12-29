@@ -27,7 +27,7 @@ final List<GameMode> gameModes = [
   GameMode(
     id: 'quiz_your_club',
     name: 'Quiz Your Club',
-    description: 'How well do you know your team?',
+    description: 'Prove your loyalty',
     icon: Icons.shield,
     color: const Color(0xFF7A263A),
     isLocked: false,
@@ -36,7 +36,7 @@ final List<GameMode> gameModes = [
   GameMode(
     id: 'premier_league_legends',
     name: 'Premier League Legends',
-    description: 'Test your knowledge of PL history',
+    description: 'Icons of the English game',
     icon: Icons.star,
     color: const Color(0xFF3D195B), // Premier League purple
     isLocked: false,
@@ -46,7 +46,7 @@ final List<GameMode> gameModes = [
   GameMode(
     id: 'higher_or_lower',
     name: 'Higher or Lower',
-    description: 'Compare the stats - who comes out on top?',
+    description: 'The numbers game',
     icon: Icons.swap_vert,
     color: const Color(0xFF1565C0), // Blue
     isLocked: false,
@@ -56,7 +56,7 @@ final List<GameMode> gameModes = [
   GameMode(
     id: 'survival_mode',
     name: 'Survival Mode',
-    description: 'How long can you last? One wrong answer and you\'re out!',
+    description: 'One mistake and it\'s over',
     icon: Icons.local_fire_department,
     color: const Color(0xFFE65100), // Orange
     isLocked: false,
@@ -66,7 +66,7 @@ final List<GameMode> gameModes = [
   GameMode(
     id: 'timed_blitz',
     name: 'Timed Blitz',
-    description: '60 seconds - how many can you get?',
+    description: 'Beat the clock',
     icon: Icons.timer,
     color: const Color(0xFFD32F2F), // Red
     isLocked: false,
@@ -76,7 +76,7 @@ final List<GameMode> gameModes = [
   GameMode(
     id: 'international_cup',
     name: 'International Cup',
-    description: 'Win matches to lift the trophy!',
+    description: 'Glory awaits',
     icon: Icons.emoji_events,
     color: const Color(0xFF00695C), // Teal
     isLocked: false,

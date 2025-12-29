@@ -5,6 +5,8 @@ import '../services/score_service.dart';
 import '../services/stats_service.dart';
 import '../services/achievement_service.dart';
 import '../services/haptic_service.dart';
+import '../services/streak_service.dart';
+import '../services/xp_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/animated_button.dart';
 import '../widgets/form_guide.dart';
@@ -33,6 +35,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
   int _footballIQ = 50;
   int _iqChange = 0;
   List<Achievement> _newAchievements = [];
+  XPAward? _xpAward;
+  int _currentStreak = 0;
 
   late ConfettiController _confettiController;
 
@@ -68,6 +72,19 @@ class _ResultsScreenState extends State<ResultsScreen> {
       modeId: 'quiz_your_club',
     );
 
+    // Record streak activity
+    final streakResult = await StreakService.recordActivity();
+
+    // Award XP
+    final isPerfect = widget.score == widget.totalQuestions;
+    final xpAward = await XPService.awardXP(
+      correctAnswers: widget.score,
+      totalQuestions: widget.totalQuestions,
+      modeId: 'quiz_your_club',
+      streakDays: streakResult.streak,
+      isPerfect: isPerfect,
+    );
+
     // Check for achievements
     final stats = await StatsService.getTotalStats();
     final form = await StatsService.getFormGuide();
@@ -87,11 +104,12 @@ class _ResultsScreenState extends State<ResultsScreen> {
       _footballIQ = statsResult.newIQ;
       _iqChange = statsResult.change;
       _newAchievements = achievements;
+      _xpAward = xpAward;
+      _currentStreak = streakResult.streak;
     });
 
     // Celebrate perfect score or new best with confetti
-    final isPerfect = widget.score == widget.totalQuestions;
-    if (isPerfect || isNewBest) {
+    if (isPerfect || isNewBest || xpAward.leveledUp) {
       HapticService.celebrate();
       _confettiController.play();
     }
@@ -99,23 +117,27 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
   String _getVerdict() {
     final percentage = (widget.score / widget.totalQuestions) * 100;
-    if (percentage >= 80) {
-      return 'True Fan';
+    if (percentage == 100) {
+      return 'Club Legend';
+    } else if (percentage >= 80) {
+      return 'Season Ticket Holder';
     } else if (percentage >= 50) {
       return 'Matchday Regular';
     } else {
-      return 'Tourist';
+      return 'Casual Fan';
     }
   }
 
   String _getVerdictEmoji() {
     final percentage = (widget.score / widget.totalQuestions) * 100;
-    if (percentage >= 80) {
+    if (percentage == 100) {
       return '🏆';
+    } else if (percentage >= 80) {
+      return '⭐';
     } else if (percentage >= 50) {
       return '⚽';
     } else {
-      return '🎫';
+      return '📺';
     }
   }
 
@@ -142,11 +164,12 @@ class _ResultsScreenState extends State<ResultsScreen> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: const Text(
-                        'NEW BEST!',
+                        'NEW CLUB RECORD',
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
+                          letterSpacing: 1,
                         ),
                       ),
                     ),
@@ -218,6 +241,11 @@ class _ResultsScreenState extends State<ResultsScreen> {
                       color: AppTheme.textSecondary,
                     ),
                   ),
+                  // XP earned
+                  if (_xpAward != null) ...[
+                    const SizedBox(height: 20),
+                    _XPEarnedRow(xpAward: _xpAward!, streak: _currentStreak),
+                  ],
                   // New achievements
                   if (_newAchievements.isNotEmpty) ...[
                     const SizedBox(height: 16),
@@ -288,6 +316,127 @@ class _ResultsScreenState extends State<ResultsScreen> {
               ],
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+/// XP earned display row for results screen
+class _XPEarnedRow extends StatelessWidget {
+  final XPAward xpAward;
+  final int streak;
+
+  const _XPEarnedRow({
+    required this.xpAward,
+    required this.streak,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: AppTheme.surface,
+        borderRadius: BorderRadius.circular(AppTheme.radiusMD),
+      ),
+      child: Column(
+        children: [
+          // Main XP earned
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.star,
+                color: AppTheme.highlight,
+                size: 20,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                '+${xpAward.totalXPEarned} XP',
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.highlight,
+                ),
+              ),
+              if (streak > 1) ...[
+                const SizedBox(width: 12),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFF6B35).withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.local_fire_department,
+                        color: Color(0xFFFF6B35),
+                        size: 16,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        '$streak',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFFF6B35),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ],
+          ),
+          // Bonus breakdown if any
+          if (xpAward.bonusReasons.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              runSpacing: 4,
+              alignment: WrapAlignment.center,
+              children: xpAward.bonusReasons.map((reason) => Text(
+                reason,
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: AppTheme.textMuted,
+                ),
+              )).toList(),
+            ),
+          ],
+          // Level up indicator
+          if (xpAward.leveledUp) ...[
+            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: AppTheme.gold.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.arrow_upward,
+                    color: AppTheme.gold,
+                    size: 16,
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    'Level ${xpAward.newLevel} - ${XPService.getLevelTitle(xpAward.newLevel)}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.gold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ],
       ),
     );

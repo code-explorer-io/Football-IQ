@@ -31,7 +31,7 @@ class ClubSelectionScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Pick your club',
+              'Select Your Club',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -40,7 +40,7 @@ class ClubSelectionScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             const Text(
-              'How well do you know your team?',
+              'Prove you know your team',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.white70,

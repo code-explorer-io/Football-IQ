@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/game_mode.dart';
 import '../services/score_service.dart';
+import '../services/haptic_service.dart';
+import '../services/streak_service.dart';
+import '../services/xp_service.dart';
+import '../theme/app_theme.dart';
 import 'home_screen.dart';
 
 class TimedBlitzIntroScreen extends StatelessWidget {
@@ -58,7 +62,7 @@ class TimedBlitzIntroScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               const Text(
-                '60 seconds on the clock\nHow many can you get right?\nNo pressure...',
+                '60 seconds.\nThe clock is ticking.\nHow many can you get?',
                 style: TextStyle(
                   fontSize: 18,
                   color: Colors.white70,
@@ -75,11 +79,11 @@ class TimedBlitzIntroScreen extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    _buildRule(Icons.timer, 'Answer as many as you can'),
+                    _buildRule(Icons.timer, 'Race against the clock'),
                     const SizedBox(height: 8),
-                    _buildRule(Icons.flash_on, 'Wrong answers don\'t end the game'),
+                    _buildRule(Icons.flash_on, 'Mistakes don\'t stop you'),
                     const SizedBox(height: 8),
-                    _buildRule(Icons.speed, 'Quick - questions are short'),
+                    _buildRule(Icons.speed, 'Quick fire questions'),
                   ],
                 ),
               ),
@@ -104,7 +108,7 @@ class TimedBlitzIntroScreen extends StatelessWidget {
                     ),
                   ),
                   child: const Text(
-                    'Start Blitz',
+                    'Begin',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -228,7 +232,12 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
 
     final isCorrect = selectedIndex == _questions[_currentIndex]['answerIndex'];
 
-    HapticFeedback.mediumImpact();
+    // Haptic feedback based on answer
+    if (isCorrect) {
+      HapticService.correct();
+    } else {
+      HapticService.incorrect();
+    }
 
     setState(() {
       _selectedAnswer = selectedIndex;
@@ -514,6 +523,8 @@ class TimedBlitzResultsScreen extends StatefulWidget {
 class _TimedBlitzResultsScreenState extends State<TimedBlitzResultsScreen> {
   int _bestScore = 0;
   bool _isNewBest = false;
+  XPAward? _xpAward;
+  int _dailyStreak = 0;
 
   @override
   void initState() {
@@ -524,20 +535,41 @@ class _TimedBlitzResultsScreenState extends State<TimedBlitzResultsScreen> {
   Future<void> _loadAndSaveScore() async {
     final isNewBest = await ScoreService.saveBlitzBestScore(widget.score);
     final bestScore = await ScoreService.getBlitzBestScore();
+
+    // Record daily streak activity
+    final streakResult = await StreakService.recordActivity();
+
+    // Award XP with time bonus
+    final xpAward = await XPService.awardXP(
+      correctAnswers: widget.score,
+      totalQuestions: widget.totalAnswered,
+      modeId: 'timed_blitz',
+      streakDays: streakResult.streak,
+      isPerfect: false, // No "perfect" in blitz mode
+      secondsRemaining: widget.timeRemaining,
+    );
+
     setState(() {
       _bestScore = bestScore;
       _isNewBest = isNewBest;
+      _xpAward = xpAward;
+      _dailyStreak = streakResult.streak;
     });
+
+    // Celebrate new record or level up
+    if ((isNewBest && widget.score > 0) || xpAward.leveledUp) {
+      HapticService.celebrate();
+    }
   }
 
   String _getVerdict() {
-    if (widget.score >= 20) return 'INSANE!';
-    if (widget.score >= 15) return 'Lightning Fast!';
-    if (widget.score >= 12) return 'On Fire!';
-    if (widget.score >= 10) return 'Solid!';
-    if (widget.score >= 7) return 'Good Speed';
-    if (widget.score >= 5) return 'Warming Up';
-    return 'Keep Practicing';
+    if (widget.score >= 20) return 'World Class';
+    if (widget.score >= 15) return 'Clinical';
+    if (widget.score >= 12) return 'Sharp';
+    if (widget.score >= 10) return 'Composed';
+    if (widget.score >= 7) return 'Steady';
+    if (widget.score >= 5) return 'Finding Form';
+    return 'Rusty';
   }
 
   @override
@@ -564,11 +596,12 @@ class _TimedBlitzResultsScreenState extends State<TimedBlitzResultsScreen> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: const Text(
-                    'NEW BEST!',
+                    'NEW RECORD',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
+                      letterSpacing: 1,
                     ),
                   ),
                 ),
@@ -578,7 +611,7 @@ class _TimedBlitzResultsScreenState extends State<TimedBlitzResultsScreen> {
               ),
               const SizedBox(height: 24),
               const Text(
-                'TIME\'S UP!',
+                'FULL TIME',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -630,6 +663,11 @@ class _TimedBlitzResultsScreenState extends State<TimedBlitzResultsScreen> {
                   ),
                 ),
               ),
+              // XP earned
+              if (_xpAward != null) ...[
+                const SizedBox(height: 20),
+                _BlitzXPRow(xpAward: _xpAward!, streak: _dailyStreak),
+              ],
               const Spacer(),
               SizedBox(
                 width: double.infinity,
@@ -714,6 +752,109 @@ class _TimedBlitzResultsScreenState extends State<TimedBlitzResultsScreen> {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// XP earned display for blitz results
+class _BlitzXPRow extends StatelessWidget {
+  final XPAward xpAward;
+  final int streak;
+
+  const _BlitzXPRow({
+    required this.xpAward,
+    required this.streak,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: AppTheme.surface,
+        borderRadius: BorderRadius.circular(AppTheme.radiusMD),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.star, color: AppTheme.highlight, size: 20),
+              const SizedBox(width: 8),
+              Text(
+                '+${xpAward.totalXPEarned} XP',
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.highlight,
+                ),
+              ),
+              if (streak > 1) ...[
+                const SizedBox(width: 12),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFF6B35).withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.local_fire_department, color: Color(0xFFFF6B35), size: 16),
+                      const SizedBox(width: 4),
+                      Text(
+                        '$streak',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFFF6B35),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ],
+          ),
+          if (xpAward.bonusReasons.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              runSpacing: 4,
+              alignment: WrapAlignment.center,
+              children: xpAward.bonusReasons.map((reason) => Text(
+                reason,
+                style: const TextStyle(fontSize: 12, color: AppTheme.textMuted),
+              )).toList(),
+            ),
+          ],
+          if (xpAward.leveledUp) ...[
+            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: AppTheme.gold.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.arrow_upward, color: AppTheme.gold, size: 16),
+                  const SizedBox(width: 4),
+                  Text(
+                    'Level ${xpAward.newLevel} - ${XPService.getLevelTitle(xpAward.newLevel)}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.gold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ],
+      ),
     );
   }
 }

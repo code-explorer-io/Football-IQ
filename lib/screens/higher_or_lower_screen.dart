@@ -2,6 +2,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../models/game_mode.dart';
 import '../services/score_service.dart';
+import '../services/haptic_service.dart';
+import '../services/streak_service.dart';
+import '../services/xp_service.dart';
+import '../theme/app_theme.dart';
 import 'home_screen.dart';
 
 class HigherOrLowerIntroScreen extends StatelessWidget {
@@ -56,7 +60,7 @@ class HigherOrLowerIntroScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               const Text(
-                '10 Rounds\nCompare stats and guess:\nIs it higher or lower?',
+                '10 Rounds.\nYou know the stats.\nOr do you?',
                 style: TextStyle(
                   fontSize: 18,
                   color: Colors.white70,
@@ -84,7 +88,7 @@ class HigherOrLowerIntroScreen extends StatelessWidget {
                     ),
                   ),
                   child: const Text(
-                    'Start Game',
+                    'Begin',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -152,6 +156,13 @@ class _HigherOrLowerGameScreenState extends State<HigherOrLowerGameScreen> {
 
     final isHigher = value2 > value1;
     final isCorrect = guessedHigher == isHigher;
+
+    // Haptic feedback
+    if (isCorrect) {
+      HapticService.correct();
+    } else {
+      HapticService.incorrect();
+    }
 
     setState(() {
       _answered = true;
@@ -478,7 +489,7 @@ class _HigherOrLowerGameScreenState extends State<HigherOrLowerGameScreen> {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        _isCorrect ? 'Correct!' : 'Wrong!',
+                        _isCorrect ? 'Got it' : 'Not quite',
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -516,6 +527,8 @@ class HigherOrLowerResultsScreen extends StatefulWidget {
 class _HigherOrLowerResultsScreenState extends State<HigherOrLowerResultsScreen> {
   int _bestScore = 0;
   bool _isNewBest = false;
+  XPAward? _xpAward;
+  int _dailyStreak = 0;
 
   @override
   void initState() {
@@ -526,26 +539,49 @@ class _HigherOrLowerResultsScreenState extends State<HigherOrLowerResultsScreen>
   Future<void> _loadAndSaveScore() async {
     final isNewBest = await ScoreService.saveBestScore(widget.mode.id, widget.score);
     final bestScore = await ScoreService.getBestScore(widget.mode.id);
+
+    // Record daily streak activity
+    final streakResult = await StreakService.recordActivity();
+
+    // Award XP
+    final isPerfect = widget.score == widget.totalQuestions;
+    final xpAward = await XPService.awardXP(
+      correctAnswers: widget.score,
+      totalQuestions: widget.totalQuestions,
+      modeId: 'higher_or_lower',
+      streakDays: streakResult.streak,
+      isPerfect: isPerfect,
+    );
+
     setState(() {
       _bestScore = bestScore;
       _isNewBest = isNewBest;
+      _xpAward = xpAward;
+      _dailyStreak = streakResult.streak;
     });
+
+    // Celebrate new record or level up
+    if ((isNewBest && widget.score > 0) || xpAward.leveledUp) {
+      HapticService.celebrate();
+    }
   }
 
   String _getVerdict() {
     final percentage = (widget.score / widget.totalQuestions) * 100;
-    if (percentage >= 80) return 'Stats Master!';
-    if (percentage >= 60) return 'Good Knowledge';
-    if (percentage >= 40) return 'Room to Improve';
-    return 'Keep Learning';
+    if (percentage == 100) return 'Stat King';
+    if (percentage >= 80) return 'Data Analyst';
+    if (percentage >= 60) return 'Numbers Man';
+    if (percentage >= 40) return 'Work to Do';
+    return 'Back to Basics';
   }
 
   String _getVerdictEmoji() {
     final percentage = (widget.score / widget.totalQuestions) * 100;
+    if (percentage == 100) return '👑';
     if (percentage >= 80) return '📊';
-    if (percentage >= 60) return '👍';
+    if (percentage >= 60) return '📈';
     if (percentage >= 40) return '🤔';
-    return '📚';
+    return '📉';
   }
 
   @override
@@ -568,11 +604,12 @@ class _HigherOrLowerResultsScreenState extends State<HigherOrLowerResultsScreen>
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: const Text(
-                    'NEW BEST!',
+                    'NEW RECORD',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
+                      letterSpacing: 1,
                     ),
                   ),
                 ),
@@ -621,6 +658,11 @@ class _HigherOrLowerResultsScreenState extends State<HigherOrLowerResultsScreen>
                   color: Colors.white70,
                 ),
               ),
+              // XP earned
+              if (_xpAward != null) ...[
+                const SizedBox(height: 20),
+                _HigherOrLowerXPRow(xpAward: _xpAward!, streak: _dailyStreak),
+              ],
               const Spacer(),
               SizedBox(
                 width: double.infinity,
@@ -682,6 +724,109 @@ class _HigherOrLowerResultsScreenState extends State<HigherOrLowerResultsScreen>
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// XP earned display for higher or lower results
+class _HigherOrLowerXPRow extends StatelessWidget {
+  final XPAward xpAward;
+  final int streak;
+
+  const _HigherOrLowerXPRow({
+    required this.xpAward,
+    required this.streak,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: AppTheme.surface,
+        borderRadius: BorderRadius.circular(AppTheme.radiusMD),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.star, color: AppTheme.highlight, size: 20),
+              const SizedBox(width: 8),
+              Text(
+                '+${xpAward.totalXPEarned} XP',
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.highlight,
+                ),
+              ),
+              if (streak > 1) ...[
+                const SizedBox(width: 12),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFF6B35).withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.local_fire_department, color: Color(0xFFFF6B35), size: 16),
+                      const SizedBox(width: 4),
+                      Text(
+                        '$streak',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFFF6B35),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ],
+          ),
+          if (xpAward.bonusReasons.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              runSpacing: 4,
+              alignment: WrapAlignment.center,
+              children: xpAward.bonusReasons.map((reason) => Text(
+                reason,
+                style: const TextStyle(fontSize: 12, color: AppTheme.textMuted),
+              )).toList(),
+            ),
+          ],
+          if (xpAward.leveledUp) ...[
+            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: AppTheme.gold.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.arrow_upward, color: AppTheme.gold, size: 16),
+                  const SizedBox(width: 4),
+                  Text(
+                    'Level ${xpAward.newLevel} - ${XPService.getLevelTitle(xpAward.newLevel)}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.gold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ],
       ),
     );
   }

@@ -6,9 +6,11 @@ import '../services/score_service.dart';
 import '../services/stats_service.dart';
 import '../services/achievement_service.dart';
 import '../services/haptic_service.dart';
+import '../services/streak_service.dart';
+import '../services/xp_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/animated_button.dart';
-import '../widgets/form_guide.dart';
+import '../widgets/form_guide.dart'; // Still needed for FootballIQBadge on results screen
 import 'club_selection_screen.dart';
 import 'survival_mode_screen.dart';
 import 'higher_or_lower_screen.dart';
@@ -25,22 +27,31 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _footballIQ = 50;
-  List<String> _formGuide = [];
+  int _currentStreak = 0;
+  int _currentLevel = 1;
+  double _levelProgress = 0.0;
+  bool _streakAtRisk = false;
 
   @override
   void initState() {
     super.initState();
-    _loadStats();
+    _loadGamificationData();
   }
 
-  Future<void> _loadStats() async {
-    final iq = await StatsService.getFootballIQ();
-    final form = await StatsService.getFormGuide();
-    setState(() {
-      _footballIQ = iq;
-      _formGuide = form;
-    });
+  Future<void> _loadGamificationData() async {
+    final streak = await StreakService.getCurrentStreak();
+    final level = await XPService.getCurrentLevel();
+    final progress = await XPService.getLevelProgress();
+    final atRisk = await StreakService.isStreakAtRisk();
+
+    if (mounted) {
+      setState(() {
+        _currentStreak = streak;
+        _currentLevel = level;
+        _levelProgress = progress;
+        _streakAtRisk = atRisk;
+      });
+    }
   }
 
   @override
@@ -93,14 +104,22 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Stats row - Football IQ and Form Guide
-            StatsRow(
-              footballIQ: _footballIQ,
-              formGuide: _formGuide,
+            // Gamification stats row
+            _GamificationHeader(
+              streak: _currentStreak,
+              level: _currentLevel,
+              levelProgress: _levelProgress,
+              streakAtRisk: _streakAtRisk,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const StatsScreen()),
+                ).then((_) => _loadGamificationData());
+              },
             ),
             const SizedBox(height: 20),
             const Text(
-              'Choose your game',
+              'Select Mode',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -109,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 8),
             const Text(
-              'How much do you really know?',
+              'Test your football knowledge',
               style: TextStyle(
                 fontSize: 16,
                 color: AppTheme.textSecondary,
@@ -141,7 +160,7 @@ class _GameModeCard extends StatelessWidget {
     if (mode.isLocked) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Coming soon!'),
+          content: Text('Coming soon'),
           duration: Duration(seconds: 2),
         ),
       );
@@ -631,6 +650,8 @@ class _GenericResultsScreenState extends State<GenericResultsScreen> {
   int _footballIQ = 50;
   int _iqChange = 0;
   List<Achievement> _newAchievements = [];
+  XPAward? _xpAward;
+  int _currentStreak = 0;
 
   late ConfettiController _confettiController;
 
@@ -659,6 +680,19 @@ class _GenericResultsScreenState extends State<GenericResultsScreen> {
       modeId: widget.mode.id,
     );
 
+    // Record streak activity
+    final streakResult = await StreakService.recordActivity();
+
+    // Award XP
+    final isPerfect = widget.score == widget.totalQuestions;
+    final xpAward = await XPService.awardXP(
+      correctAnswers: widget.score,
+      totalQuestions: widget.totalQuestions,
+      modeId: widget.mode.id,
+      streakDays: streakResult.streak,
+      isPerfect: isPerfect,
+    );
+
     // Check for achievements
     final stats = await StatsService.getTotalStats();
     final form = await StatsService.getFormGuide();
@@ -678,11 +712,12 @@ class _GenericResultsScreenState extends State<GenericResultsScreen> {
       _footballIQ = statsResult.newIQ;
       _iqChange = statsResult.change;
       _newAchievements = achievements;
+      _xpAward = xpAward;
+      _currentStreak = streakResult.streak;
     });
 
     // Celebrate perfect score or new best with confetti
-    final isPerfect = widget.score == widget.totalQuestions;
-    if (isPerfect || isNewBest) {
+    if (isPerfect || isNewBest || xpAward.leveledUp) {
       HapticService.celebrate();
       _confettiController.play();
     }
@@ -797,6 +832,11 @@ class _GenericResultsScreenState extends State<GenericResultsScreen> {
                       color: AppTheme.textSecondary,
                     ),
                   ),
+                  // XP earned
+                  if (_xpAward != null) ...[
+                    const SizedBox(height: 20),
+                    _GenericXPRow(xpAward: _xpAward!, streak: _currentStreak),
+                  ],
                   // New achievements
                   if (_newAchievements.isNotEmpty) ...[
                     const SizedBox(height: 16),
@@ -865,6 +905,653 @@ class _GenericResultsScreenState extends State<GenericResultsScreen> {
               ],
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Gamification header showing streak and level
+class _GamificationHeader extends StatelessWidget {
+  final int streak;
+  final int level;
+  final double levelProgress;
+  final bool streakAtRisk;
+  final VoidCallback onTap;
+
+  const _GamificationHeader({
+    required this.streak,
+    required this.level,
+    required this.levelProgress,
+    required this.streakAtRisk,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(
+          color: AppTheme.surface,
+          borderRadius: BorderRadius.circular(AppTheme.radiusMD),
+          border: streakAtRisk
+              ? Border.all(color: AppTheme.gold.withOpacity(0.5), width: 1)
+              : null,
+        ),
+        child: Row(
+          children: [
+            // Streak indicator
+            _StatPill(
+              icon: Icons.local_fire_department,
+              iconColor: streak > 0 ? const Color(0xFFFF6B35) : AppTheme.textMuted,
+              value: '$streak',
+              label: 'day${streak != 1 ? 's' : ''}',
+              isHighlighted: streakAtRisk,
+            ),
+            const SizedBox(width: 16),
+            // Level indicator with progress
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Level $level',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: AppTheme.textPrimary,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        XPService.getLevelTitle(level),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: AppTheme.textSecondary,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 6),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: LinearProgressIndicator(
+                      value: levelProgress,
+                      backgroundColor: AppTheme.elevated,
+                      valueColor: const AlwaysStoppedAnimation<Color>(AppTheme.highlight),
+                      minHeight: 6,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 12),
+            // Arrow to indicate tappable
+            const Icon(
+              Icons.chevron_right,
+              color: AppTheme.textMuted,
+              size: 20,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Small stat pill for the gamification header
+class _StatPill extends StatelessWidget {
+  final IconData icon;
+  final Color iconColor;
+  final String value;
+  final String label;
+  final bool isHighlighted;
+
+  const _StatPill({
+    required this.icon,
+    required this.iconColor,
+    required this.value,
+    required this.label,
+    this.isHighlighted = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, color: iconColor, size: 22),
+        const SizedBox(width: 4),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: isHighlighted ? AppTheme.gold : AppTheme.textPrimary,
+          ),
+        ),
+        const SizedBox(width: 2),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 12,
+            color: AppTheme.textMuted,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Stats screen showing detailed progress
+class StatsScreen extends StatefulWidget {
+  const StatsScreen({super.key});
+
+  @override
+  State<StatsScreen> createState() => _StatsScreenState();
+}
+
+class _StatsScreenState extends State<StatsScreen> {
+  int _currentStreak = 0;
+  int _longestStreak = 0;
+  int _totalXP = 0;
+  int _weeklyXP = 0;
+  int _todayXP = 0;
+  int _level = 1;
+  double _levelProgress = 0.0;
+  int _xpToNextLevel = 0;
+  Map<String, int> _stats = {};
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAllStats();
+  }
+
+  Future<void> _loadAllStats() async {
+    final currentStreak = await StreakService.getCurrentStreak();
+    final longestStreak = await StreakService.getLongestStreak();
+    final totalXP = await XPService.getTotalXP();
+    final weeklyXP = await XPService.getWeeklyXP();
+    final todayXP = await XPService.getTodayXP();
+    final level = await XPService.getCurrentLevel();
+    final levelProgress = await XPService.getLevelProgress();
+    final xpToNext = await XPService.getXPToNextLevel();
+    final stats = await StatsService.getTotalStats();
+
+    if (mounted) {
+      setState(() {
+        _currentStreak = currentStreak;
+        _longestStreak = longestStreak;
+        _totalXP = totalXP;
+        _weeklyXP = weeklyXP;
+        _todayXP = todayXP;
+        _level = level;
+        _levelProgress = levelProgress;
+        _xpToNextLevel = xpToNext;
+        _stats = stats;
+        _isLoading = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppTheme.background,
+      appBar: AppBar(
+        backgroundColor: AppTheme.background,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: AppTheme.textPrimary),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: const Text(
+          'Your Stats',
+          style: TextStyle(
+            color: AppTheme.textPrimary,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+      ),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator(color: AppTheme.highlight))
+          : SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Level card
+                  _LevelCard(
+                    level: _level,
+                    levelProgress: _levelProgress,
+                    totalXP: _totalXP,
+                    xpToNextLevel: _xpToNextLevel,
+                  ),
+                  const SizedBox(height: 20),
+                  // Streak section
+                  _SectionTitle(title: 'Streak'),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _StatCard(
+                          icon: Icons.local_fire_department,
+                          iconColor: const Color(0xFFFF6B35),
+                          title: 'Current',
+                          value: '$_currentStreak',
+                          subtitle: 'day${_currentStreak != 1 ? 's' : ''}',
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _StatCard(
+                          icon: Icons.emoji_events,
+                          iconColor: AppTheme.gold,
+                          title: 'Longest',
+                          value: '$_longestStreak',
+                          subtitle: 'day${_longestStreak != 1 ? 's' : ''}',
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  // XP section
+                  _SectionTitle(title: 'Experience'),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _StatCard(
+                          icon: Icons.today,
+                          iconColor: AppTheme.highlight,
+                          title: 'Today',
+                          value: '$_todayXP',
+                          subtitle: 'XP',
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _StatCard(
+                          icon: Icons.date_range,
+                          iconColor: AppTheme.correct,
+                          title: 'This Week',
+                          value: '$_weeklyXP',
+                          subtitle: 'XP',
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  // Quiz stats section
+                  _SectionTitle(title: 'Performance'),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _StatCard(
+                          icon: Icons.quiz,
+                          iconColor: AppTheme.quizYourClub,
+                          title: 'Quizzes',
+                          value: '${_stats['quizzesPlayed'] ?? 0}',
+                          subtitle: 'played',
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _StatCard(
+                          icon: Icons.check_circle,
+                          iconColor: AppTheme.correct,
+                          title: 'Correct',
+                          value: '${_stats['totalCorrect'] ?? 0}',
+                          subtitle: 'answers',
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _StatCard(
+                          icon: Icons.star,
+                          iconColor: AppTheme.gold,
+                          title: 'Perfect',
+                          value: '${_stats['perfectScores'] ?? 0}',
+                          subtitle: 'scores',
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _StatCard(
+                          icon: Icons.percent,
+                          iconColor: AppTheme.silver,
+                          title: 'Accuracy',
+                          value: _getAccuracy(),
+                          subtitle: '',
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+    );
+  }
+
+  String _getAccuracy() {
+    final total = _stats['totalQuestions'] ?? 0;
+    final correct = _stats['totalCorrect'] ?? 0;
+    if (total == 0) return '--%';
+    return '${((correct / total) * 100).round()}%';
+  }
+}
+
+class _SectionTitle extends StatelessWidget {
+  final String title;
+
+  const _SectionTitle({required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      title,
+      style: const TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: AppTheme.textPrimary,
+      ),
+    );
+  }
+}
+
+class _LevelCard extends StatelessWidget {
+  final int level;
+  final double levelProgress;
+  final int totalXP;
+  final int xpToNextLevel;
+
+  const _LevelCard({
+    required this.level,
+    required this.levelProgress,
+    required this.totalXP,
+    required this.xpToNextLevel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [AppTheme.elevated, AppTheme.surface],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(AppTheme.radiusLG),
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 64,
+                height: 64,
+                decoration: BoxDecoration(
+                  color: AppTheme.highlight.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(AppTheme.radiusMD),
+                ),
+                child: Center(
+                  child: Text(
+                    '$level',
+                    style: const TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.highlight,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      XPService.getLevelTitle(level),
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      '$totalXP XP total',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: AppTheme.textSecondary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Level ${level + 1}',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppTheme.textMuted,
+                    ),
+                  ),
+                  Text(
+                    '$xpToNextLevel XP to go',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppTheme.textMuted,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: LinearProgressIndicator(
+                  value: levelProgress,
+                  backgroundColor: AppTheme.background,
+                  valueColor: const AlwaysStoppedAnimation<Color>(AppTheme.highlight),
+                  minHeight: 10,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _StatCard extends StatelessWidget {
+  final IconData icon;
+  final Color iconColor;
+  final String title;
+  final String value;
+  final String subtitle;
+
+  const _StatCard({
+    required this.icon,
+    required this.iconColor,
+    required this.title,
+    required this.value,
+    required this.subtitle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppTheme.surface,
+        borderRadius: BorderRadius.circular(AppTheme.radiusMD),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, color: iconColor, size: 20),
+              const SizedBox(width: 8),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: AppTheme.textSecondary,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              Text(
+                value,
+                style: const TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.textPrimary,
+                ),
+              ),
+              if (subtitle.isNotEmpty) ...[
+                const SizedBox(width: 4),
+                Text(
+                  subtitle,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: AppTheme.textMuted,
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// XP earned display for generic results screen
+class _GenericXPRow extends StatelessWidget {
+  final XPAward xpAward;
+  final int streak;
+
+  const _GenericXPRow({
+    required this.xpAward,
+    required this.streak,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: AppTheme.surface,
+        borderRadius: BorderRadius.circular(AppTheme.radiusMD),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.star, color: AppTheme.highlight, size: 20),
+              const SizedBox(width: 8),
+              Text(
+                '+${xpAward.totalXPEarned} XP',
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.highlight,
+                ),
+              ),
+              if (streak > 1) ...[
+                const SizedBox(width: 12),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFF6B35).withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.local_fire_department, color: Color(0xFFFF6B35), size: 16),
+                      const SizedBox(width: 4),
+                      Text(
+                        '$streak',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFFF6B35),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ],
+          ),
+          if (xpAward.bonusReasons.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              runSpacing: 4,
+              alignment: WrapAlignment.center,
+              children: xpAward.bonusReasons.map((reason) => Text(
+                reason,
+                style: const TextStyle(fontSize: 12, color: AppTheme.textMuted),
+              )).toList(),
+            ),
+          ],
+          if (xpAward.leveledUp) ...[
+            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: AppTheme.gold.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.arrow_upward, color: AppTheme.gold, size: 16),
+                  const SizedBox(width: 4),
+                  Text(
+                    'Level ${xpAward.newLevel} - ${XPService.getLevelTitle(xpAward.newLevel)}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.gold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ],
       ),
     );

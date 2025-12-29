@@ -2,6 +2,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../models/game_mode.dart';
 import '../services/score_service.dart';
+import '../services/haptic_service.dart';
+import '../services/streak_service.dart';
+import '../services/xp_service.dart';
+import '../theme/app_theme.dart';
 import 'home_screen.dart';
 
 class SurvivalIntroScreen extends StatelessWidget {
@@ -56,7 +60,7 @@ class SurvivalIntroScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               const Text(
-                'Answer correctly to survive\nOne wrong answer ends the game\nHow far can you go?',
+                'One wrong answer.\nThat\'s all it takes.\nHow long can you survive?',
                 style: TextStyle(
                   fontSize: 18,
                   color: Colors.white70,
@@ -84,7 +88,7 @@ class SurvivalIntroScreen extends StatelessWidget {
                     ),
                   ),
                   child: const Text(
-                    'Start Survival',
+                    'Begin',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -146,6 +150,13 @@ class _SurvivalQuestionScreenState extends State<SurvivalQuestionScreen> {
     if (_answered) return;
 
     final isCorrect = selectedIndex == _questions[_currentIndex]['answerIndex'];
+
+    // Haptic feedback
+    if (isCorrect) {
+      HapticService.correct();
+    } else {
+      HapticService.incorrect();
+    }
 
     setState(() {
       _selectedAnswer = selectedIndex;
@@ -372,6 +383,8 @@ class SurvivalResultsScreen extends StatefulWidget {
 class _SurvivalResultsScreenState extends State<SurvivalResultsScreen> {
   int _bestStreak = 0;
   bool _isNewBest = false;
+  XPAward? _xpAward;
+  int _dailyStreak = 0;
 
   @override
   void initState() {
@@ -382,19 +395,39 @@ class _SurvivalResultsScreenState extends State<SurvivalResultsScreen> {
   Future<void> _loadAndSaveStreak() async {
     final isNewBest = await ScoreService.saveBestStreak(widget.streak);
     final bestStreak = await ScoreService.getBestStreak();
+
+    // Record daily streak activity
+    final streakResult = await StreakService.recordActivity();
+
+    // Award XP
+    final xpAward = await XPService.awardXP(
+      correctAnswers: widget.streak,
+      totalQuestions: widget.streak, // In survival, correct = total answered
+      modeId: 'survival_mode',
+      streakDays: streakResult.streak,
+      isPerfect: widget.ranOutOfQuestions, // "Perfect" if they ran out of questions
+    );
+
     setState(() {
       _bestStreak = bestStreak;
       _isNewBest = isNewBest;
+      _xpAward = xpAward;
+      _dailyStreak = streakResult.streak;
     });
+
+    // Celebrate new record or level up
+    if ((isNewBest && widget.streak > 0) || xpAward.leveledUp) {
+      HapticService.celebrate();
+    }
   }
 
   String _getVerdict() {
-    if (widget.ranOutOfQuestions) return 'LEGENDARY!';
-    if (widget.streak >= 20) return 'Incredible!';
-    if (widget.streak >= 15) return 'Amazing!';
-    if (widget.streak >= 10) return 'Great Run!';
-    if (widget.streak >= 5) return 'Good Effort';
-    return 'Keep Trying';
+    if (widget.ranOutOfQuestions) return 'Unbeaten';
+    if (widget.streak >= 20) return 'World Class';
+    if (widget.streak >= 15) return 'Top Flight';
+    if (widget.streak >= 10) return 'Solid Run';
+    if (widget.streak >= 5) return 'Decent Spell';
+    return 'Early Exit';
   }
 
   String _getVerdictEmoji() {
@@ -403,7 +436,7 @@ class _SurvivalResultsScreenState extends State<SurvivalResultsScreen> {
     if (widget.streak >= 15) return '⭐';
     if (widget.streak >= 10) return '💪';
     if (widget.streak >= 5) return '👍';
-    return '📚';
+    return '🔄';
   }
 
   @override
@@ -426,11 +459,12 @@ class _SurvivalResultsScreenState extends State<SurvivalResultsScreen> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: const Text(
-                    'NEW BEST!',
+                    'NEW RECORD',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
+                      letterSpacing: 1,
                     ),
                   ),
                 ),
@@ -440,7 +474,7 @@ class _SurvivalResultsScreenState extends State<SurvivalResultsScreen> {
               ),
               const SizedBox(height: 24),
               const Text(
-                'GAME OVER',
+                'FULL TIME',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -495,6 +529,11 @@ class _SurvivalResultsScreenState extends State<SurvivalResultsScreen> {
                   ),
                 ),
               ),
+              // XP earned
+              if (_xpAward != null) ...[
+                const SizedBox(height: 20),
+                _SurvivalXPRow(xpAward: _xpAward!, streak: _dailyStreak),
+              ],
               const Spacer(),
               SizedBox(
                 width: double.infinity,
@@ -556,6 +595,109 @@ class _SurvivalResultsScreenState extends State<SurvivalResultsScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// XP earned display for survival results
+class _SurvivalXPRow extends StatelessWidget {
+  final XPAward xpAward;
+  final int streak;
+
+  const _SurvivalXPRow({
+    required this.xpAward,
+    required this.streak,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: AppTheme.surface,
+        borderRadius: BorderRadius.circular(AppTheme.radiusMD),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.star, color: AppTheme.highlight, size: 20),
+              const SizedBox(width: 8),
+              Text(
+                '+${xpAward.totalXPEarned} XP',
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.highlight,
+                ),
+              ),
+              if (streak > 1) ...[
+                const SizedBox(width: 12),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFF6B35).withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.local_fire_department, color: Color(0xFFFF6B35), size: 16),
+                      const SizedBox(width: 4),
+                      Text(
+                        '$streak',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFFF6B35),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ],
+          ),
+          if (xpAward.bonusReasons.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              runSpacing: 4,
+              alignment: WrapAlignment.center,
+              children: xpAward.bonusReasons.map((reason) => Text(
+                reason,
+                style: const TextStyle(fontSize: 12, color: AppTheme.textMuted),
+              )).toList(),
+            ),
+          ],
+          if (xpAward.leveledUp) ...[
+            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: AppTheme.gold.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.arrow_upward, color: AppTheme.gold, size: 16),
+                  const SizedBox(width: 4),
+                  Text(
+                    'Level ${xpAward.newLevel} - ${XPService.getLevelTitle(xpAward.newLevel)}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.gold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ],
       ),
     );
   }
