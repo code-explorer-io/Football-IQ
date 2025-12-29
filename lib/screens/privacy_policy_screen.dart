@@ -53,7 +53,7 @@ We may update this Privacy Policy from time to time. Any changes will be reflect
             _buildSection('Contact Us', '''
 If you have any questions about this Privacy Policy, please contact us at:
 
-support@codeexplorer.io'''),
+code.explorer.io@gmail.com'''),
 
             const SizedBox(height: 40),
           ],

@@ -50,7 +50,7 @@ We may update these Terms of Service from time to time. Continued use of the app
             _buildSection('Contact', '''
 For questions about these Terms, contact us at:
 
-support@codeexplorer.io'''),
+code.explorer.io@gmail.com'''),
 
             const SizedBox(height: 40),
           ],
