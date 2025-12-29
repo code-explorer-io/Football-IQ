@@ -31,18 +31,13 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // App icon placeholder
-            Container(
-              width: 120,
-              height: 120,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: const Icon(
-                Icons.sports_soccer,
-                size: 60,
-                color: Color(0xFF1A1A2E),
+            // App icon
+            ClipRRect(
+              borderRadius: BorderRadius.circular(24),
+              child: Image.asset(
+                'assets/icon/app_icon.png',
+                width: 120,
+                height: 120,
               ),
             ),
             const SizedBox(height: 24),

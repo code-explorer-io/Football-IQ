@@ -14,6 +14,8 @@ import 'survival_mode_screen.dart';
 import 'higher_or_lower_screen.dart';
 import 'timed_blitz_screen.dart';
 import 'cup_mode_screen.dart';
+import 'privacy_policy_screen.dart';
+import 'terms_of_service_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -56,6 +58,35 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         centerTitle: true,
+        actions: [
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.more_vert, color: AppTheme.textPrimary),
+            color: const Color(0xFF2A2A4E),
+            onSelected: (value) {
+              if (value == 'privacy') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PrivacyPolicyScreen()),
+                );
+              } else if (value == 'terms') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const TermsOfServiceScreen()),
+                );
+              }
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 'privacy',
+                child: Text('Privacy Policy', style: TextStyle(color: Colors.white)),
+              ),
+              const PopupMenuItem(
+                value: 'terms',
+                child: Text('Terms of Service', style: TextStyle(color: Colors.white)),
+              ),
+            ],
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

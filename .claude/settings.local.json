@@ -51,7 +51,14 @@
       "Bash(flutter --version:*)",
       "Bash(/c/Flutter/flutter/bin/flutter.bat doctor:*)",
       "Bash(git remote set-url:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(\"/c/Users/seanm/AppData/Local/Android/Sdk/emulator/emulator.exe\" -list-avds)",
+      "Bash(\"/c/Users/seanm/AppData/Local/Android/Sdk/platform-tools/adb.exe\" uninstall io.codeexplorer.football_iq)",
+      "Bash(flutter analyze:*)",
+      "Bash(dart run:*)",
+      "Bash(\"/c/Program Files/Git/bin/bash.exe\" -c \"which git\")",
+      "Bash(export PATH=\"/c/Program Files/Git/bin:$PATH\")",
+      "Bash(ping:*)"
     ]
   }
 }
