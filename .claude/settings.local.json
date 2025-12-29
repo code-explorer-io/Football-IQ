@@ -50,7 +50,8 @@
       "Bash(flutter precache:*)",
       "Bash(flutter --version:*)",
       "Bash(/c/Flutter/flutter/bin/flutter.bat doctor:*)",
-      "Bash(git remote set-url:*)"
+      "Bash(git remote set-url:*)",
+      "Bash(git push:*)"
     ]
   }
 }
