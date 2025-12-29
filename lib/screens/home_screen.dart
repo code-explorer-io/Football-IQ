@@ -13,6 +13,7 @@ import 'club_selection_screen.dart';
 import 'survival_mode_screen.dart';
 import 'higher_or_lower_screen.dart';
 import 'timed_blitz_screen.dart';
+import 'cup_mode_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -146,6 +147,14 @@ class _GameModeCard extends StatelessWidget {
         context,
         MaterialPageRoute(
           builder: (context) => TimedBlitzIntroScreen(mode: mode),
+        ),
+      );
+    } else if (mode.id == 'international_cup') {
+      // International Cup has its own screen
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CupModeIntroScreen(mode: mode),
         ),
       );
     } else {

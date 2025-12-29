@@ -59,6 +59,19 @@ class ScoreService {
     return false;
   }
 
+  // Get cups won count
+  static Future<int> getCupsWon() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('${_prefix}cups_won') ?? 0;
+  }
+
+  // Increment cups won
+  static Future<void> incrementCupsWon() async {
+    final prefs = await SharedPreferences.getInstance();
+    final current = prefs.getInt('${_prefix}cups_won') ?? 0;
+    await prefs.setInt('${_prefix}cups_won', current + 1);
+  }
+
   // Clear all scores (for testing/reset)
   static Future<void> clearAllScores() async {
     final prefs = await SharedPreferences.getInstance();

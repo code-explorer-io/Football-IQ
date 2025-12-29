@@ -1,0 +1,282 @@
+[
+  {
+    "id": "int_001",
+    "question": "Which country has won the most FIFA World Cups?",
+    "options": ["Germany", "Brazil", "Argentina"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "int_002",
+    "question": "Who scored the winning goal in the 2010 World Cup Final?",
+    "options": ["David Villa", "Andres Iniesta", "Xavi"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_003",
+    "question": "Which country hosted the 2014 FIFA World Cup?",
+    "options": ["Brazil", "South Africa", "Russia"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "int_004",
+    "question": "Who is the all-time top scorer in World Cup history?",
+    "options": ["Ronaldo", "Miroslav Klose", "Pele"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_005",
+    "question": "Which country won Euro 2020 (played in 2021)?",
+    "options": ["England", "Italy", "Spain"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "int_006",
+    "question": "Who scored the 'Hand of God' goal?",
+    "options": ["Pele", "Diego Maradona", "Lionel Messi"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "int_007",
+    "question": "Which country won the 2022 FIFA World Cup?",
+    "options": ["France", "Argentina", "Croatia"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "int_008",
+    "question": "Who won the Golden Boot at the 2018 World Cup?",
+    "options": ["Kylian Mbappe", "Harry Kane", "Antoine Griezmann"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_009",
+    "question": "Which country has won the most European Championships?",
+    "options": ["Germany", "Spain", "France"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_010",
+    "question": "Who scored the fastest hat-trick in World Cup history?",
+    "options": ["Gerd Muller", "Laszlo Kiss", "Gary Lineker"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "int_011",
+    "question": "Which country knocked England out of Euro 2020?",
+    "options": ["Italy", "Denmark", "Germany"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "int_012",
+    "question": "Who captained Spain to World Cup glory in 2010?",
+    "options": ["Xavi", "Iker Casillas", "Carles Puyol"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_013",
+    "question": "Which African nation reached the World Cup quarter-finals in 2010?",
+    "options": ["Nigeria", "Cameroon", "Ghana"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_014",
+    "question": "Who scored twice in the 2022 World Cup Final for France?",
+    "options": ["Antoine Griezmann", "Kylian Mbappe", "Olivier Giroud"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "int_015",
+    "question": "Which country hosted Euro 2024?",
+    "options": ["Germany", "England", "Italy"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "int_016",
+    "question": "Who is England's all-time top scorer?",
+    "options": ["Wayne Rooney", "Harry Kane", "Bobby Charlton"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "int_017",
+    "question": "Which country won the Copa America 2021?",
+    "options": ["Brazil", "Argentina", "Uruguay"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_018",
+    "question": "Who scored the winning penalty in the Euro 2020 final shootout?",
+    "options": ["Jorginho", "Federico Bernardeschi", "Fabio Grosso"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "int_019",
+    "question": "Which country has appeared in the most World Cup finals without winning?",
+    "options": ["Netherlands", "Hungary", "Czech Republic"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_020",
+    "question": "Who managed Germany to World Cup victory in 2014?",
+    "options": ["Jurgen Klinsmann", "Joachim Low", "Hansi Flick"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_021",
+    "question": "Which stadium hosted the 2022 World Cup Final?",
+    "options": ["Al Bayt Stadium", "Lusail Stadium", "Khalifa Stadium"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_022",
+    "question": "Who scored in the Euro 96 semi-final shootout miss for England?",
+    "options": ["Stuart Pearce", "Gareth Southgate", "Chris Waddle"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_023",
+    "question": "Which country won the first ever World Cup in 1930?",
+    "options": ["Brazil", "Uruguay", "Argentina"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_024",
+    "question": "How many World Cups has Lionel Messi played in?",
+    "options": ["4", "5", "6"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_025",
+    "question": "Which country beat Brazil 7-1 in the 2014 World Cup semi-final?",
+    "options": ["Argentina", "Germany", "Netherlands"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "int_026",
+    "question": "Who is France's all-time top scorer?",
+    "options": ["Thierry Henry", "Olivier Giroud", "Michel Platini"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_027",
+    "question": "Which country won Euro 2016?",
+    "options": ["France", "Portugal", "Germany"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "int_028",
+    "question": "Who scored the winner in the Euro 2016 final?",
+    "options": ["Cristiano Ronaldo", "Eder", "Nani"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_029",
+    "question": "Which goalkeeper saved penalties in the 2022 World Cup final shootout?",
+    "options": ["Hugo Lloris", "Emiliano Martinez", "Dominik Livakovic"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "int_030",
+    "question": "Which country has won the Africa Cup of Nations the most times?",
+    "options": ["Nigeria", "Egypt", "Cameroon"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "int_031",
+    "question": "Who won the Golden Ball at the 2022 World Cup?",
+    "options": ["Kylian Mbappe", "Lionel Messi", "Luka Modric"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "int_032",
+    "question": "Which country did England beat in the Euro 2020 semi-final?",
+    "options": ["Germany", "Denmark", "Ukraine"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "int_033",
+    "question": "Who scored a hat-trick in the 2022 World Cup Final?",
+    "options": ["Lionel Messi", "Kylian Mbappe", "Julian Alvarez"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "int_034",
+    "question": "Which country hosted the 2018 FIFA World Cup?",
+    "options": ["Qatar", "Russia", "Brazil"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "int_035",
+    "question": "Who is Germany's all-time top scorer?",
+    "options": ["Miroslav Klose", "Gerd Muller", "Thomas Muller"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "int_036",
+    "question": "Which team did Greece beat in the Euro 2004 final?",
+    "options": ["Portugal", "France", "Czech Republic"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_037",
+    "question": "Who won the 2019 Women's World Cup?",
+    "options": ["USA", "Netherlands", "England"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_038",
+    "question": "Which country knocked out Spain in the 2022 World Cup?",
+    "options": ["Portugal", "Morocco", "Japan"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_039",
+    "question": "Who captained Argentina to 2022 World Cup glory?",
+    "options": ["Angel Di Maria", "Lionel Messi", "Nicolas Otamendi"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "int_040",
+    "question": "Which country won Euro 2024?",
+    "options": ["England", "Spain", "France"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  }
+]

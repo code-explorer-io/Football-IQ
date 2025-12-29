@@ -73,4 +73,14 @@ final List<GameMode> gameModes = [
     requiresClubSelection: false,
     dataFile: 'assets/data/survival_mode.json', // Reuses survival questions
   ),
+  GameMode(
+    id: 'international_cup',
+    name: 'International Cup',
+    description: 'Win matches to lift the trophy!',
+    icon: Icons.emoji_events,
+    color: const Color(0xFF00695C), // Teal
+    isLocked: false,
+    requiresClubSelection: false,
+    dataFile: 'assets/data/international_cup.json',
+  ),
 ];
