@@ -9,6 +9,8 @@ import '../services/streak_service.dart';
 import '../services/xp_service.dart';
 import '../services/analytics_service.dart';
 import '../theme/app_theme.dart';
+import '../widgets/pitch_background.dart';
+import '../widgets/animated_answer_button.dart';
 import 'home_screen.dart';
 
 class TimedBlitzIntroScreen extends StatelessWidget {
@@ -28,96 +30,98 @@ class TimedBlitzIntroScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 120,
-                height: 120,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [mode.color, mode.color.withValues(alpha: 0.7)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+      body: PitchBackground(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 120,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [mode.color, mode.color.withValues(alpha: 0.7)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(24),
                   ),
-                  borderRadius: BorderRadius.circular(24),
+                  child: Icon(
+                    mode.icon,
+                    size: 60,
+                    color: Colors.white,
+                  ),
                 ),
-                child: Icon(
-                  mode.icon,
-                  size: 60,
-                  color: Colors.white,
+                const SizedBox(height: 32),
+                Text(
+                  mode.name,
+                  style: const TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              const SizedBox(height: 32),
-              Text(
-                mode.name,
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                const SizedBox(height: 16),
+                const Text(
+                  '60 seconds.\nThe clock is ticking.\nHow many can you get?',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white70,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                '60 seconds.\nThe clock is ticking.\nHow many can you get?',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white70,
+                const SizedBox(height: 24),
+                // Quick rules
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.05),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Column(
+                    children: [
+                      _buildRule(Icons.timer, 'Race against the clock'),
+                      const SizedBox(height: 8),
+                      _buildRule(Icons.flash_on, 'Mistakes don\'t stop you'),
+                      const SizedBox(height: 8),
+                      _buildRule(Icons.speed, 'Quick fire questions'),
+                    ],
+                  ),
                 ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 24),
-              // Quick rules
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.05),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(
-                  children: [
-                    _buildRule(Icons.timer, 'Race against the clock'),
-                    const SizedBox(height: 8),
-                    _buildRule(Icons.flash_on, 'Mistakes don\'t stop you'),
-                    const SizedBox(height: 8),
-                    _buildRule(Icons.speed, 'Quick fire questions'),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 48),
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TimedBlitzQuestionScreen(mode: mode),
+                const SizedBox(height: 48),
+                SizedBox(
+                  width: double.infinity,
+                  height: 56,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TimedBlitzQuestionScreen(mode: mode),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: mode.color,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
                       ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: mode.color,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
                     ),
-                  ),
-                  child: const Text(
-                    'Begin',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                    child: const Text(
+                      'Begin',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -285,19 +289,6 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
     );
   }
 
-  Color _getButtonColor(int index) {
-    if (!_answered) {
-      return Colors.white.withValues(alpha: 0.1);
-    }
-    if (index == _questions[_currentIndex]['answerIndex']) {
-      return Colors.green;
-    }
-    if (_selectedAnswer == index) {
-      return Colors.red;
-    }
-    return Colors.white.withValues(alpha: 0.1);
-  }
-
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
@@ -442,53 +433,14 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
                     // Answer buttons - optimized for speed
                     ...List.generate(
                       (question['options'] as List).length,
-                      (index) => GestureDetector(
-                        onTap: _answered ? null : () => _handleAnswer(index),
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 150),
-                          margin: const EdgeInsets.only(bottom: 12),
-                          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-                          decoration: BoxDecoration(
-                            color: _getButtonColor(index),
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: _answered ? Colors.transparent : Colors.white24,
-                              width: 1,
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 32,
-                                height: 32,
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withValues(alpha: 0.2),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    String.fromCharCode(65 + index),
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Text(
-                                  question['options'][index],
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                      (index) => AnimatedAnswerButton(
+                        text: question['options'][index],
+                        index: index,
+                        isSelected: _selectedAnswer == index,
+                        isCorrect: index == question['answerIndex'],
+                        showResult: _answered,
+                        onTap: () => _handleAnswer(index),
+                        accentColor: widget.mode.color,
                       ),
                     ),
                     const SizedBox(height: 24),

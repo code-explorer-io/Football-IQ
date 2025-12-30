@@ -7,6 +7,8 @@ import '../services/streak_service.dart';
 import '../services/xp_service.dart';
 import '../services/analytics_service.dart';
 import '../theme/app_theme.dart';
+import '../widgets/pitch_background.dart';
+import '../widgets/animated_answer_button.dart';
 import 'home_screen.dart';
 
 class SurvivalIntroScreen extends StatelessWidget {
@@ -26,78 +28,80 @@ class SurvivalIntroScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 120,
-                height: 120,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [mode.color, mode.color.withValues(alpha: 0.7)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+      body: PitchBackground(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 120,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [mode.color, mode.color.withValues(alpha: 0.7)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(24),
                   ),
-                  borderRadius: BorderRadius.circular(24),
+                  child: Icon(
+                    mode.icon,
+                    size: 60,
+                    color: Colors.white,
+                  ),
                 ),
-                child: Icon(
-                  mode.icon,
-                  size: 60,
-                  color: Colors.white,
+                const SizedBox(height: 32),
+                Text(
+                  mode.name,
+                  style: const TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              const SizedBox(height: 32),
-              Text(
-                mode.name,
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                const SizedBox(height: 16),
+                const Text(
+                  'One wrong answer.\nThat\'s all it takes.\nHow long can you survive?',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white70,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                'One wrong answer.\nThat\'s all it takes.\nHow long can you survive?',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white70,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 48),
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SurvivalQuestionScreen(mode: mode),
+                const SizedBox(height: 48),
+                SizedBox(
+                  width: double.infinity,
+                  height: 56,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SurvivalQuestionScreen(mode: mode),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: mode.color,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
                       ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: mode.color,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
                     ),
-                  ),
-                  child: const Text(
-                    'Begin',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                    child: const Text(
+                      'Begin',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -200,19 +204,6 @@ class _SurvivalQuestionScreenState extends State<SurvivalQuestionScreen> {
     );
   }
 
-  Color _getButtonColor(int index) {
-    if (!_answered) {
-      return Colors.white.withValues(alpha: 0.1);
-    }
-    if (index == _questions[_currentIndex]['answerIndex']) {
-      return Colors.green;
-    }
-    if (_selectedAnswer == index) {
-      return Colors.red;
-    }
-    return Colors.white.withValues(alpha: 0.1);
-  }
-
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
@@ -309,51 +300,14 @@ class _SurvivalQuestionScreenState extends State<SurvivalQuestionScreen> {
               child: ListView.builder(
                 itemCount: (question['options'] as List).length,
                 itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: _answered ? null : () => _handleAnswer(index),
-                    child: Container(
-                      margin: const EdgeInsets.only(bottom: 12),
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: _getButtonColor(index),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 32,
-                            height: 32,
-                            decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.2),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Center(
-                              child: Text(
-                                String.fromCharCode(65 + index),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              question['options'][index],
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          if (_answered && index == question['answerIndex'])
-                            const Icon(Icons.check_circle, color: Colors.white),
-                          if (_answered && _selectedAnswer == index && index != question['answerIndex'])
-                            const Icon(Icons.cancel, color: Colors.white),
-                        ],
-                      ),
-                    ),
+                  return AnimatedAnswerButton(
+                    text: question['options'][index],
+                    index: index,
+                    isSelected: _selectedAnswer == index,
+                    isCorrect: index == question['answerIndex'],
+                    showResult: _answered,
+                    onTap: () => _handleAnswer(index),
+                    accentColor: widget.mode.color,
                   );
                 },
               ),

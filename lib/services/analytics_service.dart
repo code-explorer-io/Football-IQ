@@ -121,6 +121,15 @@ class AnalyticsService {
     await _analytics.logEvent(name: 'stats_viewed');
   }
 
+  /// User shared their score
+  static Future<void> logShare(String contentType, String modeName) async {
+    await _analytics.logShare(
+      contentType: contentType,
+      itemId: modeName,
+      method: 'native_share',
+    );
+  }
+
   // ============ MONETIZATION EVENTS ============
 
   /// User viewed the paywall/upgrade screen

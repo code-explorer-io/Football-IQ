@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/game_mode.dart';
 import '../services/score_service.dart';
+import '../widgets/pitch_background.dart';
 import 'home_screen.dart';
 
 // Cup stages in order
@@ -116,9 +117,10 @@ class _CupModeIntroScreenState extends State<CupModeIntroScreen> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator(color: Colors.white))
-          : SingleChildScrollView(
+      body: PitchBackground(
+        child: _isLoading
+            ? const Center(child: CircularProgressIndicator(color: Colors.white))
+            : SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: Column(
@@ -218,6 +220,7 @@ class _CupModeIntroScreenState extends State<CupModeIntroScreen> {
                 ),
               ),
             ),
+      ),
     );
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/club.dart';
+import '../widgets/pitch_background.dart';
 import 'question_screen.dart';
 
 class QuizIntroScreen extends StatelessWidget {
@@ -19,8 +20,9 @@ class QuizIntroScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: Center(
-        child: Padding(
+      body: PitchBackground(
+        child: Center(
+          child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -93,6 +95,7 @@ class QuizIntroScreen extends StatelessWidget {
               ),
             ],
           ),
+        ),
         ),
       ),
     );

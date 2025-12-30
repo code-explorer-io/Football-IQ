@@ -105,12 +105,14 @@ class AppTheme {
     fontSize: fontSizeXL,
     fontWeight: FontWeight.bold,
     color: textPrimary,
+    letterSpacing: -0.5,
   );
 
   static const TextStyle headlineLG = TextStyle(
     fontSize: fontSizeLG,
     fontWeight: FontWeight.bold,
     color: textPrimary,
+    letterSpacing: -0.3,
   );
 
   static const TextStyle headlineMD = TextStyle(
@@ -135,6 +137,31 @@ class AppTheme {
     fontSize: fontSizeXS,
     fontWeight: FontWeight.normal,
     color: textMuted,
+  );
+
+  // Question text style - premium, readable
+  static const TextStyle questionText = TextStyle(
+    fontSize: 22,
+    fontWeight: FontWeight.w600,
+    color: textPrimary,
+    height: 1.4,
+    letterSpacing: 0.2,
+  );
+
+  // Mode title style
+  static const TextStyle modeTitle = TextStyle(
+    fontSize: 28,
+    fontWeight: FontWeight.bold,
+    color: textPrimary,
+    letterSpacing: -0.5,
+  );
+
+  // Streak/score display
+  static const TextStyle scoreDisplay = TextStyle(
+    fontSize: 48,
+    fontWeight: FontWeight.bold,
+    color: gold,
+    letterSpacing: -1,
   );
 
   // Button scale animation value

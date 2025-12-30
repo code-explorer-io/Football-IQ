@@ -4,6 +4,9 @@ import 'package:flutter/services.dart';
 import '../models/club.dart';
 import '../models/question.dart';
 import '../services/haptic_service.dart';
+import '../theme/app_theme.dart';
+import '../widgets/pitch_background.dart';
+import '../widgets/animated_answer_button.dart';
 import 'results_screen.dart';
 
 class QuestionScreen extends StatefulWidget {
@@ -179,186 +182,84 @@ class _QuestionScreenState extends State<QuestionScreen>
         ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Progress bar with smooth animation
-            TweenAnimationBuilder<double>(
-              tween: Tween(
-                begin: _currentIndex / _questions.length,
-                end: (_currentIndex + 1) / _questions.length,
+      body: PitchBackground(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Progress bar with smooth animation
+              TweenAnimationBuilder<double>(
+                tween: Tween(
+                  begin: _currentIndex / _questions.length,
+                  end: (_currentIndex + 1) / _questions.length,
+                ),
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeOut,
+                builder: (context, value, child) {
+                  return LinearProgressIndicator(
+                    value: value,
+                    backgroundColor: Colors.white24,
+                    valueColor: AlwaysStoppedAnimation<Color>(widget.club.primaryColor),
+                    minHeight: 4,
+                  );
+                },
               ),
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeOut,
-              builder: (context, value, child) {
-                return LinearProgressIndicator(
-                  value: value,
-                  backgroundColor: Colors.white24,
-                  valueColor: AlwaysStoppedAnimation<Color>(widget.club.primaryColor),
-                  minHeight: 4,
-                );
-              },
-            ),
-            const SizedBox(height: 32),
-            // Question text with animation
-            Expanded(
-              flex: 2,
-              child: Center(
-                child: FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: SlideTransition(
-                    position: _slideAnimation,
-                    child: Text(
-                      question.question,
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        height: 1.3,
+              const SizedBox(height: 32),
+              // Question text with animation
+              Expanded(
+                flex: 2,
+                child: Center(
+                  child: FadeTransition(
+                    opacity: _fadeAnimation,
+                    child: SlideTransition(
+                      position: _slideAnimation,
+                      child: Text(
+                        question.question,
+                        style: AppTheme.questionText,
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ),
                 ),
               ),
-            ),
-            // Answer options with staggered animation
-            Expanded(
-              flex: 3,
-              child: FadeTransition(
-                opacity: _fadeAnimation,
-                child: ListView.builder(
-                  itemCount: question.options.length,
-                  itemBuilder: (context, index) {
-                    return TweenAnimationBuilder<double>(
-                      tween: Tween(begin: 0.0, end: 1.0),
-                      duration: Duration(milliseconds: 300 + (index * 50)),
-                      curve: Curves.easeOut,
-                      builder: (context, value, child) {
-                        return Opacity(
-                          opacity: value,
-                          child: Transform.translate(
-                            offset: Offset(0, 20 * (1 - value)),
-                            child: child,
-                          ),
-                        );
-                      },
-                      child: _AnswerButton(
-                        text: question.options[index],
-                        index: index,
-                        isSelected: _selectedAnswer == index,
-                        isCorrect: index == question.answerIndex,
-                        showResult: _answered,
-                        onTap: () => _handleAnswer(index),
-                        clubColor: widget.club.primaryColor,
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _AnswerButton extends StatelessWidget {
-  final String text;
-  final int index;
-  final bool isSelected;
-  final bool isCorrect;
-  final bool showResult;
-  final VoidCallback onTap;
-  final Color clubColor;
-
-  const _AnswerButton({
-    required this.text,
-    required this.index,
-    required this.isSelected,
-    required this.isCorrect,
-    required this.showResult,
-    required this.onTap,
-    required this.clubColor,
-  });
-
-  Color _getBackgroundColor() {
-    if (!showResult) {
-      return Colors.white.withValues(alpha: 0.1);
-    }
-    if (isCorrect) {
-      return Colors.green;
-    }
-    if (isSelected && !isCorrect) {
-      return Colors.red;
-    }
-    return Colors.white.withValues(alpha: 0.1);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: showResult ? null : onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-        margin: const EdgeInsets.only(bottom: 12),
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: _getBackgroundColor(),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: isSelected && !showResult ? clubColor : Colors.transparent,
-            width: 2,
-          ),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Center(
-                child: Text(
-                  String.fromCharCode(65 + index), // A, B, C, D
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+              // Answer options with staggered animation
+              Expanded(
+                flex: 3,
+                child: FadeTransition(
+                  opacity: _fadeAnimation,
+                  child: ListView.builder(
+                    itemCount: question.options.length,
+                    itemBuilder: (context, index) {
+                      return TweenAnimationBuilder<double>(
+                        tween: Tween(begin: 0.0, end: 1.0),
+                        duration: Duration(milliseconds: 300 + (index * 50)),
+                        curve: Curves.easeOut,
+                        builder: (context, value, child) {
+                          return Opacity(
+                            opacity: value,
+                            child: Transform.translate(
+                              offset: Offset(0, 20 * (1 - value)),
+                              child: child,
+                            ),
+                          );
+                        },
+                        child: AnimatedAnswerButton(
+                          text: question.options[index],
+                          index: index,
+                          isSelected: _selectedAnswer == index,
+                          isCorrect: index == question.answerIndex,
+                          showResult: _answered,
+                          onTap: () => _handleAnswer(index),
+                          accentColor: widget.club.primaryColor,
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(
-                text,
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            if (showResult && isCorrect)
-              AnimatedScale(
-                scale: showResult ? 1.0 : 0.0,
-                duration: const Duration(milliseconds: 200),
-                curve: Curves.easeOut,
-                child: const Icon(Icons.check_circle, color: Colors.white),
-              ),
-            if (showResult && isSelected && !isCorrect)
-              AnimatedScale(
-                scale: showResult ? 1.0 : 0.0,
-                duration: const Duration(milliseconds: 200),
-                curve: Curves.easeOut,
-                child: const Icon(Icons.cancel, color: Colors.white),
-              ),
-          ],
+            ],
+          ),
         ),
       ),
     );

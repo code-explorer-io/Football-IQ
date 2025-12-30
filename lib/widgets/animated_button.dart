@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../services/haptic_service.dart';
 import '../theme/app_theme.dart';
 
-/// Animated button with scale effect and haptic feedback
-/// Design principle: Subtle, satisfying press feedback
+/// Animated button with scale effect, shadow, and haptic feedback
+/// Design principle: Subtle, satisfying press feedback with depth
 class AnimatedButton extends StatefulWidget {
   final Widget child;
   final VoidCallback? onTap;
@@ -12,6 +12,7 @@ class AnimatedButton extends StatefulWidget {
   final double? height;
   final BorderRadius? borderRadius;
   final bool enableHaptic;
+  final bool enableShadow;
 
   const AnimatedButton({
     super.key,
@@ -22,6 +23,7 @@ class AnimatedButton extends StatefulWidget {
     this.height,
     this.borderRadius,
     this.enableHaptic = true,
+    this.enableShadow = true,
   });
 
   @override
@@ -31,13 +33,20 @@ class AnimatedButton extends StatefulWidget {
 class _AnimatedButtonState extends State<AnimatedButton>
     with SingleTickerProviderStateMixin {
   double _scale = 1.0;
+  bool _isPressed = false;
 
   void _onTapDown(TapDownDetails details) {
-    setState(() => _scale = AppTheme.buttonPressedScale);
+    setState(() {
+      _scale = AppTheme.buttonPressedScale;
+      _isPressed = true;
+    });
   }
 
   void _onTapUp(TapUpDetails details) {
-    setState(() => _scale = 1.0);
+    setState(() {
+      _scale = 1.0;
+      _isPressed = false;
+    });
     if (widget.enableHaptic) {
       HapticService.tap();
     }
@@ -45,7 +54,10 @@ class _AnimatedButtonState extends State<AnimatedButton>
   }
 
   void _onTapCancel() {
-    setState(() => _scale = 1.0);
+    setState(() {
+      _scale = 1.0;
+      _isPressed = false;
+    });
   }
 
   @override
@@ -58,12 +70,24 @@ class _AnimatedButtonState extends State<AnimatedButton>
         scale: _scale,
         duration: AppTheme.animFast,
         curve: Curves.easeOut,
-        child: Container(
+        child: AnimatedContainer(
+          duration: AppTheme.animFast,
+          curve: Curves.easeOut,
           width: widget.width,
           height: widget.height,
           decoration: BoxDecoration(
             color: widget.backgroundColor,
             borderRadius: widget.borderRadius ?? BorderRadius.circular(AppTheme.radiusLG),
+            boxShadow: widget.enableShadow && widget.backgroundColor != null
+                ? [
+                    BoxShadow(
+                      color: widget.backgroundColor!.withValues(alpha: _isPressed ? 0.2 : 0.4),
+                      blurRadius: _isPressed ? 4 : 12,
+                      offset: Offset(0, _isPressed ? 2 : 6),
+                      spreadRadius: _isPressed ? 0 : 1,
+                    ),
+                  ]
+                : null,
           ),
           child: widget.child,
         ),

@@ -11,7 +11,9 @@ import '../services/xp_service.dart';
 import '../services/analytics_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/animated_button.dart';
+import '../widgets/animated_answer_button.dart';
 import '../widgets/form_guide.dart'; // Still needed for FootballIQBadge on results screen
+import '../widgets/pitch_background.dart';
 import 'club_selection_screen.dart';
 import 'survival_mode_screen.dart';
 import 'higher_or_lower_screen.dart';
@@ -103,65 +105,75 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Gamification stats row
-            _GamificationHeader(
-              streak: _currentStreak,
-              level: _currentLevel,
-              levelProgress: _levelProgress,
-              streakAtRisk: _streakAtRisk,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const StatsScreen()),
-                ).then((_) => _loadGamificationData());
-              },
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'Select Mode',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: AppTheme.textPrimary,
-              ),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              'Test your football knowledge',
-              style: TextStyle(
-                fontSize: 16,
-                color: AppTheme.textSecondary,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: ListView.builder(
-                itemCount: gameModes.length,
-                itemBuilder: (context, index) {
-                  final mode = gameModes[index];
-                  return _GameModeCard(mode: mode);
+      body: PitchBackground(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Gamification stats row
+              _GamificationHeader(
+                streak: _currentStreak,
+                level: _currentLevel,
+                levelProgress: _levelProgress,
+                streakAtRisk: _streakAtRisk,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const StatsScreen()),
+                  ).then((_) => _loadGamificationData());
                 },
               ),
-            ),
-          ],
+              const SizedBox(height: 20),
+              const Text(
+                'Select Mode',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.textPrimary,
+                ),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'Test your football knowledge',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: AppTheme.textSecondary,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: gameModes.length,
+                  itemBuilder: (context, index) {
+                    final mode = gameModes[index];
+                    return _GameModeCard(mode: mode);
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class _GameModeCard extends StatelessWidget {
+class _GameModeCard extends StatefulWidget {
   final GameMode mode;
 
   const _GameModeCard({required this.mode});
 
+  @override
+  State<_GameModeCard> createState() => _GameModeCardState();
+}
+
+class _GameModeCardState extends State<_GameModeCard> {
+  double _scale = 1.0;
+  bool _isPressed = false;
+
   void _onTap(BuildContext context) async {
-    if (mode.isLocked) {
+    if (widget.mode.isLocked) {
       // Show paywall for locked modes
       final purchased = await Navigator.push<bool>(
         context,
@@ -175,9 +187,9 @@ class _GameModeCard extends StatelessWidget {
     if (!context.mounted) return;
 
     // Track mode selection
-    AnalyticsService.logModeSelected(mode.name);
+    AnalyticsService.logModeSelected(widget.mode.name);
 
-    if (mode.requiresClubSelection) {
+    if (widget.mode.requiresClubSelection) {
       // Go to club selection (Quiz Your Club)
       Navigator.push(
         context,
@@ -185,36 +197,36 @@ class _GameModeCard extends StatelessWidget {
           builder: (context) => const ClubSelectionScreen(),
         ),
       );
-    } else if (mode.id == 'survival_mode') {
+    } else if (widget.mode.id == 'survival_mode') {
       // Survival Mode has its own intro screen
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SurvivalIntroScreen(mode: mode),
+          builder: (context) => SurvivalIntroScreen(mode: widget.mode),
         ),
       );
-    } else if (mode.id == 'higher_or_lower') {
+    } else if (widget.mode.id == 'higher_or_lower') {
       // Higher or Lower has its own screen
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => HigherOrLowerIntroScreen(mode: mode),
+          builder: (context) => HigherOrLowerIntroScreen(mode: widget.mode),
         ),
       );
-    } else if (mode.id == 'timed_blitz') {
+    } else if (widget.mode.id == 'timed_blitz') {
       // Timed Blitz has its own screen
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => TimedBlitzIntroScreen(mode: mode),
+          builder: (context) => TimedBlitzIntroScreen(mode: widget.mode),
         ),
       );
-    } else if (mode.id == 'international_cup') {
+    } else if (widget.mode.id == 'international_cup') {
       // International Cup has its own screen
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => CupModeIntroScreen(mode: mode),
+          builder: (context) => CupModeIntroScreen(mode: widget.mode),
         ),
       );
     } else {
@@ -222,86 +234,125 @@ class _GameModeCard extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => GenericQuizIntroScreen(mode: mode),
+          builder: (context) => GenericQuizIntroScreen(mode: widget.mode),
         ),
       );
     }
   }
 
+  void _onTapDown(TapDownDetails details) {
+    setState(() {
+      _scale = 0.97;
+      _isPressed = true;
+    });
+  }
+
+  void _onTapUp(TapUpDetails details) {
+    setState(() {
+      _scale = 1.0;
+      _isPressed = false;
+    });
+    HapticService.tap();
+    _onTap(context);
+  }
+
+  void _onTapCancel() {
+    setState(() {
+      _scale = 1.0;
+      _isPressed = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _onTap(context),
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 16),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [mode.color, mode.color.withValues(alpha: 0.7)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Row(
-                children: [
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Icon(
-                      mode.icon,
-                      color: Colors.white,
-                      size: 32,
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          mode.name,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          mode.description,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.white.withValues(alpha: 0.8),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Icon(
-                    mode.isLocked ? Icons.lock : Icons.arrow_forward_ios,
-                    color: Colors.white,
-                  ),
-                ],
-              ),
+      onTapDown: _onTapDown,
+      onTapUp: _onTapUp,
+      onTapCancel: _onTapCancel,
+      child: AnimatedScale(
+        scale: _scale,
+        duration: const Duration(milliseconds: 100),
+        curve: Curves.easeOut,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 100),
+          margin: const EdgeInsets.only(bottom: 16),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [widget.mode.color, widget.mode.color.withValues(alpha: 0.7)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
-            if (mode.isLocked)
-              Positioned.fill(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.3),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: widget.mode.color.withValues(alpha: _isPressed ? 0.2 : 0.4),
+                blurRadius: _isPressed ? 4 : 12,
+                offset: Offset(0, _isPressed ? 2 : 6),
+                spreadRadius: _isPressed ? 0 : 1,
+              ),
+            ],
+          ),
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.2),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Icon(
+                        widget.mode.icon,
+                        color: Colors.white,
+                        size: 32,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.mode.name,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            widget.mode.description,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.white.withValues(alpha: 0.8),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Icon(
+                      widget.mode.isLocked ? Icons.lock : Icons.arrow_forward_ios,
+                      color: Colors.white,
+                    ),
+                  ],
                 ),
               ),
-          ],
+              if (widget.mode.isLocked)
+                Positioned.fill(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.3),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
@@ -493,19 +544,6 @@ class _GenericQuestionScreenState extends State<GenericQuestionScreen> {
     });
   }
 
-  Color _getButtonColor(int index) {
-    if (!_answered) {
-      return Colors.white.withValues(alpha: 0.1);
-    }
-    if (index == _questions[_currentIndex]['answerIndex']) {
-      return Colors.green;
-    }
-    if (_selectedAnswer == index) {
-      return Colors.red;
-    }
-    return Colors.white.withValues(alpha: 0.1);
-  }
-
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
@@ -582,51 +620,14 @@ class _GenericQuestionScreenState extends State<GenericQuestionScreen> {
               child: ListView.builder(
                 itemCount: (question['options'] as List).length,
                 itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: _answered ? null : () => _handleAnswer(index),
-                    child: Container(
-                      margin: const EdgeInsets.only(bottom: 12),
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: _getButtonColor(index),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 32,
-                            height: 32,
-                            decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.2),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Center(
-                              child: Text(
-                                String.fromCharCode(65 + index),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              question['options'][index],
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          if (_answered && index == question['answerIndex'])
-                            const Icon(Icons.check_circle, color: Colors.white),
-                          if (_answered && _selectedAnswer == index && index != question['answerIndex'])
-                            const Icon(Icons.cancel, color: Colors.white),
-                        ],
-                      ),
-                    ),
+                  return AnimatedAnswerButton(
+                    text: question['options'][index],
+                    index: index,
+                    isSelected: _selectedAnswer == index,
+                    isCorrect: index == question['answerIndex'],
+                    showResult: _answered,
+                    onTap: () => _handleAnswer(index),
+                    accentColor: widget.mode.color,
                   );
                 },
               ),
