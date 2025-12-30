@@ -8,6 +8,7 @@ import '../services/achievement_service.dart';
 import '../services/haptic_service.dart';
 import '../services/streak_service.dart';
 import '../services/xp_service.dart';
+import '../services/analytics_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/animated_button.dart';
 import '../widgets/form_guide.dart'; // Still needed for FootballIQBadge on results screen
@@ -36,6 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _loadGamificationData();
+    AnalyticsService.logScreenView('home');
+    AnalyticsService.logAppOpen();
   }
 
   Future<void> _loadGamificationData() async {
@@ -166,6 +169,9 @@ class _GameModeCard extends StatelessWidget {
       );
       return;
     }
+
+    // Track mode selection
+    AnalyticsService.logModeSelected(mode.name);
 
     if (mode.requiresClubSelection) {
       // Go to club selection (Quiz Your Club)

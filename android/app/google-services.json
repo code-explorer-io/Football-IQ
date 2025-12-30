@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1048472890286",
+    "project_id": "football-iq-2da71",
+    "storage_bucket": "football-iq-2da71.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1048472890286:android:4a0c4b5e9ace0854b9f63f",
+        "android_client_info": {
+          "package_name": "io.codeexplorer.football_iq"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2uxIp-ZKbHzVU33PKA3i5kETbULv0Jv0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

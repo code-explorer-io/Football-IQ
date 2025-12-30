@@ -5,6 +5,7 @@ import '../services/score_service.dart';
 import '../services/haptic_service.dart';
 import '../services/streak_service.dart';
 import '../services/xp_service.dart';
+import '../services/analytics_service.dart';
 import '../theme/app_theme.dart';
 import 'home_screen.dart';
 
@@ -563,6 +564,21 @@ class _HigherOrLowerResultsScreenState extends State<HigherOrLowerResultsScreen>
     // Celebrate new record or level up
     if ((isNewBest && widget.score > 0) || xpAward.leveledUp) {
       HapticService.celebrate();
+    }
+
+    // Track analytics
+    AnalyticsService.logGameCompleted(
+      modeName: 'Higher or Lower',
+      score: widget.score,
+      totalQuestions: widget.totalQuestions,
+      xpEarned: xpAward.totalXPEarned,
+    );
+    if (isPerfect) {
+      AnalyticsService.logPerfectScore('Higher or Lower');
+    }
+    if (xpAward.leveledUp) {
+      final levelTitle = XPService.getLevelTitle(xpAward.newLevel);
+      AnalyticsService.logLevelUp(xpAward.newLevel, levelTitle);
     }
   }
 

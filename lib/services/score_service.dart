@@ -6,14 +6,14 @@ class ScoreService {
   // Get best score for a mode (or club within Quiz Your Club)
   static Future<int> getBestScore(String modeId, {String? clubId}) async {
     final prefs = await SharedPreferences.getInstance();
-    final key = clubId != null ? '${_prefix}${modeId}_$clubId' : '$_prefix$modeId';
+    final key = clubId != null ? '$_prefix${modeId}_$clubId' : '$_prefix$modeId';
     return prefs.getInt(key) ?? 0;
   }
 
   // Save best score if it's higher than current best
   static Future<bool> saveBestScore(String modeId, int score, {String? clubId}) async {
     final prefs = await SharedPreferences.getInstance();
-    final key = clubId != null ? '${_prefix}${modeId}_$clubId' : '$_prefix$modeId';
+    final key = clubId != null ? '$_prefix${modeId}_$clubId' : '$_prefix$modeId';
     final currentBest = prefs.getInt(key) ?? 0;
 
     if (score > currentBest) {

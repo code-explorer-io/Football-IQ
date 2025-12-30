@@ -7,6 +7,7 @@ import '../services/achievement_service.dart';
 import '../services/haptic_service.dart';
 import '../services/streak_service.dart';
 import '../services/xp_service.dart';
+import '../services/analytics_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/animated_button.dart';
 import '../widgets/form_guide.dart';
@@ -112,6 +113,22 @@ class _ResultsScreenState extends State<ResultsScreen> {
     if (isPerfect || isNewBest || xpAward.leveledUp) {
       HapticService.celebrate();
       _confettiController.play();
+    }
+
+    // Track analytics
+    AnalyticsService.logGameCompleted(
+      modeName: 'Quiz Your Club',
+      score: widget.score,
+      totalQuestions: widget.totalQuestions,
+      xpEarned: xpAward.totalXPEarned,
+      clubName: widget.club.name,
+    );
+    if (isPerfect) {
+      AnalyticsService.logPerfectScore('Quiz Your Club');
+    }
+    if (xpAward.leveledUp) {
+      final levelTitle = XPService.getLevelTitle(xpAward.newLevel);
+      AnalyticsService.logLevelUp(xpAward.newLevel, levelTitle);
     }
   }
 

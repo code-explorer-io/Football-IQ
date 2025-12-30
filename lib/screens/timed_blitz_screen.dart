@@ -7,6 +7,7 @@ import '../services/score_service.dart';
 import '../services/haptic_service.dart';
 import '../services/streak_service.dart';
 import '../services/xp_service.dart';
+import '../services/analytics_service.dart';
 import '../theme/app_theme.dart';
 import 'home_screen.dart';
 
@@ -559,6 +560,18 @@ class _TimedBlitzResultsScreenState extends State<TimedBlitzResultsScreen> {
     // Celebrate new record or level up
     if ((isNewBest && widget.score > 0) || xpAward.leveledUp) {
       HapticService.celebrate();
+    }
+
+    // Track analytics
+    AnalyticsService.logGameCompleted(
+      modeName: 'Timed Blitz',
+      score: widget.score,
+      totalQuestions: widget.totalAnswered,
+      xpEarned: xpAward.totalXPEarned,
+    );
+    if (xpAward.leveledUp) {
+      final levelTitle = XPService.getLevelTitle(xpAward.newLevel);
+      AnalyticsService.logLevelUp(xpAward.newLevel, levelTitle);
     }
   }
 

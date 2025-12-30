@@ -5,6 +5,7 @@ import '../services/score_service.dart';
 import '../services/haptic_service.dart';
 import '../services/streak_service.dart';
 import '../services/xp_service.dart';
+import '../services/analytics_service.dart';
 import '../theme/app_theme.dart';
 import 'home_screen.dart';
 
@@ -418,6 +419,18 @@ class _SurvivalResultsScreenState extends State<SurvivalResultsScreen> {
     // Celebrate new record or level up
     if ((isNewBest && widget.streak > 0) || xpAward.leveledUp) {
       HapticService.celebrate();
+    }
+
+    // Track analytics
+    AnalyticsService.logGameCompleted(
+      modeName: 'Survival Mode',
+      score: widget.streak,
+      totalQuestions: widget.streak,
+      xpEarned: xpAward.totalXPEarned,
+    );
+    if (xpAward.leveledUp) {
+      final levelTitle = XPService.getLevelTitle(xpAward.newLevel);
+      AnalyticsService.logLevelUp(xpAward.newLevel, levelTitle);
     }
   }
 

@@ -58,7 +58,15 @@
       "Bash(dart run:*)",
       "Bash(\"/c/Program Files/Git/bin/bash.exe\" -c \"which git\")",
       "Bash(export PATH=\"/c/Program Files/Git/bin:$PATH\")",
-      "Bash(ping:*)"
+      "Bash(ping:*)",
+      "Bash(firebase --version:*)",
+      "Bash(wmic logicaldisk:*)",
+      "Bash(dart pub global activate:*)",
+      "Bash(C:/Users/seanm/AppData/Local/Pub/Cache/bin/flutterfire configure --project=football-iq-2a498)",
+      "Bash(/c/Users/seanm/AppData/Local/Pub/Cache/bin/flutterfire.bat configure)",
+      "Bash(PATH=\"/c/Program Files/Git/cmd:$PATH\" /c/Flutter/flutter/bin/flutter pub get:*)",
+      "Bash(node --version)",
+      "Bash(npm --version:*)"
     ]
   }
 }
