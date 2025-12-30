@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
+import 'package:video_player/video_player.dart';
+import '../widgets/pitch_background.dart';
 import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -14,6 +17,11 @@ class _SplashScreenState extends State<SplashScreen>
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
   late Animation<double> _scaleAnimation;
+
+  // Video player for optional tunnel video
+  VideoPlayerController? _videoController;
+  bool _hasVideo = false;
+  bool _videoInitialized = false;
 
   @override
   void initState() {
@@ -41,80 +49,187 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
 
+    // Try to load video, fall back to static if not available
+    _initializeVideo();
+  }
+
+  Future<void> _initializeVideo() async {
+    try {
+      // Check if video asset exists
+      await rootBundle.load('assets/images/tunnel.mp4');
+
+      // Video exists, initialize player
+      _videoController = VideoPlayerController.asset('assets/images/tunnel.mp4');
+      await _videoController!.initialize();
+
+      if (mounted) {
+        setState(() {
+          _hasVideo = true;
+          _videoInitialized = true;
+        });
+
+        // Play video and navigate when complete
+        _videoController!.play();
+        _videoController!.addListener(_onVideoProgress);
+      }
+    } catch (e) {
+      // Video doesn't exist, use static fallback
+      _startStaticSplash();
+    }
+  }
+
+  void _onVideoProgress() {
+    if (_videoController == null) return;
+
+    // Check if video is complete
+    final position = _videoController!.value.position;
+    final duration = _videoController!.value.duration;
+
+    if (position >= duration && duration > Duration.zero) {
+      _navigateToHome();
+    }
+  }
+
+  void _startStaticSplash() {
     // Start animation
     _controller.forward();
 
     // Navigate to home after delay
     Future.delayed(const Duration(milliseconds: 2000), () {
-      if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                const HomeScreen(),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
-              return FadeTransition(opacity: animation, child: child);
-            },
-            transitionDuration: const Duration(milliseconds: 400),
-          ),
-        );
-      }
+      _navigateToHome();
     });
+  }
+
+  void _navigateToHome() {
+    if (!mounted) return;
+
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const HomeScreen(),
+        transitionsBuilder:
+            (context, animation, secondaryAnimation, child) {
+          return FadeTransition(opacity: animation, child: child);
+        },
+        transitionDuration: const Duration(milliseconds: 400),
+      ),
+    );
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _videoController?.removeListener(_onVideoProgress);
+    _videoController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    // If video is available and initialized, show video
+    if (_hasVideo && _videoInitialized && _videoController != null) {
+      return Scaffold(
+        backgroundColor: Colors.black,
+        body: Stack(
+          fit: StackFit.expand,
+          children: [
+            // Video background
+            FittedBox(
+              fit: BoxFit.cover,
+              child: SizedBox(
+                width: _videoController!.value.size.width,
+                height: _videoController!.value.size.height,
+                child: VideoPlayer(_videoController!),
+              ),
+            ),
+            // Overlay with logo (optional - can be removed for pure video)
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Lottie soccer ball animation
+                  SizedBox(
+                    width: 150,
+                    height: 150,
+                    child: Lottie.asset(
+                      'assets/icon/soccer-ball.json',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  const Text(
+                    'Football IQ',
+                    style: TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Test your football knowledge',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white70,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    // Static fallback with tunnel background
     return Scaffold(
       backgroundColor: const Color(0xFF1A1A2E),
-      body: Center(
-        child: AnimatedBuilder(
-          animation: _controller,
-          builder: (context, child) {
-            return Opacity(
-              opacity: _fadeAnimation.value,
-              child: Transform.scale(
-                scale: _scaleAnimation.value,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Lottie soccer ball animation
-                    SizedBox(
-                      width: 150,
-                      height: 150,
-                      child: Lottie.asset(
-                        'assets/icon/soccer-ball.json',
-                        fit: BoxFit.contain,
+      body: PitchBackground.zone(
+        zone: BackgroundZone.tunnel,
+        child: Center(
+          child: AnimatedBuilder(
+            animation: _controller,
+            builder: (context, child) {
+              return Opacity(
+                opacity: _fadeAnimation.value,
+                child: Transform.scale(
+                  scale: _scaleAnimation.value,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Lottie soccer ball animation
+                      SizedBox(
+                        width: 150,
+                        height: 150,
+                        child: Lottie.asset(
+                          'assets/icon/soccer-ball.json',
+                          fit: BoxFit.contain,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 24),
-                    const Text(
-                      'Football IQ',
-                      style: TextStyle(
-                        fontSize: 36,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                      const SizedBox(height: 24),
+                      const Text(
+                        'Football IQ',
+                        style: TextStyle(
+                          fontSize: 36,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    const Text(
-                      'Test your football knowledge',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white70,
+                      const SizedBox(height: 8),
+                      const Text(
+                        'Test your football knowledge',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white70,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

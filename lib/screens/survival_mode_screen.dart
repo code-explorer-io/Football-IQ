@@ -30,7 +30,8 @@ class SurvivalIntroScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: PitchBackground(
+      body: PitchBackground.zone(
+        zone: BackgroundZone.tunnel,
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(24.0),
@@ -120,7 +121,8 @@ class SurvivalQuestionScreen extends StatefulWidget {
   State<SurvivalQuestionScreen> createState() => _SurvivalQuestionScreenState();
 }
 
-class _SurvivalQuestionScreenState extends State<SurvivalQuestionScreen> {
+class _SurvivalQuestionScreenState extends State<SurvivalQuestionScreen>
+    with SingleTickerProviderStateMixin {
   List<dynamic> _questions = [];
   int _currentIndex = 0;
   int _streak = 0;
@@ -128,10 +130,28 @@ class _SurvivalQuestionScreenState extends State<SurvivalQuestionScreen> {
   int? _selectedAnswer;
   bool _answered = false;
 
+  // Void (death) transition animation
+  late AnimationController _voidController;
+  late Animation<double> _voidAnimation;
+  bool _showingVoid = false;
+
   @override
   void initState() {
     super.initState();
+    _voidController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+    );
+    _voidAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _voidController, curve: Curves.easeIn),
+    );
     _loadQuestions();
+  }
+
+  @override
+  void dispose() {
+    _voidController.dispose();
+    super.dispose();
   }
 
   Future<void> _loadQuestions() async {
@@ -196,16 +216,53 @@ class _SurvivalQuestionScreenState extends State<SurvivalQuestionScreen> {
   }
 
   void _showGameOver(bool ranOutOfQuestions) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => SurvivalResultsScreen(
-          mode: widget.mode,
-          streak: _streak,
-          ranOutOfQuestions: ranOutOfQuestions,
+    if (ranOutOfQuestions) {
+      // Player completed all questions - no death transition needed
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SurvivalResultsScreen(
+            mode: widget.mode,
+            streak: _streak,
+            ranOutOfQuestions: ranOutOfQuestions,
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      // Death! Show the void transition
+      _showVoidTransition();
+    }
+  }
+
+  void _showVoidTransition() {
+    setState(() {
+      _showingVoid = true;
+    });
+
+    // Fade to black (200ms)
+    _voidController.forward().then((_) {
+      // Hold black (500ms)
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (!mounted) return;
+        // Navigate to results
+        Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                SurvivalResultsScreen(
+              mode: widget.mode,
+              streak: _streak,
+              ranOutOfQuestions: false,
+            ),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              // Fade in from black
+              return FadeTransition(opacity: animation, child: child);
+            },
+            transitionDuration: const Duration(milliseconds: 300),
+          ),
+        );
+      });
+    });
   }
 
   @override
@@ -256,13 +313,17 @@ class _SurvivalQuestionScreenState extends State<SurvivalQuestionScreen> {
         centerTitle: true,
         actions: const [SizedBox(width: 48)], // Balance the leading icon
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Streak indicator
-            Container(
+      body: Stack(
+        children: [
+          PitchBackground.zone(
+            zone: BackgroundZone.dugout,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Streak indicator
+                  Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 12),
               decoration: BoxDecoration(
@@ -318,6 +379,19 @@ class _SurvivalQuestionScreenState extends State<SurvivalQuestionScreen> {
             ),
           ],
         ),
+      ),
+          ),
+          // Void overlay - fades to black on death
+          if (_showingVoid)
+            AnimatedBuilder(
+              animation: _voidAnimation,
+              builder: (context, child) {
+                return Container(
+                  color: Colors.black.withValues(alpha: _voidAnimation.value),
+                );
+              },
+            ),
+        ],
       ),
     );
   }
@@ -420,14 +494,16 @@ class _SurvivalResultsScreenState extends State<SurvivalResultsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF1A1A2E),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Spacer(),
-              if (_isNewBest)
+      body: PitchBackground.zone(
+        zone: BackgroundZone.results,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Spacer(),
+                if (_isNewBest)
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   margin: const EdgeInsets.only(bottom: 16),
@@ -619,6 +695,7 @@ class _SurvivalResultsScreenState extends State<SurvivalResultsScreen> {
             ],
           ),
         ),
+      ),
       ),
     );
   }

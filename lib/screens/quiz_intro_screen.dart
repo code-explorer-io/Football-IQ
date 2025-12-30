@@ -20,7 +20,8 @@ class QuizIntroScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: PitchBackground(
+      body: PitchBackground.zone(
+        zone: BackgroundZone.tunnel,
         child: Center(
           child: Padding(
           padding: const EdgeInsets.all(24.0),

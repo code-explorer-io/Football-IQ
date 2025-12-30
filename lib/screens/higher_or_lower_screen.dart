@@ -29,7 +29,8 @@ class HigherOrLowerIntroScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: PitchBackground(
+      body: PitchBackground.zone(
+        zone: BackgroundZone.tunnel,
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(24.0),
@@ -244,26 +245,28 @@ class _HigherOrLowerGameScreenState extends State<HigherOrLowerGameScreen> {
         ),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          // Progress bar
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: LinearProgressIndicator(
-              value: (_currentIndex + 1) / _comparisons.length,
-              backgroundColor: Colors.white24,
-              valueColor: AlwaysStoppedAnimation<Color>(widget.mode.color),
+      body: PitchBackground.zone(
+        zone: BackgroundZone.dugout,
+        child: Column(
+          children: [
+            // Progress bar
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: LinearProgressIndicator(
+                value: (_currentIndex + 1) / _comparisons.length,
+                backgroundColor: Colors.white24,
+                valueColor: AlwaysStoppedAnimation<Color>(widget.mode.color),
+              ),
             ),
-          ),
-          const SizedBox(height: 16),
-          // Category label - more prominent
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-            decoration: BoxDecoration(
-              color: widget.mode.color,
-              borderRadius: BorderRadius.circular(12),
-            ),
+            const SizedBox(height: 16),
+            // Category label - more prominent
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              decoration: BoxDecoration(
+                color: widget.mode.color,
+                borderRadius: BorderRadius.circular(12),
+              ),
             child: Text(
               category.toUpperCase(),
               style: const TextStyle(
@@ -513,6 +516,7 @@ class _HigherOrLowerGameScreenState extends State<HigherOrLowerGameScreen> {
           const SizedBox(height: 24),
         ],
       ),
+      ),
     );
   }
 }
@@ -621,23 +625,25 @@ class _HigherOrLowerResultsScreenState extends State<HigherOrLowerResultsScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF1A1A2E),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Spacer(),
-              if (_isNewBest)
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  margin: const EdgeInsets.only(bottom: 16),
-                  decoration: BoxDecoration(
-                    color: Colors.amber,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const Text(
-                    'NEW RECORD',
+      body: PitchBackground.zone(
+        zone: BackgroundZone.results,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Spacer(),
+                if (_isNewBest)
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    margin: const EdgeInsets.only(bottom: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.amber,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: const Text(
+                      'NEW RECORD',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -804,6 +810,7 @@ class _HigherOrLowerResultsScreenState extends State<HigherOrLowerResultsScreen>
             ],
           ),
         ),
+      ),
       ),
     );
   }

@@ -97,6 +97,7 @@ class XPService {
     int? streakDays,
     bool isPerfect = false,
     int? secondsRemaining, // For timed modes
+    int fastAnswerCount = 0, // Fast answers (under 5 seconds)
   }) async {
     final prefs = await SharedPreferences.getInstance();
     final previousXP = prefs.getInt(_totalXPKey) ?? 0;
@@ -145,6 +146,13 @@ class XPService {
       if (streakBonus > 0) {
         bonusReasons.add('$streakDays-Day Streak +${streakBonus.clamp(0, 100)}');
       }
+    }
+
+    // Fast answer bonus (5 XP per fast answer)
+    if (fastAnswerCount > 0) {
+      final fastBonus = fastAnswerCount * xpSpeedBonus;
+      bonusXP += fastBonus;
+      bonusReasons.add('Quick Reflexes x$fastAnswerCount +$fastBonus');
     }
 
     final totalXPEarned = baseXP + bonusXP;
@@ -258,11 +266,11 @@ class XPService {
     if (level >= 14) return 'Elite';
     if (level >= 12) return 'International';
     if (level >= 10) return 'Professional';
-    if (level >= 8) return 'First Team';
-    if (level >= 6) return 'Reserve';
-    if (level >= 4) return 'Academy';
-    if (level >= 2) return 'Youth';
-    return 'Trialist';
+    if (level >= 8) return 'Semi-Pro';
+    if (level >= 6) return 'Club Player';
+    if (level >= 4) return 'Sunday League';
+    if (level >= 2) return 'Park Footballer';
+    return 'Amateur';
   }
 
   /// Reset all XP data (for testing)

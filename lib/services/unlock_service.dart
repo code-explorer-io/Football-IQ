@@ -13,6 +13,9 @@ import 'purchase_service.dart';
 ///
 /// Premium users have all modes unlocked immediately.
 class UnlockService {
+  // DEV MODE: Set to true to unlock all modes for testing
+  static const bool devModeUnlockAll = true;
+
   static const String _keyClubQuizzesCompleted = 'unlock_club_quizzes_completed';
   static const String _keyBestSurvivalStreak = 'unlock_best_survival_streak';
   static const String _keyBestTimedBlitzScore = 'unlock_best_timed_blitz_score';
@@ -28,6 +31,9 @@ class UnlockService {
 
   /// Check if a mode is unlocked (either through progression or premium)
   static Future<bool> isModeUnlocked(String modeId) async {
+    // DEV MODE: Unlock everything for testing
+    if (devModeUnlockAll) return true;
+
     // Premium users have everything unlocked
     if (PurchaseService.isPremium) return true;
 

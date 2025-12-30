@@ -120,7 +120,8 @@ class _CupModeIntroScreenState extends State<CupModeIntroScreen> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: PitchBackground(
+      body: PitchBackground.zone(
+        zone: BackgroundZone.tunnel,
         child: _isLoading
             ? const Center(child: CircularProgressIndicator(color: Colors.white))
             : SingleChildScrollView(
@@ -481,13 +482,15 @@ class _CupMatchScreenState extends State<CupMatchScreen> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Progress bar
-            LinearProgressIndicator(
+      body: PitchBackground.zone(
+        zone: BackgroundZone.dugout,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Progress bar
+              LinearProgressIndicator(
               value: (_currentIndex + 1) / _questions.length,
               backgroundColor: Colors.white24,
               valueColor: AlwaysStoppedAnimation<Color>(widget.mode.color),
@@ -576,6 +579,7 @@ class _CupMatchScreenState extends State<CupMatchScreen> {
           ],
         ),
       ),
+      ),
     );
   }
 }
@@ -653,15 +657,17 @@ class _CupResultScreenState extends State<CupResultScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF1A1A2E),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Spacer(),
-              // Stage badge
-              Container(
+      body: PitchBackground.zone(
+        zone: BackgroundZone.results,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Spacer(),
+                // Stage badge
+                Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
                   color: widget.mode.color.withAlpha(51),
@@ -885,6 +891,7 @@ class _CupResultScreenState extends State<CupResultScreen> {
             ],
           ),
         ),
+      ),
       ),
     );
   }

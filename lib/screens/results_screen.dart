@@ -21,12 +21,14 @@ class ResultsScreen extends StatefulWidget {
   final Club club;
   final int score;
   final int totalQuestions;
+  final int fastAnswerCount;
 
   const ResultsScreen({
     super.key,
     required this.club,
     required this.score,
     required this.totalQuestions,
+    this.fastAnswerCount = 0,
   });
 
   @override
@@ -120,6 +122,7 @@ class _ResultsScreenState extends State<ResultsScreen>
       modeId: 'quiz_your_club',
       streakDays: streakResult.streak,
       isPerfect: isPerfect,
+      fastAnswerCount: widget.fastAnswerCount,
     );
 
     // Check for achievements
@@ -211,7 +214,8 @@ class _ResultsScreenState extends State<ResultsScreen>
       backgroundColor: AppTheme.background,
       body: Stack(
         children: [
-          PitchBackground(
+          PitchBackground.zone(
+            zone: BackgroundZone.results,
             child: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.all(24.0),

@@ -20,7 +20,7 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   List<Question> _questions = [];
   int _currentIndex = 0;
   int _score = 0;
@@ -32,6 +32,13 @@ class _QuestionScreenState extends State<QuestionScreen>
   late AnimationController _animController;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
+
+  // Timer for questions
+  late AnimationController _timerController;
+  static const int _questionTimeSeconds = 12; // Time per question
+  static const int _fastAnswerThreshold = 5; // Seconds for "fast answer" bonus
+  bool _timeExpired = false;
+  int _fastAnswerCount = 0; // Track fast correct answers for bonus XP
 
   @override
   void initState() {
@@ -50,13 +57,94 @@ class _QuestionScreenState extends State<QuestionScreen>
       end: Offset.zero,
     ).animate(CurvedAnimation(parent: _animController, curve: Curves.easeOut));
 
+    // Timer controller - counts down from 1.0 to 0.0
+    _timerController = AnimationController(
+      duration: Duration(seconds: _questionTimeSeconds),
+      vsync: this,
+    );
+    _timerController.addStatusListener(_onTimerStatusChanged);
+
     _loadQuestions();
+  }
+
+  void _onTimerStatusChanged(AnimationStatus status) {
+    if (status == AnimationStatus.dismissed && !_answered && mounted) {
+      // Time ran out - treat as wrong answer
+      _handleTimeExpired();
+    }
+  }
+
+  void _handleTimeExpired() {
+    if (_answered) return;
+
+    setState(() {
+      _timeExpired = true;
+      _answered = true;
+      _selectedAnswer = -1; // No selection
+    });
+
+    // Haptic and sound for timeout
+    HapticService.incorrect();
+    SoundService.incorrect();
+
+    // Move to next question after delay
+    Future.delayed(const Duration(milliseconds: 1200), () {
+      _moveToNextQuestion();
+    });
+  }
+
+  void _startTimer() {
+    _timerController.value = 1.0; // Reset to full
+    _timerController.reverse(); // Count down to 0
+  }
+
+  void _stopTimer() {
+    _timerController.stop();
   }
 
   @override
   void dispose() {
+    _timerController.removeStatusListener(_onTimerStatusChanged);
+    _timerController.dispose();
     _animController.dispose();
     super.dispose();
+  }
+
+  void _moveToNextQuestion() {
+    if (!mounted) return;
+    if (_currentIndex < _questions.length - 1) {
+      // Animate out, change question, animate in
+      _animController.reverse().then((_) {
+        if (!mounted) return;
+        setState(() {
+          _currentIndex++;
+          _selectedAnswer = null;
+          _answered = false;
+          _timeExpired = false;
+        });
+        _animController.forward();
+        _startTimer(); // Start timer for new question
+      });
+    } else {
+      // Quiz complete - go to results with fade transition
+      Navigator.pushReplacement(
+        context,
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              ResultsScreen(
+            club: widget.club,
+            score: _score,
+            totalQuestions: _questions.length,
+            fastAnswerCount: _fastAnswerCount,
+          ),
+          transitionsBuilder:
+              (context, animation, secondaryAnimation, child) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+          transitionDuration: const Duration(milliseconds: 400),
+        ),
+      );
+    }
   }
 
   Future<void> _loadQuestions() async {
@@ -73,8 +161,9 @@ class _QuestionScreenState extends State<QuestionScreen>
         _isLoading = false;
       });
 
-      // Start animation
+      // Start animation and timer
       _animController.forward();
+      _startTimer();
     } catch (e) {
       // If loading fails, use placeholder questions
       setState(() {
@@ -82,6 +171,7 @@ class _QuestionScreenState extends State<QuestionScreen>
         _questions = _getPlaceholderQuestions();
       });
       _animController.forward();
+      _startTimer();
     }
   }
 
@@ -98,7 +188,20 @@ class _QuestionScreenState extends State<QuestionScreen>
   void _handleAnswer(int selectedIndex) {
     if (_answered) return;
 
+    // Calculate time taken before stopping timer
+    final secondsRemaining = (_timerController.value * _questionTimeSeconds).ceil();
+    final secondsTaken = _questionTimeSeconds - secondsRemaining;
+    final isFastAnswer = secondsTaken < _fastAnswerThreshold;
+
+    // Stop the timer immediately
+    _stopTimer();
+
     final isCorrect = selectedIndex == _questions[_currentIndex].answerIndex;
+
+    // Track fast correct answers for bonus XP
+    if (isCorrect && isFastAnswer) {
+      _fastAnswerCount++;
+    }
 
     // Haptic and sound feedback
     if (isCorrect) {
@@ -119,37 +222,7 @@ class _QuestionScreenState extends State<QuestionScreen>
 
     // Wait a moment then move to next question
     Future.delayed(const Duration(milliseconds: 1200), () {
-      if (!mounted) return;
-      if (_currentIndex < _questions.length - 1) {
-        // Animate out, change question, animate in
-        _animController.reverse().then((_) {
-          if (!mounted) return;
-          setState(() {
-            _currentIndex++;
-            _selectedAnswer = null;
-            _answered = false;
-          });
-          _animController.forward();
-        });
-      } else {
-        // Quiz complete - go to results with fade transition
-        Navigator.pushReplacement(
-          context,
-          PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                ResultsScreen(
-              club: widget.club,
-              score: _score,
-              totalQuestions: _questions.length,
-            ),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
-              return FadeTransition(opacity: animation, child: child);
-            },
-            transitionDuration: const Duration(milliseconds: 400),
-          ),
-        );
-      }
+      _moveToNextQuestion();
     });
   }
 
@@ -185,7 +258,8 @@ class _QuestionScreenState extends State<QuestionScreen>
         ),
         centerTitle: true,
       ),
-      body: PitchBackground(
+      body: PitchBackground.zone(
+        zone: BackgroundZone.dugout,
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -208,7 +282,72 @@ class _QuestionScreenState extends State<QuestionScreen>
                   );
                 },
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 16),
+              // Timer bar with countdown
+              AnimatedBuilder(
+                animation: _timerController,
+                builder: (context, child) {
+                  final secondsRemaining = (_timerController.value * _questionTimeSeconds).ceil();
+                  final isLowTime = secondsRemaining <= 3;
+
+                  return Column(
+                    children: [
+                      // Timer progress bar
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: LinearProgressIndicator(
+                          value: _answered ? 0 : _timerController.value,
+                          backgroundColor: Colors.white12,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            isLowTime ? Colors.red : Colors.white70,
+                          ),
+                          minHeight: 6,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      // Timer text
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          if (!_answered) ...[
+                            Icon(
+                              Icons.timer_outlined,
+                              size: 16,
+                              color: isLowTime ? Colors.red : Colors.white54,
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              '00:${secondsRemaining.toString().padLeft(2, '0')}',
+                              style: TextStyle(
+                                color: isLowTime ? Colors.red : Colors.white54,
+                                fontSize: 14,
+                                fontWeight: isLowTime ? FontWeight.bold : FontWeight.normal,
+                                fontFeatures: const [FontFeature.tabularFigures()],
+                              ),
+                            ),
+                          ] else if (_timeExpired) ...[
+                            const Icon(
+                              Icons.timer_off_outlined,
+                              size: 16,
+                              color: Colors.red,
+                            ),
+                            const SizedBox(width: 4),
+                            const Text(
+                              "Time's up!",
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              ),
+              const SizedBox(height: 16),
               // Question text with animation
               Expanded(
                 flex: 2,

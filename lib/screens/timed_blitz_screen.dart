@@ -32,7 +32,8 @@ class TimedBlitzIntroScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: PitchBackground(
+      body: PitchBackground.zone(
+        zone: BackgroundZone.tunnel,
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(24.0),
@@ -319,11 +320,13 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
 
     return Scaffold(
       backgroundColor: const Color(0xFF1A1A2E),
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Timer bar at top
-            AnimatedBuilder(
+      body: PitchBackground.zone(
+        zone: BackgroundZone.dugout,
+        child: SafeArea(
+          child: Column(
+            children: [
+              // Timer bar at top
+              AnimatedBuilder(
               animation: _timerAnimationController,
               builder: (context, child) {
                 final progress = _secondsRemaining / _totalSeconds;
@@ -456,6 +459,7 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
           ],
         ),
       ),
+      ),
     );
   }
 }
@@ -556,23 +560,25 @@ class _TimedBlitzResultsScreenState extends State<TimedBlitzResultsScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xFF1A1A2E),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Spacer(),
-              if (_isNewBest)
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  margin: const EdgeInsets.only(bottom: 16),
-                  decoration: BoxDecoration(
-                    color: Colors.amber,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const Text(
-                    'NEW RECORD',
+      body: PitchBackground.zone(
+        zone: BackgroundZone.results,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Spacer(),
+                if (_isNewBest)
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    margin: const EdgeInsets.only(bottom: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.amber,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: const Text(
+                      'NEW RECORD',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -751,6 +757,7 @@ class _TimedBlitzResultsScreenState extends State<TimedBlitzResultsScreen> {
             ],
           ),
         ),
+      ),
       ),
     );
   }
