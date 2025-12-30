@@ -56,7 +56,7 @@ class AppTheme {
   // Shadows for elevated elements
   static List<BoxShadow> get elevatedShadow => [
     BoxShadow(
-      color: Colors.black.withOpacity(0.3),
+      color: Colors.black.withValues(alpha: 0.3),
       blurRadius: 8,
       offset: const Offset(0, 4),
     ),
@@ -71,7 +71,7 @@ class AppTheme {
 
   // Gradient for mode cards
   static LinearGradient modeGradient(Color color) => LinearGradient(
-    colors: [color, color.withOpacity(0.7)],
+    colors: [color, color.withValues(alpha: 0.7)],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
@@ -85,13 +85,13 @@ class AppTheme {
     Color bgColor;
 
     if (!answered) {
-      bgColor = Colors.white.withOpacity(0.1);
+      bgColor = Colors.white.withValues(alpha: 0.1);
     } else if (isCorrectAnswer) {
       bgColor = correct;
     } else if (isSelected) {
       bgColor = incorrect;
     } else {
-      bgColor = Colors.white.withOpacity(0.1);
+      bgColor = Colors.white.withValues(alpha: 0.1);
     }
 
     return BoxDecoration(
@@ -173,7 +173,7 @@ class AppTheme {
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         foregroundColor: textPrimary,
-        side: BorderSide(color: textSecondary.withOpacity(0.5)),
+        side: BorderSide(color: textSecondary.withValues(alpha: 0.5)),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radiusLG),
         ),

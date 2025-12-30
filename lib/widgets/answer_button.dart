@@ -76,7 +76,7 @@ class _AnswerButtonState extends State<AnswerButton>
 
   Color _getBackgroundColor() {
     if (!widget.answered) {
-      return Colors.white.withOpacity(0.1);
+      return Colors.white.withValues(alpha: 0.1);
     }
     if (widget.isCorrectAnswer) {
       return AppTheme.correct;
@@ -84,7 +84,7 @@ class _AnswerButtonState extends State<AnswerButton>
     if (widget.isSelected) {
       return AppTheme.incorrect;
     }
-    return Colors.white.withOpacity(0.1);
+    return Colors.white.withValues(alpha: 0.1);
   }
 
   @override
@@ -113,7 +113,7 @@ class _AnswerButtonState extends State<AnswerButton>
                 width: 32,
                 height: 32,
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
+                  color: Colors.white.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(AppTheme.radiusSM),
                 ),
                 child: Center(

@@ -66,7 +66,8 @@
       "Bash(/c/Users/seanm/AppData/Local/Pub/Cache/bin/flutterfire.bat configure)",
       "Bash(PATH=\"/c/Program Files/Git/cmd:$PATH\" /c/Flutter/flutter/bin/flutter pub get:*)",
       "Bash(node --version)",
-      "Bash(npm --version:*)"
+      "Bash(npm --version:*)",
+      "Bash(find:*)"
     ]
   }
 }

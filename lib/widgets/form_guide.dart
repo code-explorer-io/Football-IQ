@@ -45,7 +45,7 @@ class FormGuide extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 2),
           decoration: BoxDecoration(
             color: result == '-'
-                ? Colors.white.withOpacity(0.1)
+                ? Colors.white.withValues(alpha: 0.1)
                 : _getColor(result),
             borderRadius: BorderRadius.circular(4),
           ),
@@ -107,12 +107,12 @@ class FootballIQBadge extends StatelessWidget {
           end: Alignment.bottomRight,
           colors: [
             Color(tierColor),
-            Color(tierColor).withOpacity(0.7),
+            Color(tierColor).withValues(alpha: 0.7),
           ],
         ),
         boxShadow: [
           BoxShadow(
-            color: Color(tierColor).withOpacity(0.3),
+            color: Color(tierColor).withValues(alpha: 0.3),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -134,7 +134,7 @@ class FootballIQBadge extends StatelessWidget {
             style: TextStyle(
               fontSize: size * 0.15,
               fontWeight: FontWeight.bold,
-              color: Colors.white.withOpacity(0.8),
+              color: Colors.white.withValues(alpha: 0.8),
             ),
           ),
         ],

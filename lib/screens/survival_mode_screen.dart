@@ -37,7 +37,7 @@ class SurvivalIntroScreen extends StatelessWidget {
                 height: 120,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [mode.color, mode.color.withOpacity(0.7)],
+                    colors: [mode.color, mode.color.withValues(alpha: 0.7)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -202,7 +202,7 @@ class _SurvivalQuestionScreenState extends State<SurvivalQuestionScreen> {
 
   Color _getButtonColor(int index) {
     if (!_answered) {
-      return Colors.white.withOpacity(0.1);
+      return Colors.white.withValues(alpha: 0.1);
     }
     if (index == _questions[_currentIndex]['answerIndex']) {
       return Colors.green;
@@ -210,7 +210,7 @@ class _SurvivalQuestionScreenState extends State<SurvivalQuestionScreen> {
     if (_selectedAnswer == index) {
       return Colors.red;
     }
-    return Colors.white.withOpacity(0.1);
+    return Colors.white.withValues(alpha: 0.1);
   }
 
   @override
@@ -271,7 +271,7 @@ class _SurvivalQuestionScreenState extends State<SurvivalQuestionScreen> {
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 12),
               decoration: BoxDecoration(
-                color: widget.mode.color.withOpacity(0.2),
+                color: widget.mode.color.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -324,7 +324,7 @@ class _SurvivalQuestionScreenState extends State<SurvivalQuestionScreen> {
                             width: 32,
                             height: 32,
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.2),
+                              color: Colors.white.withValues(alpha: 0.2),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Center(
@@ -651,7 +651,7 @@ class _SurvivalXPRow extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFF6B35).withOpacity(0.2),
+                    color: const Color(0xFFFF6B35).withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
@@ -690,7 +690,7 @@ class _SurvivalXPRow extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: AppTheme.gold.withOpacity(0.2),
+                color: AppTheme.gold.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(

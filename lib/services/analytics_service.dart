@@ -91,7 +91,7 @@ class AnalyticsService {
 
   /// User unlocked an achievement
   static Future<void> logAchievementUnlocked(String achievementId, String achievementName) async {
-    await _analytics.logUnlockAchievement(achievementId: achievementId);
+    await _analytics.logUnlockAchievement(id: achievementId);
     await _analytics.logEvent(
       name: 'achievement_unlocked',
       parameters: {

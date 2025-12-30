@@ -232,7 +232,7 @@ class _GameModeCard extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [mode.color, mode.color.withOpacity(0.7)],
+            colors: [mode.color, mode.color.withValues(alpha: 0.7)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -248,7 +248,7 @@ class _GameModeCard extends StatelessWidget {
                     width: 60,
                     height: 60,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.white.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Icon(
@@ -275,7 +275,7 @@ class _GameModeCard extends StatelessWidget {
                           mode.description,
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.white.withOpacity(0.8),
+                            color: Colors.white.withValues(alpha: 0.8),
                           ),
                         ),
                       ],
@@ -292,7 +292,7 @@ class _GameModeCard extends StatelessWidget {
               Positioned.fill(
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.3),
+                    color: Colors.black.withValues(alpha: 0.3),
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
@@ -333,7 +333,7 @@ class GenericQuizIntroScreen extends StatelessWidget {
                 height: 120,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [mode.color, mode.color.withOpacity(0.7)],
+                    colors: [mode.color, mode.color.withValues(alpha: 0.7)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -467,6 +467,7 @@ class _GenericQuestionScreenState extends State<GenericQuestionScreen> {
     });
 
     Future.delayed(const Duration(milliseconds: 1000), () {
+      if (!mounted) return;
       if (_currentIndex < _questions.length - 1) {
         setState(() {
           _currentIndex++;
@@ -490,7 +491,7 @@ class _GenericQuestionScreenState extends State<GenericQuestionScreen> {
 
   Color _getButtonColor(int index) {
     if (!_answered) {
-      return Colors.white.withOpacity(0.1);
+      return Colors.white.withValues(alpha: 0.1);
     }
     if (index == _questions[_currentIndex]['answerIndex']) {
       return Colors.green;
@@ -498,7 +499,7 @@ class _GenericQuestionScreenState extends State<GenericQuestionScreen> {
     if (_selectedAnswer == index) {
       return Colors.red;
     }
-    return Colors.white.withOpacity(0.1);
+    return Colors.white.withValues(alpha: 0.1);
   }
 
   @override
@@ -592,7 +593,7 @@ class _GenericQuestionScreenState extends State<GenericQuestionScreen> {
                             width: 32,
                             height: 32,
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.2),
+                              color: Colors.white.withValues(alpha: 0.2),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Center(
@@ -943,7 +944,7 @@ class _GamificationHeader extends StatelessWidget {
           color: AppTheme.surface,
           borderRadius: BorderRadius.circular(AppTheme.radiusMD),
           border: streakAtRisk
-              ? Border.all(color: AppTheme.gold.withOpacity(0.5), width: 1)
+              ? Border.all(color: AppTheme.gold.withValues(alpha: 0.5), width: 1)
               : null,
         ),
         child: Row(
@@ -1310,7 +1311,7 @@ class _LevelCard extends StatelessWidget {
                 width: 64,
                 height: 64,
                 decoration: BoxDecoration(
-                  color: AppTheme.highlight.withOpacity(0.2),
+                  color: AppTheme.highlight.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(AppTheme.radiusMD),
                 ),
                 child: Center(
@@ -1499,7 +1500,7 @@ class _GenericXPRow extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFF6B35).withOpacity(0.2),
+                    color: const Color(0xFFFF6B35).withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
@@ -1538,7 +1539,7 @@ class _GenericXPRow extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: AppTheme.gold.withOpacity(0.2),
+                color: AppTheme.gold.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(

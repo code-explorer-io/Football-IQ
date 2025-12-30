@@ -39,7 +39,7 @@ class TimedBlitzIntroScreen extends StatelessWidget {
                 height: 120,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [mode.color, mode.color.withOpacity(0.7)],
+                    colors: [mode.color, mode.color.withValues(alpha: 0.7)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -75,7 +75,7 @@ class TimedBlitzIntroScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.05),
+                  color: Colors.white.withValues(alpha: 0.05),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Column(
@@ -287,7 +287,7 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
 
   Color _getButtonColor(int index) {
     if (!_answered) {
-      return Colors.white.withOpacity(0.1);
+      return Colors.white.withValues(alpha: 0.1);
     }
     if (index == _questions[_currentIndex]['answerIndex']) {
       return Colors.green;
@@ -295,7 +295,7 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
     if (_selectedAnswer == index) {
       return Colors.red;
     }
-    return Colors.white.withOpacity(0.1);
+    return Colors.white.withValues(alpha: 0.1);
   }
 
   @override
@@ -334,7 +334,7 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
                 return Container(
                   height: 8,
                   width: double.infinity,
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withValues(alpha: 0.1),
                   child: FractionallySizedBox(
                     alignment: Alignment.centerLeft,
                     widthFactor: progress,
@@ -344,7 +344,7 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
                         boxShadow: isUrgent
                             ? [
                                 BoxShadow(
-                                  color: Colors.red.withOpacity(0.5),
+                                  color: Colors.red.withValues(alpha: 0.5),
                                   blurRadius: 8,
                                   spreadRadius: 2,
                                 )
@@ -406,7 +406,7 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.1),
+                      color: Colors.white.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -462,7 +462,7 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
                                 width: 32,
                                 height: 32,
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.2),
+                                  color: Colors.white.withValues(alpha: 0.2),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Center(
@@ -807,7 +807,7 @@ class _BlitzXPRow extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFF6B35).withOpacity(0.2),
+                    color: const Color(0xFFFF6B35).withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
@@ -846,7 +846,7 @@ class _BlitzXPRow extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: AppTheme.gold.withOpacity(0.2),
+                color: AppTheme.gold.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(

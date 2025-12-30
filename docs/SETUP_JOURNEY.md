@@ -237,15 +237,64 @@ $env:FLUTTER_PREBUILT_ENGINE_VERSION = "1527ae0ec577a4ef50e65f6fefcfc1326707d9bf
 
 ---
 
+### Problem 6: Firebase Package Errors (79 "Undefined class" errors)
+
+**Symptom:** Dart analyzer shows "Undefined class 'FirebaseOptions'" and similar errors for all Firebase imports, even though packages were in pubspec.yaml.
+
+**Root Cause:** Corrupted packages in the pub cache - specifically `firebase_core_platform_interface` was missing its main Dart file.
+
+**Solution:**
+1. Delete corrupted packages from cache:
+   ```bash
+   rm -rf "/c/Users/seanm/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core-"*
+   rm -rf "/c/Users/seanm/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_analytics-"*
+   rm -rf "/c/Users/seanm/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core_platform_interface-"*
+   # etc for all firebase packages
+   ```
+
+2. Re-download packages:
+   ```bash
+   dart pub get
+   ```
+
+**Lesson:** If packages appear installed but aren't recognized, the cache may be corrupted. Delete and re-download rather than just running `pub get` repeatedly.
+
+---
+
+### Problem 7: withOpacity Deprecation Warnings
+
+**Symptom:** 58 `info` level warnings about `withOpacity` being deprecated.
+
+**Solution:** Replace all instances of `.withOpacity(0.X)` with `.withValues(alpha: 0.X)`:
+```bash
+sed -i 's/\.withOpacity(/.withValues(alpha: /g' lib/**/*.dart
+```
+
+---
+
+### Problem 8: BuildContext Async Warnings
+
+**Symptom:** `use_build_context_synchronously` warnings when using `context` after `Future.delayed`.
+
+**Solution:** Add `mounted` check before using context:
+```dart
+Future.delayed(const Duration(milliseconds: 1000), () {
+  if (!mounted) return;  // Add this line
+  Navigator.pushReplacement(context, ...);
+});
+```
+
+---
+
 ## What's Still Needed
 
 | Item | Status | Notes |
 |------|--------|-------|
-| Firebase Analytics code | In progress | Service created, need to add event tracking |
+| Firebase Analytics | ✅ Complete | All screens tracked, events logged |
 | RevenueCat | Not started | For in-app purchases |
 | Apple Developer account | Waiting | Payment pending |
 | Codemagic | Not started | iOS cloud builds |
 
 ---
 
-*Last updated: 2024-12-30*
+*Last updated: 2025-12-30*

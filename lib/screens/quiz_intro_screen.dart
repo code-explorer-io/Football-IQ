@@ -31,7 +31,7 @@ class QuizIntroScreen extends StatelessWidget {
                 height: 120,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [club.primaryColor, club.primaryColor.withOpacity(0.7)],
+                    colors: [club.primaryColor, club.primaryColor.withValues(alpha: 0.7)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),

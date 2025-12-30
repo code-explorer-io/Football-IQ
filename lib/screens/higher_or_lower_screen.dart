@@ -37,7 +37,7 @@ class HigherOrLowerIntroScreen extends StatelessWidget {
                 height: 120,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [mode.color, mode.color.withOpacity(0.7)],
+                    colors: [mode.color, mode.color.withValues(alpha: 0.7)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -175,6 +175,7 @@ class _HigherOrLowerGameScreenState extends State<HigherOrLowerGameScreen> {
     });
 
     Future.delayed(const Duration(milliseconds: 1500), () {
+      if (!mounted) return;
       if (_currentIndex < _comparisons.length - 1) {
         setState(() {
           _currentIndex++;
@@ -281,7 +282,7 @@ class _HigherOrLowerGameScreenState extends State<HigherOrLowerGameScreen> {
                         gradient: LinearGradient(
                           colors: [
                             const Color(0xFF2E7D32),
-                            const Color(0xFF2E7D32).withOpacity(0.7),
+                            const Color(0xFF2E7D32).withValues(alpha: 0.7),
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -344,9 +345,9 @@ class _HigherOrLowerGameScreenState extends State<HigherOrLowerGameScreen> {
                         gradient: LinearGradient(
                           colors: _answered
                               ? (_isCorrect
-                                  ? [Colors.green, Colors.green.withOpacity(0.7)]
-                                  : [Colors.red, Colors.red.withOpacity(0.7)])
-                              : [widget.mode.color, widget.mode.color.withOpacity(0.7)],
+                                  ? [Colors.green, Colors.green.withValues(alpha: 0.7)]
+                                  : [Colors.red, Colors.red.withValues(alpha: 0.7)])
+                              : [widget.mode.color, widget.mode.color.withValues(alpha: 0.7)],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
@@ -388,7 +389,7 @@ class _HigherOrLowerGameScreenState extends State<HigherOrLowerGameScreen> {
               margin: const EdgeInsets.symmetric(horizontal: 20),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.1),
+                color: Colors.white.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
@@ -783,7 +784,7 @@ class _HigherOrLowerXPRow extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFF6B35).withOpacity(0.2),
+                    color: const Color(0xFFFF6B35).withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
@@ -822,7 +823,7 @@ class _HigherOrLowerXPRow extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: AppTheme.gold.withOpacity(0.2),
+                color: AppTheme.gold.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(

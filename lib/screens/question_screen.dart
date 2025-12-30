@@ -113,9 +113,11 @@ class _QuestionScreenState extends State<QuestionScreen>
 
     // Wait a moment then move to next question
     Future.delayed(const Duration(milliseconds: 1200), () {
+      if (!mounted) return;
       if (_currentIndex < _questions.length - 1) {
         // Animate out, change question, animate in
         _animController.reverse().then((_) {
+          if (!mounted) return;
           setState(() {
             _currentIndex++;
             _selectedAnswer = null;
@@ -285,7 +287,7 @@ class _AnswerButton extends StatelessWidget {
 
   Color _getBackgroundColor() {
     if (!showResult) {
-      return Colors.white.withOpacity(0.1);
+      return Colors.white.withValues(alpha: 0.1);
     }
     if (isCorrect) {
       return Colors.green;
@@ -293,7 +295,7 @@ class _AnswerButton extends StatelessWidget {
     if (isSelected && !isCorrect) {
       return Colors.red;
     }
-    return Colors.white.withOpacity(0.1);
+    return Colors.white.withValues(alpha: 0.1);
   }
 
   @override
@@ -319,7 +321,7 @@ class _AnswerButton extends StatelessWidget {
               width: 32,
               height: 32,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
+                color: Colors.white.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Center(
