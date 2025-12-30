@@ -67,17 +67,62 @@ Not required for Android/iOS/Web development.
 
 ## Git Issue History & Resolution
 
-### Problem (December 30, 2024)
-Previous Git for Windows installation was incomplete - missing `git.exe` executables.
+> **IMPORTANT**: We've hit Git issues multiple times. This section documents everything we learned.
 
-### Root Cause
+### Issue #1: Missing git.exe (December 30, 2024 - Morning)
+
+**Symptoms:**
+- `git --version` returns "git is not recognized"
+- `flutter doctor` shows Git not found
+- VS Code terminal can't run git commands
+
+**Root Cause:**
 Corrupted/partial Git installation at `C:\Program Files\Git\` that only contained helper tools (`gitk.exe`, `git-gui.exe`) but not the main `git.exe`.
 
-### Solution Applied
-1. Uninstalled incomplete Git installation
+**How We Diagnosed:**
+```cmd
+dir "C:\Program Files\Git\cmd"        # Check if git.exe exists
+dir "C:\Program Files\Git\bin"        # Check alternative location
+where git                              # Shows which git would be used
+```
+
+**Solution Applied:**
+1. Uninstalled incomplete Git installation via Windows Settings → Apps
 2. Fresh install of Git for Windows from https://git-scm.com/download/win
-3. Selected "Git from the command line and also from 3rd-party software" during install
-4. Restarted VS Code to pick up new PATH
+3. During install, selected "Git from the command line and also from 3rd-party software"
+4. **CRITICAL**: Restarted VS Code completely (not just terminal - the whole app)
+5. Verified with `git --version`
+
+### Issue #2: GitHub Desktop ENOENT Error (December 30, 2024 - Evening)
+
+**Symptoms:**
+- GitHub Desktop shows "Can't find Football-IQ"
+- Error: `ENOENT: Git failed to execute. This can occur...`
+- Repository appears grayed out or missing
+
+**Root Cause:**
+GitHub Desktop loses reference to repositories when:
+- Git is reinstalled
+- PATH environment changes
+- Windows updates modify environment
+
+**Key Insight:**
+Git command line still works even when GitHub Desktop fails! Don't let the GUI stop you.
+
+**Solution Applied:**
+Used command line to commit and push while GitHub Desktop was broken:
+```cmd
+cd C:\Users\seanm\Projects\Football-IQ
+git status
+git add .
+git commit -m "Your commit message"
+git push
+```
+
+**To Fix GitHub Desktop Later:**
+1. Click "Locate..." button and point to project folder, OR
+2. File → Add Local Repository → Browse to project, OR
+3. Fresh install: Uninstall, delete `%APPDATA%\GitHub Desktop`, reinstall
 
 ### Verification Commands
 ```cmd
@@ -90,6 +135,12 @@ Expected output:
 - `where git` → `C:\Program Files\Git\cmd\git.exe`
 - `git --version` → `git version 2.52.0.windows.1`
 - `flutter doctor` → `[✓] Flutter (Channel stable, 3.38.5, ...)`
+
+### Prevention Tips
+1. After any Git changes, always restart VS Code completely
+2. Keep command line skills sharp - GUIs fail, CLI doesn't
+3. Commit frequently so you never lose much work
+4. If weird Git errors appear, first try: restart VS Code and run `git --version`
 
 ---
 
