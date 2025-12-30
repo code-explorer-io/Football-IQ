@@ -19,6 +19,7 @@ import 'timed_blitz_screen.dart';
 import 'cup_mode_screen.dart';
 import 'privacy_policy_screen.dart';
 import 'terms_of_service_screen.dart';
+import 'paywall_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -159,16 +160,19 @@ class _GameModeCard extends StatelessWidget {
 
   const _GameModeCard({required this.mode});
 
-  void _onTap(BuildContext context) {
+  void _onTap(BuildContext context) async {
     if (mode.isLocked) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Coming soon'),
-          duration: Duration(seconds: 2),
-        ),
+      // Show paywall for locked modes
+      final purchased = await Navigator.push<bool>(
+        context,
+        MaterialPageRoute(builder: (context) => const PaywallScreen()),
       );
-      return;
+      // If purchased, the mode will now be unlocked (isLocked getter checks PurchaseService)
+      if (purchased != true) return;
     }
+
+    // Check context is still valid after async gap
+    if (!context.mounted) return;
 
     // Track mode selection
     AnalyticsService.logModeSelected(mode.name);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../services/purchase_service.dart';
 
 class GameMode {
   final String id;
@@ -6,7 +7,7 @@ class GameMode {
   final String description;
   final IconData icon;
   final Color color;
-  final bool isLocked;
+  final bool isFree; // True if mode is free, false if requires premium
   final bool requiresClubSelection;
   final String? dataFile; // For modes that don't need club selection
 
@@ -16,10 +17,13 @@ class GameMode {
     required this.description,
     required this.icon,
     required this.color,
-    this.isLocked = false,
+    this.isFree = false,
     this.requiresClubSelection = true,
     this.dataFile,
   });
+
+  /// Check if this mode is locked (requires premium but user doesn't have it)
+  bool get isLocked => !isFree && !PurchaseService.isPremium;
 }
 
 // Available game modes
@@ -30,7 +34,7 @@ final List<GameMode> gameModes = [
     description: 'Prove your loyalty',
     icon: Icons.shield,
     color: const Color(0xFF7A263A),
-    isLocked: false,
+    isFree: true, // Core mode is free
     requiresClubSelection: true,
   ),
   GameMode(
@@ -39,7 +43,7 @@ final List<GameMode> gameModes = [
     description: 'Icons of the English game',
     icon: Icons.star,
     color: const Color(0xFF3D195B), // Premier League purple
-    isLocked: false,
+    isFree: false, // Premium
     requiresClubSelection: false,
     dataFile: 'assets/data/premier_league_legends.json',
   ),
@@ -49,7 +53,7 @@ final List<GameMode> gameModes = [
     description: 'The numbers game',
     icon: Icons.swap_vert,
     color: const Color(0xFF1565C0), // Blue
-    isLocked: false,
+    isFree: false, // Premium
     requiresClubSelection: false,
     dataFile: 'assets/data/higher_or_lower.json',
   ),
@@ -59,7 +63,7 @@ final List<GameMode> gameModes = [
     description: 'One mistake and it\'s over',
     icon: Icons.local_fire_department,
     color: const Color(0xFFE65100), // Orange
-    isLocked: false,
+    isFree: false, // Premium
     requiresClubSelection: false,
     dataFile: 'assets/data/survival_mode.json',
   ),
@@ -69,7 +73,7 @@ final List<GameMode> gameModes = [
     description: 'Beat the clock',
     icon: Icons.timer,
     color: const Color(0xFFD32F2F), // Red
-    isLocked: false,
+    isFree: false, // Premium
     requiresClubSelection: false,
     dataFile: 'assets/data/survival_mode.json', // Reuses survival questions
   ),
@@ -79,7 +83,7 @@ final List<GameMode> gameModes = [
     description: 'Glory awaits',
     icon: Icons.emoji_events,
     color: const Color(0xFF00695C), // Teal
-    isLocked: false,
+    isFree: false, // Premium
     requiresClubSelection: false,
     dataFile: 'assets/data/international_cup.json',
   ),

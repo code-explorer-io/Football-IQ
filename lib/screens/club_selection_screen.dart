@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/club.dart';
 import 'quiz_intro_screen.dart';
+import 'paywall_screen.dart';
 
 class ClubSelectionScreen extends StatelessWidget {
   const ClubSelectionScreen({super.key});
@@ -71,20 +72,21 @@ class _ClubCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        if (!club.isLocked) {
+      onTap: () async {
+        if (club.isLocked) {
+          // Show paywall for locked clubs
+          final purchased = await Navigator.push<bool>(
+            context,
+            MaterialPageRoute(builder: (context) => const PaywallScreen()),
+          );
+          if (purchased != true) return;
+        }
+        // Navigate to quiz (either club was free or user just purchased)
+        if (context.mounted) {
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => QuizIntroScreen(club: club),
-            ),
-          );
-        } else {
-          // Show locked message
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Unlock all clubs with premium'),
-              duration: Duration(seconds: 2),
             ),
           );
         }
