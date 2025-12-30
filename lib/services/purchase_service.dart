@@ -11,8 +11,8 @@ import 'analytics_service.dart';
 class PurchaseService {
   static const String _entitlementId = 'premium';
 
-  // RevenueCat API key (test key works for both platforms during development)
-  static const String _apiKey = 'test_RODuUzywbPUvRvshJFrJwpmOorI';
+  // RevenueCat API key for Google Play
+  static const String _apiKey = 'goog_oFlOoAMzEvSmjjCzjidKONioDlu';
 
   // Cache key for offline access
   static const String _premiumCacheKey = 'is_premium_cached';

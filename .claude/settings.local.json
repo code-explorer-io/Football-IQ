@@ -67,7 +67,31 @@
       "Bash(PATH=\"/c/Program Files/Git/cmd:$PATH\" /c/Flutter/flutter/bin/flutter pub get:*)",
       "Bash(node --version)",
       "Bash(npm --version:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(/c/Flutter/flutter/bin/flutter devices:*)",
+      "Bash(PATH=\"/c/Program Files/Git/bin:/c/Program Files/Git/cmd:$PATH\" /c/Flutter/flutter/bin/flutter devices:*)",
+      "Bash(\"/c/Program Files/Git/bin/bash.exe\" -c \"export PATH=''/c/Program Files/Git/cmd:/c/Program Files/Git/bin:$PATH'' && cd /c/Users/seanm/Projects/Football-IQ && /c/Flutter/flutter/bin/flutter devices\")",
+      "Bash(cmd /c \"cd /d c:\\\\Users\\\\seanm\\\\Projects\\\\Football-IQ && C:\\\\Flutter\\\\flutter\\\\bin\\\\flutter.bat devices\")",
+      "Bash(cmd /c \"cd /d c:\\\\Users\\\\seanm\\\\Projects\\\\Football-IQ && set PATH=C:\\\\Program Files\\\\Git\\\\cmd;%PATH% && C:\\\\Flutter\\\\flutter\\\\bin\\\\flutter.bat devices\")",
+      "Bash(cmd /c \"set PATH=C:\\\\Program Files\\\\Git\\\\cmd;%PATH% && C:\\\\Flutter\\\\flutter\\\\bin\\\\flutter.bat devices 2>&1\")",
+      "Bash(cmd /c \"dir \"\"C:\\\\Program Files\\\\Android\\\\Android Studio\\\\jbr\\\\bin\\\\java.exe\"\" 2>&1\")",
+      "Bash(cmd /c \"echo JAVA_HOME=%JAVA_HOME% && echo STUDIO_JDK=%STUDIO_JDK% && echo JDK_HOME=%JDK_HOME%\")",
+      "Bash(cmd /c \"dir \"\"C:\\\\Program Files\\\\Android\\\\Android Studio\\\\jbr\\\\bin\"\" 2>&1\")",
+      "Bash(cmd /c \"dir \"\"C:\\\\Program Files\\\\Git\"\" /B 2>&1\")",
+      "Bash(cmd /c \"dir \"\"C:\\\\Program Files\\\\Git\\\\bin\"\" /B 2>&1\")",
+      "Bash(cmd /c \"dir \"\"C:\\\\Program Files\\\\Git\\\\bin\\\\bash.exe\"\" 2>&1\")",
+      "Bash(cmd /c \"if exist \"\"C:\\\\Program Files\\\\Git\\\\bin\\\\bash.exe\"\" \\(echo EXISTS\\) else \\(echo NOT FOUND\\)\")",
+      "Bash(cmd /c \"echo %CLAUDE_CODE_GIT_BASH_PATH%\")",
+      "Bash(cmd /c \"\"\"C:\\\\Program Files\\\\Git\\\\bin\\\\bash.exe\"\" --version 2>&1\")",
+      "Bash(code --version:*)",
+      "Bash(cmd /c \"code --list-extensions 2>&1 | findstr -i claude\")",
+      "Bash(\"/c/Program Files/Git/bin/bash.exe\" --version)",
+      "Bash(code --list-extensions:*)",
+      "Bash(\"/c/Program Files/Git/bin/bash.exe\" -c \"echo ''bash test successful''\")",
+      "Bash(printenv:*)",
+      "Bash(reg query \"HKCU\\\\Environment\" /v CLAUDE_CODE_GIT_BASH_PATH)",
+      "Bash(/c/Flutter/flutter/bin/flutter:*)",
+      "Bash(/c/Flutter/flutter/bin/flutter.bat:*)"
     ]
   }
 }
