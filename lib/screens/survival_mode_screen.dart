@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import '../models/game_mode.dart';
 import '../services/score_service.dart';
 import '../services/haptic_service.dart';
+import '../services/sound_service.dart';
 import '../services/streak_service.dart';
 import '../services/xp_service.dart';
 import '../services/analytics_service.dart';
+import '../services/unlock_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/pitch_background.dart';
 import '../widgets/animated_answer_button.dart';
@@ -156,11 +158,13 @@ class _SurvivalQuestionScreenState extends State<SurvivalQuestionScreen> {
 
     final isCorrect = selectedIndex == _questions[_currentIndex]['answerIndex'];
 
-    // Haptic feedback
+    // Haptic and sound feedback
     if (isCorrect) {
       HapticService.correct();
+      SoundService.correct();
     } else {
       HapticService.incorrect();
+      SoundService.incorrect();
     }
 
     setState(() {
@@ -340,6 +344,7 @@ class _SurvivalResultsScreenState extends State<SurvivalResultsScreen> {
   bool _isNewBest = false;
   XPAward? _xpAward;
   int _dailyStreak = 0;
+  UnlockResult? _unlockResult;
 
   @override
   void initState() {
@@ -363,16 +368,21 @@ class _SurvivalResultsScreenState extends State<SurvivalResultsScreen> {
       isPerfect: widget.ranOutOfQuestions, // "Perfect" if they ran out of questions
     );
 
+    // Record survival streak for unlock progression
+    final unlockResult = await UnlockService.recordSurvivalStreak(widget.streak);
+
     setState(() {
       _bestStreak = bestStreak;
       _isNewBest = isNewBest;
       _xpAward = xpAward;
       _dailyStreak = streakResult.streak;
+      _unlockResult = unlockResult;
     });
 
-    // Celebrate new record or level up
-    if ((isNewBest && widget.streak > 0) || xpAward.leveledUp) {
+    // Celebrate new record, level up, or mode unlock
+    if ((isNewBest && widget.streak > 0) || xpAward.leveledUp || unlockResult.didUnlock) {
       HapticService.celebrate();
+      SoundService.levelUp();
     }
 
     // Track analytics
@@ -397,13 +407,13 @@ class _SurvivalResultsScreenState extends State<SurvivalResultsScreen> {
     return 'Early Exit';
   }
 
-  String _getVerdictEmoji() {
-    if (widget.ranOutOfQuestions) return '👑';
-    if (widget.streak >= 20) return '🔥';
-    if (widget.streak >= 15) return '⭐';
-    if (widget.streak >= 10) return '💪';
-    if (widget.streak >= 5) return '👍';
-    return '🔄';
+  IconData _getVerdictIcon() {
+    if (widget.ranOutOfQuestions) return Icons.emoji_events;
+    if (widget.streak >= 20) return Icons.local_fire_department;
+    if (widget.streak >= 15) return Icons.star;
+    if (widget.streak >= 10) return Icons.trending_up;
+    if (widget.streak >= 5) return Icons.sports_soccer;
+    return Icons.replay;
   }
 
   @override
@@ -435,9 +445,10 @@ class _SurvivalResultsScreenState extends State<SurvivalResultsScreen> {
                     ),
                   ),
                 ),
-              Text(
-                _getVerdictEmoji(),
-                style: const TextStyle(fontSize: 80),
+              Icon(
+                _getVerdictIcon(),
+                size: 80,
+                color: widget.mode.color,
               ),
               const SizedBox(height: 24),
               const Text(
@@ -501,6 +512,52 @@ class _SurvivalResultsScreenState extends State<SurvivalResultsScreen> {
                 const SizedBox(height: 20),
                 _SurvivalXPRow(xpAward: _xpAward!, streak: _dailyStreak),
               ],
+              // Mode unlock celebration
+              if (_unlockResult != null && _unlockResult!.didUnlock) ...[
+                const SizedBox(height: 16),
+                TweenAnimationBuilder<double>(
+                  tween: Tween(begin: 0.8, end: 1.0),
+                  duration: const Duration(milliseconds: 600),
+                  curve: Curves.elasticOut,
+                  builder: (context, scale, child) {
+                    return Transform.scale(scale: scale, child: child);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          AppTheme.gold,
+                          AppTheme.gold.withValues(alpha: 0.8),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppTheme.gold.withValues(alpha: 0.4),
+                          blurRadius: 12,
+                          spreadRadius: 2,
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.lock_open, color: Colors.black, size: 20),
+                        const SizedBox(width: 8),
+                        Text(
+                          '${_unlockResult!.unlockedModeName} Unlocked!',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
               const Spacer(),
               SizedBox(
                 width: double.infinity,
@@ -522,7 +579,7 @@ class _SurvivalResultsScreenState extends State<SurvivalResultsScreen> {
                     ),
                   ),
                   child: const Text(
-                    'Try Again',
+                    'Kick Off Again',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

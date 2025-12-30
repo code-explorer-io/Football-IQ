@@ -9,10 +9,12 @@ import '../services/haptic_service.dart';
 import '../services/streak_service.dart';
 import '../services/xp_service.dart';
 import '../services/analytics_service.dart';
+import '../services/unlock_service.dart';
+import '../services/purchase_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/animated_button.dart';
 import '../widgets/animated_answer_button.dart';
-import '../widgets/form_guide.dart'; // Still needed for FootballIQBadge on results screen
+import '../widgets/form_guide.dart';
 import '../widgets/pitch_background.dart';
 import 'club_selection_screen.dart';
 import 'survival_mode_screen.dart';
@@ -35,13 +37,23 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentLevel = 1;
   double _levelProgress = 0.0;
   bool _streakAtRisk = false;
+  Map<String, bool> _unlockedModes = {};
+  Map<String, double> _unlockProgress = {};
+  bool _isLoadingUnlocks = true;
 
   @override
   void initState() {
     super.initState();
-    _loadGamificationData();
+    _loadAllData();
     AnalyticsService.logScreenView('home');
     AnalyticsService.logAppOpen();
+  }
+
+  Future<void> _loadAllData() async {
+    await Future.wait([
+      _loadGamificationData(),
+      _loadUnlockData(),
+    ]);
   }
 
   Future<void> _loadGamificationData() async {
@@ -56,6 +68,24 @@ class _HomeScreenState extends State<HomeScreen> {
         _currentLevel = level;
         _levelProgress = progress;
         _streakAtRisk = atRisk;
+      });
+    }
+  }
+
+  Future<void> _loadUnlockData() async {
+    final Map<String, bool> unlocked = {};
+    final Map<String, double> progress = {};
+
+    for (final mode in gameModes) {
+      unlocked[mode.id] = await UnlockService.isModeUnlocked(mode.id);
+      progress[mode.id] = await UnlockService.getUnlockProgress(mode.id);
+    }
+
+    if (mounted) {
+      setState(() {
+        _unlockedModes = unlocked;
+        _unlockProgress = progress;
+        _isLoadingUnlocks = false;
       });
     }
   }
@@ -121,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const StatsScreen()),
-                  ).then((_) => _loadGamificationData());
+                  ).then((_) => _loadAllData());
                 },
               ),
               const SizedBox(height: 20),
@@ -143,14 +173,39 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 16),
               Expanded(
-                child: ListView.builder(
-                  itemCount: gameModes.length,
-                  itemBuilder: (context, index) {
-                    final mode = gameModes[index];
-                    return _GameModeCard(mode: mode);
-                  },
-                ),
+                child: _isLoadingUnlocks
+                    ? const Center(child: CircularProgressIndicator(color: AppTheme.highlight))
+                    : ListView.builder(
+                        itemCount: gameModes.length,
+                        itemBuilder: (context, index) {
+                          final mode = gameModes[index];
+                          final isUnlocked = _unlockedModes[mode.id] ?? false;
+                          final progress = _unlockProgress[mode.id] ?? 0.0;
+                          return _GameModeCard(
+                            mode: mode,
+                            isUnlocked: isUnlocked,
+                            unlockProgress: progress,
+                            onRefresh: _loadAllData,
+                          );
+                        },
+                      ),
               ),
+              // Premium unlock all button
+              if (!PurchaseService.isPremium)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8, bottom: 8),
+                  child: _UnlockAllButton(
+                    onTap: () async {
+                      final purchased = await Navigator.push<bool>(
+                        context,
+                        MaterialPageRoute(builder: (context) => const PaywallScreen()),
+                      );
+                      if (purchased == true) {
+                        _loadAllData();
+                      }
+                    },
+                  ),
+                ),
             ],
           ),
         ),
@@ -161,83 +216,264 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class _GameModeCard extends StatefulWidget {
   final GameMode mode;
+  final bool isUnlocked;
+  final double unlockProgress;
+  final VoidCallback onRefresh;
 
-  const _GameModeCard({required this.mode});
+  const _GameModeCard({
+    required this.mode,
+    required this.isUnlocked,
+    required this.unlockProgress,
+    required this.onRefresh,
+  });
 
   @override
   State<_GameModeCard> createState() => _GameModeCardState();
 }
 
-class _GameModeCardState extends State<_GameModeCard> {
+class _GameModeCardState extends State<_GameModeCard>
+    with SingleTickerProviderStateMixin {
   double _scale = 1.0;
   bool _isPressed = false;
+  String? _progressText;
+  late AnimationController _glowController;
+  late Animation<double> _glowAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _glowController = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    );
+    _glowAnimation = Tween<double>(begin: 0.3, end: 0.6).animate(
+      CurvedAnimation(parent: _glowController, curve: Curves.easeInOut),
+    );
+    // Subtle glow pulse for unlocked cards
+    if (widget.isUnlocked) {
+      _glowController.repeat(reverse: true);
+    }
+    _loadProgressText();
+  }
+
+  @override
+  void dispose() {
+    _glowController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(_GameModeCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Start glow when newly unlocked
+    if (widget.isUnlocked && !oldWidget.isUnlocked) {
+      _glowController.repeat(reverse: true);
+    }
+  }
+
+  Future<void> _loadProgressText() async {
+    if (!widget.isUnlocked && !widget.mode.isPremiumOnly) {
+      final text = await UnlockService.getProgressText(widget.mode.id);
+      if (mounted) {
+        setState(() => _progressText = text);
+      }
+    }
+  }
 
   void _onTap(BuildContext context) async {
-    if (widget.mode.isLocked) {
-      // Show paywall for locked modes
-      final purchased = await Navigator.push<bool>(
-        context,
-        MaterialPageRoute(builder: (context) => const PaywallScreen()),
-      );
-      // If purchased, the mode will now be unlocked (isLocked getter checks PurchaseService)
-      if (purchased != true) return;
+    if (!widget.isUnlocked) {
+      // Show what's needed to unlock
+      _showUnlockRequirement(context);
+      return;
     }
-
-    // Check context is still valid after async gap
-    if (!context.mounted) return;
 
     // Track mode selection
     AnalyticsService.logModeSelected(widget.mode.name);
 
     if (widget.mode.requiresClubSelection) {
-      // Go to club selection (Quiz Your Club)
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => const ClubSelectionScreen(),
         ),
-      );
+      ).then((_) => widget.onRefresh());
     } else if (widget.mode.id == 'survival_mode') {
-      // Survival Mode has its own intro screen
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => SurvivalIntroScreen(mode: widget.mode),
         ),
-      );
+      ).then((_) => widget.onRefresh());
     } else if (widget.mode.id == 'higher_or_lower') {
-      // Higher or Lower has its own screen
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => HigherOrLowerIntroScreen(mode: widget.mode),
         ),
-      );
+      ).then((_) => widget.onRefresh());
     } else if (widget.mode.id == 'timed_blitz') {
-      // Timed Blitz has its own screen
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => TimedBlitzIntroScreen(mode: widget.mode),
         ),
-      );
+      ).then((_) => widget.onRefresh());
     } else if (widget.mode.id == 'international_cup') {
-      // International Cup has its own screen
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => CupModeIntroScreen(mode: widget.mode),
         ),
-      );
+      ).then((_) => widget.onRefresh());
     } else {
-      // Standard quiz modes (PL Legends)
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => GenericQuizIntroScreen(mode: widget.mode),
         ),
-      );
+      ).then((_) => widget.onRefresh());
     }
+  }
+
+  void _showUnlockRequirement(BuildContext context) {
+    final requirement = UnlockService.getUnlockRequirement(widget.mode.id);
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppTheme.surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) => Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: widget.mode.color.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Icon(
+                widget.mode.icon,
+                color: widget.mode.color,
+                size: 32,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              widget.mode.name,
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: AppTheme.textPrimary,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.lock_outline, color: AppTheme.textMuted, size: 18),
+                const SizedBox(width: 8),
+                Text(
+                  requirement,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: AppTheme.textSecondary,
+                  ),
+                ),
+              ],
+            ),
+            if (!widget.mode.isPremiumOnly && widget.unlockProgress > 0) ...[
+              const SizedBox(height: 20),
+              // Progress bar
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Progress',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: AppTheme.textMuted,
+                        ),
+                      ),
+                      Text(
+                        _progressText ?? '',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: AppTheme.textSecondary,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(6),
+                    child: LinearProgressIndicator(
+                      value: widget.unlockProgress,
+                      backgroundColor: AppTheme.elevated,
+                      valueColor: AlwaysStoppedAnimation<Color>(widget.mode.color),
+                      minHeight: 10,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+            const SizedBox(height: 24),
+            // Unlock instantly button
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () async {
+                  Navigator.pop(context);
+                  final purchased = await Navigator.push<bool>(
+                    context,
+                    MaterialPageRoute(builder: (context) => const PaywallScreen()),
+                  );
+                  if (purchased == true) {
+                    widget.onRefresh();
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.gold,
+                  foregroundColor: Colors.black,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.bolt, size: 20),
+                    SizedBox(width: 8),
+                    Text(
+                      'Unlock All Modes - £2.49',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text(
+                'Keep Playing to Unlock',
+                style: TextStyle(color: AppTheme.textMuted),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   void _onTapDown(TapDownDetails details) {
@@ -265,6 +501,8 @@ class _GameModeCardState extends State<_GameModeCard> {
 
   @override
   Widget build(BuildContext context) {
+    final isLocked = !widget.isUnlocked;
+
     return GestureDetector(
       onTapDown: _onTapDown,
       onTapUp: _onTapUp,
@@ -273,25 +511,33 @@ class _GameModeCardState extends State<_GameModeCard> {
         scale: _scale,
         duration: const Duration(milliseconds: 100),
         curve: Curves.easeOut,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 100),
-          margin: const EdgeInsets.only(bottom: 16),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [widget.mode.color, widget.mode.color.withValues(alpha: 0.7)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: widget.mode.color.withValues(alpha: _isPressed ? 0.2 : 0.4),
-                blurRadius: _isPressed ? 4 : 12,
-                offset: Offset(0, _isPressed ? 2 : 6),
-                spreadRadius: _isPressed ? 0 : 1,
+        child: AnimatedBuilder(
+          animation: _glowAnimation,
+          builder: (context, child) {
+            return Container(
+              margin: const EdgeInsets.only(bottom: 16),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: isLocked
+                      ? [Colors.grey.shade700, Colors.grey.shade800]
+                      : [widget.mode.color, widget.mode.color.withValues(alpha: 0.7)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: (isLocked ? Colors.grey : widget.mode.color)
+                        .withValues(alpha: _isPressed ? 0.2 : (isLocked ? 0.3 : _glowAnimation.value)),
+                    blurRadius: _isPressed ? 4 : (isLocked ? 8 : 16),
+                    offset: Offset(0, _isPressed ? 2 : 6),
+                    spreadRadius: _isPressed ? 0 : (isLocked ? 0 : 2),
+                  ),
+                ],
               ),
-            ],
-          ),
+              child: child,
+            );
+          },
           child: Stack(
             children: [
               Padding(
@@ -302,12 +548,12 @@ class _GameModeCardState extends State<_GameModeCard> {
                       width: 60,
                       height: 60,
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
+                        color: Colors.white.withValues(alpha: isLocked ? 0.1 : 0.2),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Icon(
                         widget.mode.icon,
-                        color: Colors.white,
+                        color: Colors.white.withValues(alpha: isLocked ? 0.5 : 1.0),
                         size: 32,
                       ),
                     ),
@@ -318,39 +564,180 @@ class _GameModeCardState extends State<_GameModeCard> {
                         children: [
                           Text(
                             widget.mode.name,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                              color: Colors.white.withValues(alpha: isLocked ? 0.7 : 1.0),
                             ),
                           ),
                           const SizedBox(height: 4),
-                          Text(
-                            widget.mode.description,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.white.withValues(alpha: 0.8),
+                          if (isLocked && !widget.mode.isPremiumOnly)
+                            // Show unlock progress
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  _progressText ?? 'Locked',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white.withValues(alpha: 0.6),
+                                  ),
+                                ),
+                                const SizedBox(height: 6),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(4),
+                                  child: SizedBox(
+                                    height: 4,
+                                    child: LinearProgressIndicator(
+                                      value: widget.unlockProgress,
+                                      backgroundColor: Colors.white.withValues(alpha: 0.2),
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.white.withValues(alpha: 0.8),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          else if (isLocked && widget.mode.isPremiumOnly)
+                            Row(
+                              children: [
+                                const Icon(Icons.star, color: AppTheme.gold, size: 16),
+                                const SizedBox(width: 4),
+                                Text(
+                                  'Premium',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: AppTheme.gold.withValues(alpha: 0.9),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            )
+                          else
+                            Text(
+                              widget.mode.description,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.white.withValues(alpha: 0.8),
+                              ),
                             ),
-                          ),
                         ],
                       ),
                     ),
                     Icon(
-                      widget.mode.isLocked ? Icons.lock : Icons.arrow_forward_ios,
-                      color: Colors.white,
+                      isLocked ? Icons.lock : Icons.arrow_forward_ios,
+                      color: Colors.white.withValues(alpha: isLocked ? 0.5 : 1.0),
                     ),
                   ],
                 ),
               ),
-              if (widget.mode.isLocked)
-                Positioned.fill(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.3),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Premium unlock button at bottom of home screen with shimmer effect
+class _UnlockAllButton extends StatefulWidget {
+  final VoidCallback onTap;
+
+  const _UnlockAllButton({required this.onTap});
+
+  @override
+  State<_UnlockAllButton> createState() => _UnlockAllButtonState();
+}
+
+class _UnlockAllButtonState extends State<_UnlockAllButton>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _shimmerController;
+  late Animation<double> _shimmerAnimation;
+  bool _isPressed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _shimmerController = AnimationController(
+      duration: const Duration(milliseconds: 2000),
+      vsync: this,
+    )..repeat();
+    _shimmerAnimation = Tween<double>(begin: -1.0, end: 2.0).animate(
+      CurvedAnimation(parent: _shimmerController, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _shimmerController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTapDown: (_) => setState(() => _isPressed = true),
+      onTapUp: (_) {
+        setState(() => _isPressed = false);
+        HapticService.tap();
+        widget.onTap();
+      },
+      onTapCancel: () => setState(() => _isPressed = false),
+      child: AnimatedScale(
+        scale: _isPressed ? 0.97 : 1.0,
+        duration: const Duration(milliseconds: 100),
+        child: AnimatedBuilder(
+          animation: _shimmerAnimation,
+          builder: (context, child) {
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: const [AppTheme.gold, Color(0xFFFFD700), AppTheme.gold],
+                  stops: [
+                    0.0,
+                    (_shimmerAnimation.value).clamp(0.0, 1.0),
+                    1.0,
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppTheme.gold.withValues(alpha: _isPressed ? 0.2 : 0.5),
+                    blurRadius: _isPressed ? 6 : 14,
+                    offset: Offset(0, _isPressed ? 2 : 4),
+                    spreadRadius: _isPressed ? 0 : 1,
+                  ),
+                ],
+              ),
+              child: child,
+            );
+          },
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.bolt, color: Colors.black, size: 22),
+              SizedBox(width: 8),
+              Text(
+                'Unlock All Modes',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(width: 8),
+              Text(
+                '£2.49',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black54,
+                ),
+              ),
             ],
           ),
         ),
@@ -589,7 +976,6 @@ class _GenericQuestionScreenState extends State<GenericQuestionScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Show moment description if available (for Iconic Moments)
                     if (question['moment'] != null) ...[
                       Text(
                         '"${question['moment']}"',
@@ -664,6 +1050,7 @@ class _GenericResultsScreenState extends State<GenericResultsScreen> {
   List<Achievement> _newAchievements = [];
   XPAward? _xpAward;
   int _currentStreak = 0;
+  UnlockResult? _unlockResult;
 
   late ConfettiController _confettiController;
 
@@ -742,11 +1129,11 @@ class _GenericResultsScreenState extends State<GenericResultsScreen> {
     return 'Keep Learning';
   }
 
-  String _getVerdictEmoji() {
+  IconData _getVerdictIcon() {
     final percentage = (widget.score / widget.totalQuestions) * 100;
-    if (percentage >= 80) return '🏆';
-    if (percentage >= 50) return '⚽';
-    return '📚';
+    if (percentage >= 80) return Icons.emoji_events;
+    if (percentage >= 50) return Icons.sports_soccer;
+    return Icons.school;
   }
 
   @override
@@ -772,17 +1159,19 @@ class _GenericResultsScreenState extends State<GenericResultsScreen> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: const Text(
-                        'NEW BEST!',
+                        'NEW RECORD',
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
+                          letterSpacing: 1,
                         ),
                       ),
                     ),
-                  Text(
-                    _getVerdictEmoji(),
-                    style: const TextStyle(fontSize: 80),
+                  Icon(
+                    _getVerdictIcon(),
+                    size: 80,
+                    color: widget.mode.color,
                   ),
                   const SizedBox(height: 24),
                   Text(
@@ -871,7 +1260,7 @@ class _GenericResultsScreenState extends State<GenericResultsScreen> {
                   ],
                   const Spacer(),
                   PrimaryButton(
-                    text: 'Play Again',
+                    text: 'Kick Off Again',
                     backgroundColor: widget.mode.color,
                     onTap: () {
                       Navigator.pushReplacement(
@@ -923,8 +1312,8 @@ class _GenericResultsScreenState extends State<GenericResultsScreen> {
   }
 }
 
-/// Gamification header showing streak and level
-class _GamificationHeader extends StatelessWidget {
+/// Gamification header showing streak and level with pulse animation when at risk
+class _GamificationHeader extends StatefulWidget {
   final int streak;
   final int level;
   final double levelProgress;
@@ -940,75 +1329,145 @@ class _GamificationHeader extends StatelessWidget {
   });
 
   @override
+  State<_GamificationHeader> createState() => _GamificationHeaderState();
+}
+
+class _GamificationHeaderState extends State<_GamificationHeader>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _pulseController;
+  late Animation<double> _pulseAnimation;
+  bool _isPressed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _pulseController = AnimationController(
+      duration: const Duration(milliseconds: 1200),
+      vsync: this,
+    );
+    _pulseAnimation = Tween<double>(begin: 0.3, end: 0.7).animate(
+      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
+    );
+    if (widget.streakAtRisk) {
+      _pulseController.repeat(reverse: true);
+    }
+  }
+
+  @override
+  void didUpdateWidget(_GamificationHeader oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.streakAtRisk && !oldWidget.streakAtRisk) {
+      _pulseController.repeat(reverse: true);
+    } else if (!widget.streakAtRisk && oldWidget.streakAtRisk) {
+      _pulseController.stop();
+      _pulseController.reset();
+    }
+  }
+
+  @override
+  void dispose() {
+    _pulseController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        decoration: BoxDecoration(
-          color: AppTheme.surface,
-          borderRadius: BorderRadius.circular(AppTheme.radiusMD),
-          border: streakAtRisk
-              ? Border.all(color: AppTheme.gold.withValues(alpha: 0.5), width: 1)
-              : null,
-        ),
-        child: Row(
-          children: [
-            // Streak indicator
-            _StatPill(
-              icon: Icons.local_fire_department,
-              iconColor: streak > 0 ? const Color(0xFFFF6B35) : AppTheme.textMuted,
-              value: '$streak',
-              label: 'day${streak != 1 ? 's' : ''}',
-              isHighlighted: streakAtRisk,
-            ),
-            const SizedBox(width: 16),
-            // Level indicator with progress
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        'Level $level',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: AppTheme.textPrimary,
+      onTapDown: (_) => setState(() => _isPressed = true),
+      onTapUp: (_) {
+        setState(() => _isPressed = false);
+        HapticService.tap();
+        widget.onTap();
+      },
+      onTapCancel: () => setState(() => _isPressed = false),
+      child: AnimatedScale(
+        scale: _isPressed ? 0.98 : 1.0,
+        duration: const Duration(milliseconds: 100),
+        child: AnimatedBuilder(
+          animation: _pulseAnimation,
+          builder: (context, child) {
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              decoration: BoxDecoration(
+                color: AppTheme.surface,
+                borderRadius: BorderRadius.circular(AppTheme.radiusMD),
+                border: widget.streakAtRisk
+                    ? Border.all(
+                        color: AppTheme.gold.withValues(alpha: _pulseAnimation.value),
+                        width: 1.5,
+                      )
+                    : null,
+                boxShadow: widget.streakAtRisk
+                    ? [
+                        BoxShadow(
+                          color: AppTheme.gold.withValues(alpha: _pulseAnimation.value * 0.3),
+                          blurRadius: 8,
+                          spreadRadius: 0,
                         ),
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        XPService.getLevelTitle(level),
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: AppTheme.textSecondary,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 6),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-                    child: LinearProgressIndicator(
-                      value: levelProgress,
-                      backgroundColor: AppTheme.elevated,
-                      valueColor: const AlwaysStoppedAnimation<Color>(AppTheme.highlight),
-                      minHeight: 6,
-                    ),
-                  ),
-                ],
+                      ]
+                    : null,
               ),
-            ),
-            const SizedBox(width: 12),
-            // Arrow to indicate tappable
-            const Icon(
-              Icons.chevron_right,
-              color: AppTheme.textMuted,
-              size: 20,
-            ),
-          ],
+              child: child,
+            );
+          },
+          child: Row(
+            children: [
+              // Streak indicator
+              _StatPill(
+                icon: Icons.local_fire_department,
+                iconColor: widget.streak > 0 ? const Color(0xFFFF6B35) : AppTheme.textMuted,
+                value: '${widget.streak}',
+                label: 'day${widget.streak != 1 ? 's' : ''}',
+                isHighlighted: widget.streakAtRisk,
+              ),
+              const SizedBox(width: 16),
+              // Level indicator with progress
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Level ${widget.level}',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: AppTheme.textPrimary,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          XPService.getLevelTitle(widget.level),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: AppTheme.textSecondary,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(4),
+                      child: LinearProgressIndicator(
+                        value: widget.levelProgress,
+                        backgroundColor: AppTheme.elevated,
+                        valueColor: const AlwaysStoppedAnimation<Color>(AppTheme.highlight),
+                        minHeight: 6,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 12),
+              // Arrow to indicate tappable
+              const Icon(
+                Icons.chevron_right,
+                color: AppTheme.textMuted,
+                size: 20,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../models/club.dart';
 import '../models/question.dart';
 import '../services/haptic_service.dart';
+import '../services/sound_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/pitch_background.dart';
 import '../widgets/animated_answer_button.dart';
@@ -99,11 +100,13 @@ class _QuestionScreenState extends State<QuestionScreen>
 
     final isCorrect = selectedIndex == _questions[_currentIndex].answerIndex;
 
-    // Haptic feedback
+    // Haptic and sound feedback
     if (isCorrect) {
       HapticService.correct();
+      SoundService.correct();
     } else {
       HapticService.incorrect();
+      SoundService.incorrect();
     }
 
     setState(() {

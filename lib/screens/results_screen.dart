@@ -5,9 +5,11 @@ import '../services/score_service.dart';
 import '../services/stats_service.dart';
 import '../services/achievement_service.dart';
 import '../services/haptic_service.dart';
+import '../services/sound_service.dart';
 import '../services/streak_service.dart';
 import '../services/xp_service.dart';
 import '../services/analytics_service.dart';
+import '../services/unlock_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/animated_button.dart';
 import '../widgets/form_guide.dart';
@@ -41,6 +43,7 @@ class _ResultsScreenState extends State<ResultsScreen>
   XPAward? _xpAward;
   int _currentStreak = 0;
   bool _dataLoaded = false;
+  UnlockResult? _unlockResult;
 
   late ConfettiController _confettiController;
   late AnimationController _scoreAnimController;
@@ -132,6 +135,9 @@ class _ResultsScreenState extends State<ResultsScreen>
       formGuide: form,
     );
 
+    // Record club quiz completion for unlock progression
+    final unlockResult = await UnlockService.recordClubQuizCompleted();
+
     setState(() {
       _bestScore = bestScore;
       _isNewBest = isNewBest;
@@ -141,6 +147,7 @@ class _ResultsScreenState extends State<ResultsScreen>
       _xpAward = xpAward;
       _currentStreak = streakResult.streak;
       _dataLoaded = true;
+      _unlockResult = unlockResult;
     });
 
     // Start animations
@@ -148,9 +155,10 @@ class _ResultsScreenState extends State<ResultsScreen>
     await Future.delayed(const Duration(milliseconds: 300));
     _scoreAnimController.forward();
 
-    // Celebrate perfect score or new best with confetti
-    if (isPerfect || isNewBest || xpAward.leveledUp) {
+    // Celebrate perfect score, new best, level up, or mode unlock with confetti
+    if (isPerfect || isNewBest || xpAward.leveledUp || unlockResult.didUnlock) {
       HapticService.celebrate();
+      SoundService.levelUp();
       _confettiController.play();
     }
 
@@ -184,16 +192,16 @@ class _ResultsScreenState extends State<ResultsScreen>
     }
   }
 
-  String _getVerdictEmoji() {
+  IconData _getVerdictIcon() {
     final percentage = (widget.score / widget.totalQuestions) * 100;
     if (percentage == 100) {
-      return '🏆';
+      return Icons.emoji_events;
     } else if (percentage >= 80) {
-      return '⭐';
+      return Icons.star;
     } else if (percentage >= 50) {
-      return '⚽';
+      return Icons.sports_soccer;
     } else {
-      return '📺';
+      return Icons.tv;
     }
   }
 
@@ -248,12 +256,13 @@ class _ResultsScreenState extends State<ResultsScreen>
                             )
                           : const SizedBox(height: 40),
                     ),
-                    // Verdict emoji with scale animation
+                    // Verdict icon with scale animation
                     ScaleTransition(
                       scale: _scaleAnimation,
-                      child: Text(
-                        _getVerdictEmoji(),
-                        style: const TextStyle(fontSize: 72),
+                      child: Icon(
+                        _getVerdictIcon(),
+                        size: 72,
+                        color: widget.club.primaryColor,
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -454,6 +463,55 @@ class _ResultsScreenState extends State<ResultsScreen>
                         ),
                       ),
                     ],
+                    // Mode unlock celebration
+                    if (_unlockResult != null && _unlockResult!.didUnlock) ...[
+                      const SizedBox(height: 16),
+                      FadeTransition(
+                        opacity: _fadeAnimation,
+                        child: TweenAnimationBuilder<double>(
+                          tween: Tween(begin: 0.8, end: 1.0),
+                          duration: const Duration(milliseconds: 600),
+                          curve: Curves.elasticOut,
+                          builder: (context, scale, child) {
+                            return Transform.scale(scale: scale, child: child);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  AppTheme.gold,
+                                  AppTheme.gold.withValues(alpha: 0.8),
+                                ],
+                              ),
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppTheme.gold.withValues(alpha: 0.4),
+                                  blurRadius: 12,
+                                  spreadRadius: 2,
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(Icons.lock_open, color: Colors.black, size: 20),
+                                const SizedBox(width: 8),
+                                Text(
+                                  '${_unlockResult!.unlockedModeName} Unlocked!',
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                     const Spacer(flex: 2),
                     // Action buttons
                     FadeTransition(
@@ -462,7 +520,7 @@ class _ResultsScreenState extends State<ResultsScreen>
                         children: [
                           // Play Again button
                           PrimaryButton(
-                            text: 'Play Again',
+                            text: 'Kick Off Again',
                             backgroundColor: widget.club.primaryColor,
                             onTap: () {
                               Navigator.pushReplacement(

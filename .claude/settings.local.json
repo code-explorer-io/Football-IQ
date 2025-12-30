@@ -57,7 +57,11 @@
       "Bash(then echo \"✓ EXISTS: $path\")",
       "Bash(else echo \"✗ MISSING: $path\")",
       "Bash(fi)",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(cmd /c \"cd /d c:\\Users\\seanm\\Projects\\Football-IQ && C:\\Flutter\\flutter\\bin\\flutter.bat analyze\")",
+      "Bash(cmd /c \"cd /d c:\\Users\\seanm\\Projects\\Football-IQ && C:\\Flutter\\flutter\\bin\\flutter.bat analyze 2>&1\")",
+      "Bash(PATH=\"/c/Users/seanm/AppData/Local/GitHubDesktop/app-3.5.4/resources/app/git/cmd:/c/Program Files/Git/bin:$PATH\" /c/Flutter/flutter/bin/flutter analyze:*)",
+      "Bash(cmd /c \"cd /d c:\\Users\\seanm\\Projects\\Football-IQ && C:\\Flutter\\flutter\\bin\\flutter.bat pub get 2>&1\")"
     ]
   }
 }

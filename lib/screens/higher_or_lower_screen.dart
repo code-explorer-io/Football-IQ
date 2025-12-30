@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import '../models/game_mode.dart';
 import '../services/score_service.dart';
 import '../services/haptic_service.dart';
+import '../services/sound_service.dart';
 import '../services/streak_service.dart';
 import '../services/xp_service.dart';
 import '../services/analytics_service.dart';
+import '../services/unlock_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/pitch_background.dart';
 import 'home_screen.dart';
@@ -161,11 +163,13 @@ class _HigherOrLowerGameScreenState extends State<HigherOrLowerGameScreen> {
     final isHigher = value2 > value1;
     final isCorrect = guessedHigher == isHigher;
 
-    // Haptic feedback
+    // Haptic and sound feedback
     if (isCorrect) {
       HapticService.correct();
+      SoundService.correct();
     } else {
       HapticService.incorrect();
+      SoundService.incorrect();
     }
 
     setState(() {
@@ -534,6 +538,7 @@ class _HigherOrLowerResultsScreenState extends State<HigherOrLowerResultsScreen>
   bool _isNewBest = false;
   XPAward? _xpAward;
   int _dailyStreak = 0;
+  UnlockResult? _unlockResult;
 
   @override
   void initState() {
@@ -558,16 +563,24 @@ class _HigherOrLowerResultsScreenState extends State<HigherOrLowerResultsScreen>
       isPerfect: isPerfect,
     );
 
+    // Record Higher or Lower win for unlock progression (7+ is a win)
+    UnlockResult unlockResult = UnlockResult();
+    if (widget.score >= 7) {
+      unlockResult = await UnlockService.recordHigherOrLowerWin();
+    }
+
     setState(() {
       _bestScore = bestScore;
       _isNewBest = isNewBest;
       _xpAward = xpAward;
       _dailyStreak = streakResult.streak;
+      _unlockResult = unlockResult;
     });
 
-    // Celebrate new record or level up
-    if ((isNewBest && widget.score > 0) || xpAward.leveledUp) {
+    // Celebrate new record, level up, or mode unlock
+    if ((isNewBest && widget.score > 0) || xpAward.leveledUp || unlockResult.didUnlock) {
       HapticService.celebrate();
+      SoundService.levelUp();
     }
 
     // Track analytics
@@ -595,13 +608,13 @@ class _HigherOrLowerResultsScreenState extends State<HigherOrLowerResultsScreen>
     return 'Back to Basics';
   }
 
-  String _getVerdictEmoji() {
+  IconData _getVerdictIcon() {
     final percentage = (widget.score / widget.totalQuestions) * 100;
-    if (percentage == 100) return '👑';
-    if (percentage >= 80) return '📊';
-    if (percentage >= 60) return '📈';
-    if (percentage >= 40) return '🤔';
-    return '📉';
+    if (percentage == 100) return Icons.emoji_events;
+    if (percentage >= 80) return Icons.insights;
+    if (percentage >= 60) return Icons.trending_up;
+    if (percentage >= 40) return Icons.trending_flat;
+    return Icons.trending_down;
   }
 
   @override
@@ -633,9 +646,10 @@ class _HigherOrLowerResultsScreenState extends State<HigherOrLowerResultsScreen>
                     ),
                   ),
                 ),
-              Text(
-                _getVerdictEmoji(),
-                style: const TextStyle(fontSize: 80),
+              Icon(
+                _getVerdictIcon(),
+                size: 80,
+                color: widget.mode.color,
               ),
               const SizedBox(height: 24),
               Text(
@@ -683,6 +697,52 @@ class _HigherOrLowerResultsScreenState extends State<HigherOrLowerResultsScreen>
                 const SizedBox(height: 20),
                 _HigherOrLowerXPRow(xpAward: _xpAward!, streak: _dailyStreak),
               ],
+              // Mode unlock celebration
+              if (_unlockResult != null && _unlockResult!.didUnlock) ...[
+                const SizedBox(height: 16),
+                TweenAnimationBuilder<double>(
+                  tween: Tween(begin: 0.8, end: 1.0),
+                  duration: const Duration(milliseconds: 600),
+                  curve: Curves.elasticOut,
+                  builder: (context, scale, child) {
+                    return Transform.scale(scale: scale, child: child);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          AppTheme.gold,
+                          AppTheme.gold.withValues(alpha: 0.8),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppTheme.gold.withValues(alpha: 0.4),
+                          blurRadius: 12,
+                          spreadRadius: 2,
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.lock_open, color: Colors.black, size: 20),
+                        const SizedBox(width: 8),
+                        Text(
+                          '${_unlockResult!.unlockedModeName} Unlocked!',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
               const Spacer(),
               SizedBox(
                 width: double.infinity,
@@ -704,7 +764,7 @@ class _HigherOrLowerResultsScreenState extends State<HigherOrLowerResultsScreen>
                     ),
                   ),
                   child: const Text(
-                    'Play Again',
+                    'Kick Off Again',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

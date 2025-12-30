@@ -5,9 +5,11 @@ import 'package:flutter/services.dart';
 import '../models/game_mode.dart';
 import '../services/score_service.dart';
 import '../services/haptic_service.dart';
+import '../services/sound_service.dart';
 import '../services/streak_service.dart';
 import '../services/xp_service.dart';
 import '../services/analytics_service.dart';
+import '../services/unlock_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/pitch_background.dart';
 import '../widgets/animated_answer_button.dart';
@@ -220,9 +222,10 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
         _secondsRemaining--;
       });
 
-      // Haptic feedback in last 10 seconds
+      // Haptic and sound feedback in last 10 seconds
       if (_secondsRemaining <= 10 && _secondsRemaining > 0) {
         HapticFeedback.lightImpact();
+        SoundService.tick();
       }
 
       if (_secondsRemaining <= 0) {
@@ -237,11 +240,13 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
 
     final isCorrect = selectedIndex == _questions[_currentIndex]['answerIndex'];
 
-    // Haptic feedback based on answer
+    // Haptic and sound feedback based on answer
     if (isCorrect) {
       HapticService.correct();
+      SoundService.correct();
     } else {
       HapticService.incorrect();
+      SoundService.incorrect();
     }
 
     setState(() {
@@ -478,6 +483,7 @@ class _TimedBlitzResultsScreenState extends State<TimedBlitzResultsScreen> {
   bool _isNewBest = false;
   XPAward? _xpAward;
   int _dailyStreak = 0;
+  UnlockResult? _unlockResult;
 
   @override
   void initState() {
@@ -502,16 +508,21 @@ class _TimedBlitzResultsScreenState extends State<TimedBlitzResultsScreen> {
       secondsRemaining: widget.timeRemaining,
     );
 
+    // Record timed blitz score for unlock progression
+    final unlockResult = await UnlockService.recordTimedBlitzScore(widget.score);
+
     setState(() {
       _bestScore = bestScore;
       _isNewBest = isNewBest;
       _xpAward = xpAward;
       _dailyStreak = streakResult.streak;
+      _unlockResult = unlockResult;
     });
 
-    // Celebrate new record or level up
-    if ((isNewBest && widget.score > 0) || xpAward.leveledUp) {
+    // Celebrate new record, level up, or mode unlock
+    if ((isNewBest && widget.score > 0) || xpAward.leveledUp || unlockResult.didUnlock) {
       HapticService.celebrate();
+      SoundService.levelUp();
     }
 
     // Track analytics
@@ -632,6 +643,52 @@ class _TimedBlitzResultsScreenState extends State<TimedBlitzResultsScreen> {
               if (_xpAward != null) ...[
                 const SizedBox(height: 20),
                 _BlitzXPRow(xpAward: _xpAward!, streak: _dailyStreak),
+              ],
+              // Mode unlock celebration
+              if (_unlockResult != null && _unlockResult!.didUnlock) ...[
+                const SizedBox(height: 16),
+                TweenAnimationBuilder<double>(
+                  tween: Tween(begin: 0.8, end: 1.0),
+                  duration: const Duration(milliseconds: 600),
+                  curve: Curves.elasticOut,
+                  builder: (context, scale, child) {
+                    return Transform.scale(scale: scale, child: child);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          AppTheme.gold,
+                          AppTheme.gold.withValues(alpha: 0.8),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppTheme.gold.withValues(alpha: 0.4),
+                          blurRadius: 12,
+                          spreadRadius: 2,
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.lock_open, color: Colors.black, size: 20),
+                        const SizedBox(width: 8),
+                        Text(
+                          '${_unlockResult!.unlockedModeName} Unlocked!',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
               const Spacer(),
               SizedBox(

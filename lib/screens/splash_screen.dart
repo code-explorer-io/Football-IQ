@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -83,13 +84,13 @@ class _SplashScreenState extends State<SplashScreen>
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // App icon
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(24),
-                      child: Image.asset(
-                        'assets/icon/app_icon.png',
-                        width: 120,
-                        height: 120,
+                    // Lottie soccer ball animation
+                    SizedBox(
+                      width: 150,
+                      height: 150,
+                      child: Lottie.asset(
+                        'assets/icon/soccer-ball.json',
+                        fit: BoxFit.contain,
                       ),
                     ),
                     const SizedBox(height: 24),

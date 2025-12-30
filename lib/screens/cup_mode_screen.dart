@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../models/game_mode.dart';
 import '../services/score_service.dart';
+import '../services/haptic_service.dart';
+import '../services/sound_service.dart';
+import '../services/unlock_service.dart';
+import '../theme/app_theme.dart';
 import '../widgets/pitch_background.dart';
 import 'home_screen.dart';
 
@@ -345,7 +348,14 @@ class _CupMatchScreenState extends State<CupMatchScreen> {
 
     final isCorrect = selectedIndex == _questions[_currentIndex]['answerIndex'];
 
-    HapticFeedback.mediumImpact();
+    // Haptic and sound feedback
+    if (isCorrect) {
+      HapticService.correct();
+      SoundService.correct();
+    } else {
+      HapticService.incorrect();
+      SoundService.incorrect();
+    }
 
     setState(() {
       _selectedAnswer = selectedIndex;
@@ -592,6 +602,7 @@ class CupResultScreen extends StatefulWidget {
 
 class _CupResultScreenState extends State<CupResultScreen> {
   bool _isWinner = false;
+  UnlockResult? _unlockResult;
 
   @override
   void initState() {
@@ -600,12 +611,19 @@ class _CupResultScreenState extends State<CupResultScreen> {
   }
 
   Future<void> _checkWinner() async {
-    // If won the final, increment cups won
+    // If won the final, increment cups won and record for unlock progression
     if (widget.didAdvance && widget.stage == CupStage.final_) {
       await ScoreService.incrementCupsWon();
+      final unlockResult = await UnlockService.recordCupWin();
+
       setState(() {
         _isWinner = true;
+        _unlockResult = unlockResult;
       });
+
+      // Celebrate cup win (and mode unlock if applicable)
+      HapticService.celebrate();
+      SoundService.levelUp();
     }
   }
 
@@ -615,10 +633,10 @@ class _CupResultScreenState extends State<CupResultScreen> {
     return 'KNOCKED OUT';
   }
 
-  String _getResultEmoji() {
-    if (_isWinner) return '🏆';
-    if (widget.didAdvance) return '⚽';
-    return '😔';
+  IconData _getResultIcon() {
+    if (_isWinner) return Icons.emoji_events;
+    if (widget.didAdvance) return Icons.sports_soccer;
+    return Icons.sentiment_dissatisfied;
   }
 
   String _getResultMessage() {
@@ -659,9 +677,10 @@ class _CupResultScreenState extends State<CupResultScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              Text(
-                _getResultEmoji(),
-                style: const TextStyle(fontSize: 80),
+              Icon(
+                _getResultIcon(),
+                size: 80,
+                color: widget.didAdvance ? Colors.green : Colors.red,
               ),
               const SizedBox(height: 24),
               Text(
@@ -691,6 +710,52 @@ class _CupResultScreenState extends State<CupResultScreen> {
                 ),
                 textAlign: TextAlign.center,
               ),
+              // Mode unlock celebration (for future Tournament Mode)
+              if (_unlockResult != null && _unlockResult!.didUnlock) ...[
+                const SizedBox(height: 20),
+                TweenAnimationBuilder<double>(
+                  tween: Tween(begin: 0.8, end: 1.0),
+                  duration: const Duration(milliseconds: 600),
+                  curve: Curves.elasticOut,
+                  builder: (context, scale, child) {
+                    return Transform.scale(scale: scale, child: child);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          AppTheme.gold,
+                          AppTheme.gold.withValues(alpha: 0.8),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppTheme.gold.withValues(alpha: 0.4),
+                          blurRadius: 12,
+                          spreadRadius: 2,
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.lock_open, color: Colors.black, size: 20),
+                        const SizedBox(width: 8),
+                        Text(
+                          '${_unlockResult!.unlockedModeName} Unlocked!',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
               const Spacer(),
               if (widget.didAdvance && !_isWinner)
                 SizedBox(
