@@ -103,5 +103,250 @@
     "options": ["Eden Dzeko", "Eden Hazard", "Eden Silva"],
     "answerIndex": 1,
     "difficulty": "easy"
+  },
+  {
+    "id": "cfc_016",
+    "question": "Which team did Chelsea beat in the 2012 Champions League Final?",
+    "options": ["Barcelona", "Bayern Munich", "Real Madrid"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_017",
+    "question": "Who scored Chelsea's equalizer in the 2012 Champions League Final?",
+    "options": ["Frank Lampard", "Didier Drogba", "Juan Mata"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_018",
+    "question": "What year was Chelsea Football Club founded?",
+    "options": ["1905", "1892", "1910"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "cfc_019",
+    "question": "Which Italian manager won the Premier League and FA Cup double with Chelsea?",
+    "options": ["Carlo Ancelotti", "Antonio Conte", "Maurizio Sarri"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_020",
+    "question": "Which defender captained Chelsea to multiple Premier League titles?",
+    "options": ["Gary Cahill", "John Terry", "Marcel Desailly"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "cfc_021",
+    "question": "What is the capacity of Stamford Bridge?",
+    "options": ["About 35,000", "About 41,000", "About 50,000"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "cfc_022",
+    "question": "Who did Chelsea beat in the 2021 Champions League Final?",
+    "options": ["Manchester City", "Real Madrid", "Paris Saint-Germain"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "cfc_023",
+    "question": "Who scored Chelsea's winning goal in the 2021 Champions League Final?",
+    "options": ["Mason Mount", "Kai Havertz", "Timo Werner"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_024",
+    "question": "Which French striker was known as 'The King' at Chelsea?",
+    "options": ["Thierry Henry", "Didier Drogba", "Nicolas Anelka"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_025",
+    "question": "How many goals did Didier Drogba score in FA Cup finals?",
+    "options": ["2", "4", "6"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "cfc_026",
+    "question": "Which club did Eden Hazard join after leaving Chelsea?",
+    "options": ["Barcelona", "Real Madrid", "Paris Saint-Germain"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "cfc_027",
+    "question": "Who managed Chelsea in the 2007-08 and 2009-10 seasons?",
+    "options": ["Avram Grant", "Luiz Felipe Scolari", "Carlo Ancelotti"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "cfc_028",
+    "question": "Which midfielder scored 211 goals for Chelsea, a club record?",
+    "options": ["Eden Hazard", "Frank Lampard", "Juan Mata"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_029",
+    "question": "Which team are Chelsea's biggest London rivals?",
+    "options": ["Arsenal", "Tottenham", "West Ham"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "cfc_030",
+    "question": "What trophy did Chelsea win by beating Villarreal in 2021?",
+    "options": ["Club World Cup", "UEFA Super Cup", "Europa League"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "cfc_031",
+    "question": "Which Spanish midfielder wore the number 10 shirt from 2011-2014?",
+    "options": ["Cesc Fàbregas", "Juan Mata", "Fernando Torres"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_032",
+    "question": "Who was Chelsea's manager when they won back-to-back titles in 2005 and 2006?",
+    "options": ["José Mourinho", "Claudio Ranieri", "Carlo Ancelotti"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "cfc_033",
+    "question": "Which player holds the record for most Chelsea appearances?",
+    "options": ["John Terry", "Ron Harris", "Frank Lampard"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "cfc_034",
+    "question": "What was special about Chelsea's 2004-05 Premier League campaign?",
+    "options": ["Unbeaten season", "Fewest goals conceded (15)", "Most points ever"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "cfc_035",
+    "question": "Which Brazilian defender captained Chelsea to the 2012 Champions League?",
+    "options": ["David Luiz", "Thiago Silva", "Alex"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_036",
+    "question": "Who won the PFA Player of the Year while at Chelsea in 2015?",
+    "options": ["Diego Costa", "Eden Hazard", "N'Golo Kanté"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_037",
+    "question": "Which goalkeeper joined Chelsea from Rennes in 2020?",
+    "options": ["Kepa Arrizabalaga", "Édouard Mendy", "Robert Sánchez"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_038",
+    "question": "How many FA Cups has Chelsea won?",
+    "options": ["6", "8", "10"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_039",
+    "question": "Which striker joined from Liverpool in 2011 for £50 million?",
+    "options": ["Didier Drogba", "Fernando Torres", "Samuel Eto'o"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "cfc_040",
+    "question": "What was José Mourinho's self-proclaimed title at Chelsea?",
+    "options": ["The Best", "The Special One", "The Winner"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "cfc_041",
+    "question": "Which French midfielder won back-to-back PFA Player of the Year awards?",
+    "options": ["Claude Makélélé", "N'Golo Kanté", "Michael Essien"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_042",
+    "question": "Who scored a hat-trick in the 2010 FA Cup Final against Portsmouth?",
+    "options": ["Frank Lampard", "Didier Drogba", "Florent Malouda"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "cfc_043",
+    "question": "Which consortium bought Chelsea in 2022?",
+    "options": ["Clearlake Capital group", "Saudi Investment Fund", "Qatar Sports Investments"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_044",
+    "question": "Who was Chelsea's top scorer in the 2016-17 title-winning season?",
+    "options": ["Eden Hazard", "Diego Costa", "Pedro"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_045",
+    "question": "Which competition did Chelsea win by beating Arsenal 4-1 in 2019?",
+    "options": ["FA Cup", "League Cup", "Europa League"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_046",
+    "question": "Who was Chelsea's first £100 million signing?",
+    "options": ["Kai Havertz", "Romelu Lukaku", "Enzo Fernández"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_047",
+    "question": "Which winger scored in both the 2012 FA Cup and Champions League Finals?",
+    "options": ["Juan Mata", "Ramires", "Didier Drogba"],
+    "answerIndex": 2,
+    "difficulty": "hard"
+  },
+  {
+    "id": "cfc_048",
+    "question": "What formation did Antonio Conte famously use at Chelsea?",
+    "options": ["4-4-2", "3-4-3", "4-3-3"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_049",
+    "question": "Which academy graduate became England captain while at Chelsea?",
+    "options": ["Mason Mount", "John Terry", "Reece James"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_050",
+    "question": "Who managed Chelsea to the 2022 Club World Cup victory?",
+    "options": ["Thomas Tuchel", "Frank Lampard", "Graham Potter"],
+    "answerIndex": 0,
+    "difficulty": "medium"
   }
 ]

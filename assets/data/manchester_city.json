@@ -278,5 +278,75 @@
     "options": ["Sergio Aguero", "Edin Dzeko", "Mario Balotelli"],
     "answerIndex": 1,
     "difficulty": "hard"
+  },
+  {
+    "id": "mci_041",
+    "question": "How many Premier League goals did Erling Haaland score in his debut season?",
+    "options": ["28", "32", "36"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "mci_042",
+    "question": "Which club did Manchester City sign Erling Haaland from?",
+    "options": ["Salzburg", "Borussia Dortmund", "Molde"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "mci_043",
+    "question": "Who was Manchester City's first £50 million signing?",
+    "options": ["Raheem Sterling", "Kevin De Bruyne", "Aymeric Laporte"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "mci_044",
+    "question": "What nationality is Bernardo Silva?",
+    "options": ["Spanish", "Portuguese", "Brazilian"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "mci_045",
+    "question": "Which goalkeeper has been Manchester City's first choice since 2017?",
+    "options": ["Joe Hart", "Ederson", "Claudio Bravo"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "mci_046",
+    "question": "How many consecutive Premier League titles did City win from 2021-2024?",
+    "options": ["3", "4", "5"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "mci_047",
+    "question": "Which English defender captained City before Vincent Kompany?",
+    "options": ["Richard Dunne", "Micah Richards", "Joleon Lescott"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "mci_048",
+    "question": "What trophy did City win by beating Watford 6-0 in 2019?",
+    "options": ["League Cup", "FA Cup", "Community Shield"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "mci_049",
+    "question": "Which English winger was part of City's academy before moving to Bayern Munich?",
+    "options": ["Raheem Sterling", "Jadon Sancho", "Phil Foden"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "mci_050",
+    "question": "Who won the Ballon d'Or while playing for Manchester City in 2023?",
+    "options": ["Erling Haaland", "Kevin De Bruyne", "Rodri"],
+    "answerIndex": 2,
+    "difficulty": "medium"
   }
 ]

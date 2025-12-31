@@ -278,5 +278,145 @@
     "options": ["England", "Spain", "France"],
     "answerIndex": 1,
     "difficulty": "easy"
+  },
+  {
+    "id": "int_041",
+    "question": "Who managed England at Euro 2024?",
+    "options": ["Gareth Southgate", "Steve Holland", "Graham Potter"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "int_042",
+    "question": "Which player scored the winner in the Euro 2024 final?",
+    "options": ["Lamine Yamal", "Mikel Oyarzabal", "Dani Olmo"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_043",
+    "question": "How many times has France won the World Cup?",
+    "options": ["1", "2", "3"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_044",
+    "question": "Which country hosted Euro 2020 final?",
+    "options": ["Italy", "England", "Germany"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "int_045",
+    "question": "Who was top scorer at Euro 2024?",
+    "options": ["Harry Kane", "Jamal Musiala", "Six players tied on 3"],
+    "answerIndex": 2,
+    "difficulty": "hard"
+  },
+  {
+    "id": "int_046",
+    "question": "Which stadium hosted the Euro 2024 final?",
+    "options": ["Allianz Arena", "Olympiastadion Berlin", "Signal Iduna Park"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_047",
+    "question": "Who won the Golden Glove at the 2022 World Cup?",
+    "options": ["Hugo Lloris", "Emiliano Martinez", "Yassine Bounou"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_048",
+    "question": "Which African nation reached the 2022 World Cup semi-finals?",
+    "options": ["Senegal", "Morocco", "Cameroon"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "int_049",
+    "question": "Who won the Copa America 2024?",
+    "options": ["Brazil", "Argentina", "Colombia"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "int_050",
+    "question": "Which England player missed a penalty in the Euro 2020 final shootout?",
+    "options": ["Harry Kane", "Marcus Rashford", "All three listed"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_051",
+    "question": "How old was Lamine Yamal at Euro 2024?",
+    "options": ["15", "16", "17"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_052",
+    "question": "Which country has the most European Championship titles?",
+    "options": ["Germany", "Spain", "Italy"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_053",
+    "question": "Who scored England's goal in the Euro 2024 final?",
+    "options": ["Jude Bellingham", "Cole Palmer", "Harry Kane"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_054",
+    "question": "Which nation did Japan beat 2-1 at the 2022 World Cup?",
+    "options": ["Germany", "Spain", "Both of these"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_055",
+    "question": "Who scored a famous last-minute header vs Slovakia at Euro 2024?",
+    "options": ["Harry Kane", "Jude Bellingham", "Declan Rice"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "int_056",
+    "question": "Which South American country has never won a World Cup?",
+    "options": ["Colombia", "Paraguay", "Both of these"],
+    "answerIndex": 2,
+    "difficulty": "hard"
+  },
+  {
+    "id": "int_057",
+    "question": "Who managed Spain to Euro 2024 victory?",
+    "options": ["Luis Enrique", "Luis de la Fuente", "Robert Moreno"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_058",
+    "question": "Which nation won the 2023 Women's World Cup?",
+    "options": ["England", "Spain", "USA"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_059",
+    "question": "Who is the youngest goalscorer in European Championship history?",
+    "options": ["Kylian Mbappe", "Lamine Yamal", "Renato Sanches"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "int_060",
+    "question": "Which country did Argentina beat in the 2022 World Cup semi-final?",
+    "options": ["France", "Croatia", "Netherlands"],
+    "answerIndex": 1,
+    "difficulty": "medium"
   }
 ]

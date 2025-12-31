@@ -238,5 +238,125 @@
     "category": "International goals",
     "item1": { "name": "Cristiano Ronaldo", "value": 130 },
     "item2": { "name": "Ali Daei", "value": 109 }
+  },
+  {
+    "id": "hol_041",
+    "category": "Premier League goals",
+    "item1": { "name": "Mohamed Salah", "value": 160 },
+    "item2": { "name": "Sergio Aguero", "value": 184 }
+  },
+  {
+    "id": "hol_042",
+    "category": "Stadium capacity",
+    "item1": { "name": "Old Trafford", "value": 74000 },
+    "item2": { "name": "Emirates Stadium", "value": 60000 }
+  },
+  {
+    "id": "hol_043",
+    "category": "Premier League goals",
+    "item1": { "name": "Jamie Vardy", "value": 136 },
+    "item2": { "name": "Teddy Sheringham", "value": 146 }
+  },
+  {
+    "id": "hol_044",
+    "category": "Transfer fee (millions GBP)",
+    "item1": { "name": "Erling Haaland", "value": 51 },
+    "item2": { "name": "Darwin Nunez", "value": 85 }
+  },
+  {
+    "id": "hol_045",
+    "category": "Champions League titles (club)",
+    "item1": { "name": "Real Madrid", "value": 15 },
+    "item2": { "name": "AC Milan", "value": 7 }
+  },
+  {
+    "id": "hol_046",
+    "category": "Premier League points in a season",
+    "item1": { "name": "Man City (17/18)", "value": 100 },
+    "item2": { "name": "Liverpool (19/20)", "value": 99 }
+  },
+  {
+    "id": "hol_047",
+    "category": "England caps",
+    "item1": { "name": "Peter Shilton", "value": 125 },
+    "item2": { "name": "Wayne Rooney", "value": 120 }
+  },
+  {
+    "id": "hol_048",
+    "category": "Premier League goals",
+    "item1": { "name": "Son Heung-min", "value": 115 },
+    "item2": { "name": "Gabriel Jesus", "value": 58 }
+  },
+  {
+    "id": "hol_049",
+    "category": "La Liga goals",
+    "item1": { "name": "Lionel Messi", "value": 474 },
+    "item2": { "name": "Cristiano Ronaldo", "value": 311 }
+  },
+  {
+    "id": "hol_050",
+    "category": "Premier League titles (club)",
+    "item1": { "name": "Manchester United", "value": 13 },
+    "item2": { "name": "Manchester City", "value": 8 }
+  },
+  {
+    "id": "hol_051",
+    "category": "Premier League goals",
+    "item1": { "name": "Nicolas Anelka", "value": 125 },
+    "item2": { "name": "Emile Heskey", "value": 110 }
+  },
+  {
+    "id": "hol_052",
+    "category": "Years as manager",
+    "item1": { "name": "Alex Ferguson at Man Utd", "value": 26 },
+    "item2": { "name": "Arsene Wenger at Arsenal", "value": 22 }
+  },
+  {
+    "id": "hol_053",
+    "category": "Premier League goals",
+    "item1": { "name": "Darren Bent", "value": 106 },
+    "item2": { "name": "Kevin Campbell", "value": 83 }
+  },
+  {
+    "id": "hol_054",
+    "category": "Transfer fee (millions GBP)",
+    "item1": { "name": "Moises Caicedo", "value": 115 },
+    "item2": { "name": "Declan Rice", "value": 105 }
+  },
+  {
+    "id": "hol_055",
+    "category": "Premier League assists",
+    "item1": { "name": "Dennis Bergkamp", "value": 94 },
+    "item2": { "name": "David Beckham", "value": 80 }
+  },
+  {
+    "id": "hol_056",
+    "category": "World Cup wins (country)",
+    "item1": { "name": "Brazil", "value": 5 },
+    "item2": { "name": "Germany", "value": 4 }
+  },
+  {
+    "id": "hol_057",
+    "category": "Premier League goals",
+    "item1": { "name": "Dion Dublin", "value": 111 },
+    "item2": { "name": "Kevin Phillips", "value": 93 }
+  },
+  {
+    "id": "hol_058",
+    "category": "Career appearances",
+    "item1": { "name": "Ryan Giggs", "value": 963 },
+    "item2": { "name": "Frank Lampard", "value": 897 }
+  },
+  {
+    "id": "hol_059",
+    "category": "Premier League goals",
+    "item1": { "name": "Dwight Yorke", "value": 123 },
+    "item2": { "name": "Andrew Cole", "value": 187 }
+  },
+  {
+    "id": "hol_060",
+    "category": "Premier League goals conceded (season)",
+    "item1": { "name": "Chelsea (04/05)", "value": 15 },
+    "item2": { "name": "Liverpool (18/19)", "value": 22 }
   }
 ]

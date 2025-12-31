@@ -52,6 +52,21 @@ class _SplashScreenState extends State<SplashScreen>
 
     // Try to load video, fall back to static if not available
     _initializeVideo();
+
+    // Precache background images for smoother navigation
+    _precacheImages();
+  }
+
+  /// Precache commonly used background images to avoid loading delays
+  void _precacheImages() {
+    // Only precache after context is available
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      // Precache the most commonly used backgrounds
+      precacheImage(const AssetImage('assets/images/stadium_night_new.png'), context);
+      precacheImage(const AssetImage('assets/images/pitch.png'), context);
+      precacheImage(const AssetImage('assets/images/tunnel.png'), context);
+    });
   }
 
   Future<void> _initializeVideo() async {
@@ -91,7 +106,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void _onVideoProgress() {
-    if (_videoController == null) return;
+    if (_videoController == null || !mounted) return;
 
     // Check if video is complete
     final position = _videoController!.value.position;

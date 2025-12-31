@@ -103,5 +103,250 @@
     "options": ["1878", "1885", "1892"],
     "answerIndex": 0,
     "difficulty": "hard"
+  },
+  {
+    "id": "efc_016",
+    "question": "Which manager won Everton two league titles in the 1980s?",
+    "options": ["Joe Royle", "Howard Kendall", "Gordon Lee"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "efc_017",
+    "question": "What trophy did Everton win in 1985 by beating Rapid Vienna?",
+    "options": ["UEFA Cup", "Cup Winners' Cup", "European Cup"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "efc_018",
+    "question": "Which England goalkeeper played for Everton from 1981-1990?",
+    "options": ["Peter Shilton", "Neville Southall", "Ray Clemence"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "efc_019",
+    "question": "How many FA Cups has Everton won?",
+    "options": ["3", "5", "7"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "efc_020",
+    "question": "Which striker scored the winning goal in the 1995 FA Cup Final?",
+    "options": ["Duncan Ferguson", "Paul Rideout", "Daniel Amokachi"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "efc_021",
+    "question": "Who did Everton beat in the 1995 FA Cup Final?",
+    "options": ["Liverpool", "Manchester United", "Arsenal"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "efc_022",
+    "question": "Which English striker was Everton's top scorer in the 2000s?",
+    "options": ["Wayne Rooney", "Kevin Campbell", "James Beattie"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "efc_023",
+    "question": "At what age did Wayne Rooney leave Everton for Manchester United?",
+    "options": ["16", "18", "20"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "efc_024",
+    "question": "Which manager led Everton to fourth place in 2005?",
+    "options": ["Walter Smith", "David Moyes", "Roberto Martínez"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "efc_025",
+    "question": "How long was David Moyes manager of Everton?",
+    "options": ["8 years", "11 years", "14 years"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "efc_026",
+    "question": "Which Australian midfielder was a key player under David Moyes?",
+    "options": ["Harry Kewell", "Tim Cahill", "Mark Viduka"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "efc_027",
+    "question": "What is the approximate capacity of Goodison Park?",
+    "options": ["32,000", "40,000", "48,000"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "efc_028",
+    "question": "Which Belgian striker joined Everton from Chelsea in 2014?",
+    "options": ["Kevin Mirallas", "Romelu Lukaku", "Christian Benteke"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "efc_029",
+    "question": "Who was Everton's manager from 2013-2016?",
+    "options": ["David Moyes", "Roberto Martínez", "Ronald Koeman"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "efc_030",
+    "question": "Which club did Romelu Lukaku join in 2017?",
+    "options": ["Chelsea", "Manchester United", "Inter Milan"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "efc_031",
+    "question": "What is the name of Everton's anthem sung before matches?",
+    "options": ["Blue Moon", "Z-Cars", "Spirit of the Blues"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "efc_032",
+    "question": "Which midfielder was known as 'The Artful Dodger' at Everton?",
+    "options": ["Peter Reid", "Trevor Steven", "Andrei Kanchelskis"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "efc_033",
+    "question": "Who scored a famous hat-trick in a 4-4 Merseyside Derby in 1991?",
+    "options": ["Tony Cottee", "Peter Beardsley", "Graeme Sharp"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "efc_034",
+    "question": "Which Icelandic midfielder played for Everton from 2017-2023?",
+    "options": ["Aron Gunnarsson", "Gylfi Sigurdsson", "Birkir Bjarnason"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "efc_035",
+    "question": "What is the motto on Everton's crest?",
+    "options": ["Only the Best", "Nil Satis Nisi Optimum", "Nothing but the Best"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "efc_036",
+    "question": "What does 'Nil Satis Nisi Optimum' translate to?",
+    "options": ["Only the Best Will Do", "Nothing but Victory", "Excellence Always"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "efc_037",
+    "question": "Which defender was Everton captain during the 2020s relegation battles?",
+    "options": ["Séamus Coleman", "Michael Keane", "Yerry Mina"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "efc_038",
+    "question": "What nationality is Séamus Coleman?",
+    "options": ["Scottish", "Irish", "Welsh"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "efc_039",
+    "question": "Which manager kept Everton in the Premier League in 2022?",
+    "options": ["Carlo Ancelotti", "Frank Lampard", "Rafael Benítez"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "efc_040",
+    "question": "Which former Liverpool manager controversially managed Everton in 2021?",
+    "options": ["Roy Hodgson", "Rafael Benítez", "Brendan Rodgers"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "efc_041",
+    "question": "What points deduction did Everton receive in 2023-24?",
+    "options": ["6 points", "8 points", "10 points"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "efc_042",
+    "question": "Which striker scored Everton's winning goal vs Crystal Palace to avoid relegation in 2022?",
+    "options": ["Dominic Calvert-Lewin", "Richarlison", "Demarai Gray"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "efc_043",
+    "question": "Where is Everton's new stadium being built?",
+    "options": ["Kirkby", "Bramley-Moore Dock", "Crosby"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "efc_044",
+    "question": "Which Brazilian forward played for Everton from 2018-2022?",
+    "options": ["Richarlison", "Bernard", "Both of these"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "efc_045",
+    "question": "What year did Everton have their best Premier League finish under Moyes?",
+    "options": ["2003", "2005", "2007"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "efc_046",
+    "question": "Which midfielder was known for his long-range goals at Everton?",
+    "options": ["Leon Osman", "Leighton Baines", "Steven Pienaar"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "efc_047",
+    "question": "Who holds the record for most Everton appearances?",
+    "options": ["Neville Southall", "Brian Labone", "Dave Watson"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "efc_048",
+    "question": "Which manager led Everton to the FA Cup semi-final in 2016?",
+    "options": ["David Moyes", "Roberto Martínez", "Ronald Koeman"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "efc_049",
+    "question": "What is the name of Everton's training ground?",
+    "options": ["Finch Farm", "Bellefield", "Goodison Park"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "efc_050",
+    "question": "Which club legend became Everton caretaker manager multiple times?",
+    "options": ["Duncan Ferguson", "David Unsworth", "Both of these"],
+    "answerIndex": 2,
+    "difficulty": "medium"
   }
 ]

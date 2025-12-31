@@ -10,6 +10,10 @@ import '../services/analytics_service.dart';
 import '../services/unlock_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/pitch_background.dart';
+import '../widgets/xp_award_display.dart';
+import '../widgets/unlock_celebration.dart';
+import '../widgets/error_state_widget.dart';
+import '../widgets/new_record_badge.dart';
 import 'home_screen.dart';
 
 class HigherOrLowerIntroScreen extends StatelessWidget {
@@ -121,7 +125,7 @@ class HigherOrLowerGameScreen extends StatefulWidget {
 }
 
 class _HigherOrLowerGameScreenState extends State<HigherOrLowerGameScreen> {
-  List<dynamic> _comparisons = [];
+  List<Map<String, dynamic>> _comparisons = [];
   int _currentIndex = 0;
   int _score = 0;
   bool _isLoading = true;
@@ -151,8 +155,35 @@ class _HigherOrLowerGameScreenState extends State<HigherOrLowerGameScreen> {
           .loadString(widget.mode.dataFile!);
       final List<dynamic> jsonList = jsonDecode(jsonString);
 
-      jsonList.shuffle();
-      _comparisons = jsonList.take(10).toList();
+      // Validate and cast each comparison
+      final validComparisons = <Map<String, dynamic>>[];
+      for (final item in jsonList) {
+        if (item is! Map<String, dynamic>) continue;
+
+        // Validate required fields exist
+        if (item['item1'] == null || item['item2'] == null) continue;
+        if (item['category'] == null) continue;
+
+        final item1 = item['item1'];
+        final item2 = item['item2'];
+
+        // Validate item structure
+        if (item1 is! Map<String, dynamic> || item2 is! Map<String, dynamic>) continue;
+        if (item1['name'] == null || item1['value'] == null) continue;
+        if (item2['name'] == null || item2['value'] == null) continue;
+
+        // Validate value types (must be numeric)
+        if (item1['value'] is! num || item2['value'] is! num) continue;
+
+        validComparisons.add(item);
+      }
+
+      if (validComparisons.isEmpty) {
+        throw Exception('No valid comparisons found in data file');
+      }
+
+      validComparisons.shuffle();
+      _comparisons = validComparisons.take(10).toList();
 
       setState(() {
         _isLoading = false;
@@ -244,51 +275,10 @@ class _HigherOrLowerGameScreenState extends State<HigherOrLowerGameScreen> {
             onPressed: () => Navigator.pop(context),
           ),
         ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.error_outline,
-                  size: 64,
-                  color: AppTheme.textMuted,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Unable to load data',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.textPrimary,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Please check your connection and try again',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppTheme.textSecondary,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  onPressed: _loadComparisons,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: widget.mode.color,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Text('Try Again'),
-                ),
-              ],
-            ),
-          ),
+        body: ErrorStateWidget(
+          title: 'Unable to load data',
+          onRetry: _loadComparisons,
+          buttonColor: widget.mode.color,
         ),
       );
     }
@@ -711,24 +701,7 @@ class _HigherOrLowerResultsScreenState extends State<HigherOrLowerResultsScreen>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Spacer(),
-                if (_isNewBest)
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    margin: const EdgeInsets.only(bottom: 16),
-                    decoration: BoxDecoration(
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Text(
-                      'NEW RECORD',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                ),
+                if (_isNewBest) const NewRecordBadge(),
               Icon(
                 _getVerdictIcon(),
                 size: 80,
@@ -778,53 +751,12 @@ class _HigherOrLowerResultsScreenState extends State<HigherOrLowerResultsScreen>
               // XP earned
               if (_xpAward != null) ...[
                 const SizedBox(height: 20),
-                _HigherOrLowerXPRow(xpAward: _xpAward!, streak: _dailyStreak),
+                XPAwardDisplay(xpAward: _xpAward!, streak: _dailyStreak),
               ],
               // Mode unlock celebration
               if (_unlockResult != null && _unlockResult!.didUnlock) ...[
                 const SizedBox(height: 16),
-                TweenAnimationBuilder<double>(
-                  tween: Tween(begin: 0.8, end: 1.0),
-                  duration: const Duration(milliseconds: 600),
-                  curve: Curves.elasticOut,
-                  builder: (context, scale, child) {
-                    return Transform.scale(scale: scale, child: child);
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          AppTheme.gold,
-                          AppTheme.gold.withValues(alpha: 0.8),
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppTheme.gold.withValues(alpha: 0.4),
-                          blurRadius: 12,
-                          spreadRadius: 2,
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.lock_open, color: Colors.black, size: 20),
-                        const SizedBox(width: 8),
-                        Text(
-                          '${_unlockResult!.unlockedModeName} Unlocked!',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                UnlockCelebration(unlockResult: _unlockResult!),
               ],
               const Spacer(),
               SizedBox(
@@ -888,109 +820,6 @@ class _HigherOrLowerResultsScreenState extends State<HigherOrLowerResultsScreen>
           ),
         ),
       ),
-      ),
-    );
-  }
-}
-
-/// XP earned display for higher or lower results
-class _HigherOrLowerXPRow extends StatelessWidget {
-  final XPAward xpAward;
-  final int streak;
-
-  const _HigherOrLowerXPRow({
-    required this.xpAward,
-    required this.streak,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: AppTheme.surface,
-        borderRadius: BorderRadius.circular(AppTheme.radiusMD),
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.star, color: AppTheme.highlight, size: 20),
-              const SizedBox(width: 8),
-              Text(
-                '+${xpAward.totalXPEarned} XP',
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.highlight,
-                ),
-              ),
-              if (streak > 1) ...[
-                const SizedBox(width: 12),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFF6B35).withValues(alpha: 0.2),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.local_fire_department, color: Color(0xFFFF6B35), size: 16),
-                      const SizedBox(width: 4),
-                      Text(
-                        '$streak',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFFFF6B35),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ],
-          ),
-          if (xpAward.bonusReasons.isNotEmpty) ...[
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
-              runSpacing: 4,
-              alignment: WrapAlignment.center,
-              children: xpAward.bonusReasons.map((reason) => Text(
-                reason,
-                style: const TextStyle(fontSize: 12, color: AppTheme.textMuted),
-              )).toList(),
-            ),
-          ],
-          if (xpAward.leveledUp) ...[
-            const SizedBox(height: 8),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: AppTheme.gold.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.arrow_upward, color: AppTheme.gold, size: 16),
-                  const SizedBox(width: 4),
-                  Text(
-                    'Level ${xpAward.newLevel} - ${XPService.getLevelTitle(xpAward.newLevel)}',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: AppTheme.gold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ],
       ),
     );
   }

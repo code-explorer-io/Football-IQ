@@ -278,5 +278,75 @@
     "options": ["Dean Ashton", "Teddy Sheringham", "Marlon Harewood"],
     "answerIndex": 2,
     "difficulty": "hard"
+  },
+  {
+    "id": "whu_041",
+    "question": "Which team did West Ham beat in the 2023 Europa Conference League Final?",
+    "options": ["Roma", "Fiorentina", "Villarreal"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "whu_042",
+    "question": "How much did Arsenal pay for Declan Rice in 2023?",
+    "options": ["£80 million", "£100 million", "£120 million"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "whu_043",
+    "question": "Which Brazilian midfielder joined West Ham in 2022?",
+    "options": ["Lucas Paquetá", "Felipe Anderson", "Andreas Pereira"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "whu_044",
+    "question": "What is the capacity of the London Stadium?",
+    "options": ["About 52,000", "About 62,000", "About 72,000"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "whu_045",
+    "question": "Which England striker joined West Ham after Euro 2020?",
+    "options": ["Michail Antonio", "Jarrod Bowen", "Danny Ings"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "whu_046",
+    "question": "Who was West Ham's captain after Mark Noble retired?",
+    "options": ["Declan Rice", "Kurt Zouma", "Aaron Cresswell"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "whu_047",
+    "question": "Which West Ham player was named in the 2020-21 Premier League Team of the Season?",
+    "options": ["Michail Antonio", "Declan Rice", "Tomás Soucek"],
+    "answerIndex": 2,
+    "difficulty": "hard"
+  },
+  {
+    "id": "whu_048",
+    "question": "What year did West Ham move to the London Stadium?",
+    "options": ["2015", "2016", "2017"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "whu_049",
+    "question": "Which academy graduate played for England while still at West Ham in 2018?",
+    "options": ["Declan Rice", "Reece Oxford", "Grady Diangana"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "whu_050",
+    "question": "Who was named West Ham's all-time greatest player in club polls?",
+    "options": ["Bobby Moore", "Geoff Hurst", "Trevor Brooking"],
+    "answerIndex": 0,
+    "difficulty": "easy"
   }
 ]

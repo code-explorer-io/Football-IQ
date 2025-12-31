@@ -11,6 +11,10 @@ import '../services/unlock_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/pitch_background.dart';
 import '../widgets/animated_answer_button.dart';
+import '../widgets/xp_award_display.dart';
+import '../widgets/unlock_celebration.dart';
+import '../widgets/error_state_widget.dart';
+import '../widgets/new_record_badge.dart';
 import 'home_screen.dart';
 
 class SurvivalIntroScreen extends StatelessWidget {
@@ -123,7 +127,7 @@ class SurvivalQuestionScreen extends StatefulWidget {
 
 class _SurvivalQuestionScreenState extends State<SurvivalQuestionScreen>
     with SingleTickerProviderStateMixin {
-  List<dynamic> _questions = [];
+  List<Map<String, dynamic>> _questions = [];
   int _currentIndex = 0;
   int _streak = 0;
   bool _isLoading = true;
@@ -170,8 +174,35 @@ class _SurvivalQuestionScreenState extends State<SurvivalQuestionScreen>
           .loadString(widget.mode.dataFile!);
       final List<dynamic> jsonList = jsonDecode(jsonString);
 
-      jsonList.shuffle();
-      _questions = jsonList;
+      // Validate and cast each question
+      final validQuestions = <Map<String, dynamic>>[];
+      for (final item in jsonList) {
+        if (item is! Map<String, dynamic>) continue;
+
+        // Validate required fields exist
+        if (item['question'] == null ||
+            item['options'] == null ||
+            item['answerIndex'] == null) continue;
+
+        // Validate types
+        if (item['question'] is! String) continue;
+        if (item['options'] is! List) continue;
+        if (item['answerIndex'] is! int) continue;
+
+        // Validate answer index is in range
+        final options = item['options'] as List;
+        final answerIndex = item['answerIndex'] as int;
+        if (answerIndex < 0 || answerIndex >= options.length) continue;
+
+        validQuestions.add(item);
+      }
+
+      if (validQuestions.isEmpty) {
+        throw Exception('No valid questions found in data file');
+      }
+
+      validQuestions.shuffle();
+      _questions = validQuestions;
 
       setState(() {
         _isLoading = false;
@@ -207,6 +238,7 @@ class _SurvivalQuestionScreenState extends State<SurvivalQuestionScreen>
     });
 
     Future.delayed(const Duration(milliseconds: 1200), () {
+      if (!mounted) return;
       if (isCorrect) {
         // Continue to next question
         if (_currentIndex < _questions.length - 1) {
@@ -298,51 +330,9 @@ class _SurvivalQuestionScreenState extends State<SurvivalQuestionScreen>
             onPressed: () => Navigator.pop(context),
           ),
         ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.error_outline,
-                  size: 64,
-                  color: AppTheme.textMuted,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Unable to load questions',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.textPrimary,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Please check your connection and try again',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppTheme.textSecondary,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  onPressed: _loadQuestions,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: widget.mode.color,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Text('Try Again'),
-                ),
-              ],
-            ),
-          ),
+        body: ErrorStateWidget(
+          onRetry: _loadQuestions,
+          buttonColor: widget.mode.color,
         ),
       );
     }
@@ -428,6 +418,7 @@ class _SurvivalQuestionScreenState extends State<SurvivalQuestionScreen>
                 itemCount: (question['options'] as List).length,
                 itemBuilder: (context, index) {
                   return AnimatedAnswerButton(
+                    key: ValueKey('q${_currentIndex}_opt$index'),
                     text: question['options'][index],
                     index: index,
                     isSelected: _selectedAnswer == index,
@@ -574,24 +565,7 @@ class _SurvivalResultsScreenState extends State<SurvivalResultsScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Spacer(),
-                if (_isNewBest)
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  margin: const EdgeInsets.only(bottom: 16),
-                  decoration: BoxDecoration(
-                    color: Colors.amber,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const Text(
-                    'NEW RECORD',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                ),
+                if (_isNewBest) const NewRecordBadge(),
               Icon(
                 _getVerdictIcon(),
                 size: 80,
@@ -657,53 +631,12 @@ class _SurvivalResultsScreenState extends State<SurvivalResultsScreen> {
               // XP earned
               if (_xpAward != null) ...[
                 const SizedBox(height: 20),
-                _SurvivalXPRow(xpAward: _xpAward!, streak: _dailyStreak),
+                XPAwardDisplay(xpAward: _xpAward!, streak: _dailyStreak),
               ],
               // Mode unlock celebration
               if (_unlockResult != null && _unlockResult!.didUnlock) ...[
                 const SizedBox(height: 16),
-                TweenAnimationBuilder<double>(
-                  tween: Tween(begin: 0.8, end: 1.0),
-                  duration: const Duration(milliseconds: 600),
-                  curve: Curves.elasticOut,
-                  builder: (context, scale, child) {
-                    return Transform.scale(scale: scale, child: child);
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          AppTheme.gold,
-                          AppTheme.gold.withValues(alpha: 0.8),
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppTheme.gold.withValues(alpha: 0.4),
-                          blurRadius: 12,
-                          spreadRadius: 2,
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.lock_open, color: Colors.black, size: 20),
-                        const SizedBox(width: 8),
-                        Text(
-                          '${_unlockResult!.unlockedModeName} Unlocked!',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                UnlockCelebration(unlockResult: _unlockResult!),
               ],
               const Spacer(),
               SizedBox(
@@ -767,109 +700,6 @@ class _SurvivalResultsScreenState extends State<SurvivalResultsScreen> {
           ),
         ),
       ),
-      ),
-    );
-  }
-}
-
-/// XP earned display for survival results
-class _SurvivalXPRow extends StatelessWidget {
-  final XPAward xpAward;
-  final int streak;
-
-  const _SurvivalXPRow({
-    required this.xpAward,
-    required this.streak,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: AppTheme.surface,
-        borderRadius: BorderRadius.circular(AppTheme.radiusMD),
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.star, color: AppTheme.highlight, size: 20),
-              const SizedBox(width: 8),
-              Text(
-                '+${xpAward.totalXPEarned} XP',
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.highlight,
-                ),
-              ),
-              if (streak > 1) ...[
-                const SizedBox(width: 12),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFF6B35).withValues(alpha: 0.2),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.local_fire_department, color: Color(0xFFFF6B35), size: 16),
-                      const SizedBox(width: 4),
-                      Text(
-                        '$streak',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFFFF6B35),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ],
-          ),
-          if (xpAward.bonusReasons.isNotEmpty) ...[
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
-              runSpacing: 4,
-              alignment: WrapAlignment.center,
-              children: xpAward.bonusReasons.map((reason) => Text(
-                reason,
-                style: const TextStyle(fontSize: 12, color: AppTheme.textMuted),
-              )).toList(),
-            ),
-          ],
-          if (xpAward.leveledUp) ...[
-            const SizedBox(height: 8),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: AppTheme.gold.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.arrow_upward, color: AppTheme.gold, size: 16),
-                  const SizedBox(width: 4),
-                  Text(
-                    'Level ${xpAward.newLevel} - ${XPService.getLevelTitle(xpAward.newLevel)}',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: AppTheme.gold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ],
       ),
     );
   }

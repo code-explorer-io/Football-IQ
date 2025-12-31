@@ -103,5 +103,250 @@
     "options": ["1874", "1885", "1892"],
     "answerIndex": 0,
     "difficulty": "hard"
+  },
+  {
+    "id": "avfc_016",
+    "question": "Which team did Villa beat in the 1982 European Cup Final?",
+    "options": ["Real Madrid", "Bayern Munich", "Juventus"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "avfc_017",
+    "question": "Who scored Villa's winning goal in the 1982 European Cup Final?",
+    "options": ["Gary Shaw", "Peter Withe", "Tony Morley"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "avfc_018",
+    "question": "Which goalkeeper was the hero of the 1982 European Cup Final?",
+    "options": ["Nigel Spink", "Jimmy Rimmer", "Mark Bosnich"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "avfc_019",
+    "question": "How much did Manchester City pay for Jack Grealish?",
+    "options": ["£80 million", "£100 million", "£120 million"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "avfc_020",
+    "question": "What is the capacity of Villa Park?",
+    "options": ["About 35,000", "About 42,000", "About 52,000"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "avfc_021",
+    "question": "Which Scottish midfielder has been a key player since 2018?",
+    "options": ["Scott Brown", "John McGinn", "Callum McGregor"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "avfc_022",
+    "question": "Who was Villa's manager when they won promotion in 2019?",
+    "options": ["Steve Bruce", "Dean Smith", "Tim Sherwood"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "avfc_023",
+    "question": "Which stand at Villa Park is known as the Holte End?",
+    "options": ["Home end behind the goal", "Away end", "Main stand"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "avfc_024",
+    "question": "How many FA Cups has Aston Villa won?",
+    "options": ["5", "7", "9"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "avfc_025",
+    "question": "Which manager led Villa to the League Cup final in 2020?",
+    "options": ["Unai Emery", "Dean Smith", "Steven Gerrard"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "avfc_026",
+    "question": "Who did Villa lose to in the 2020 League Cup Final?",
+    "options": ["Liverpool", "Manchester City", "Arsenal"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "avfc_027",
+    "question": "Which Colombian striker played for Villa from 1998-2001?",
+    "options": ["Radamel Falcao", "Juan Pablo Ángel", "Carlos Bacca"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "avfc_028",
+    "question": "Who was Villa's top scorer in their 1980-81 title-winning season?",
+    "options": ["Peter Withe", "Gary Shaw", "Brian Little"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "avfc_029",
+    "question": "Which manager took charge after Dean Smith in 2021?",
+    "options": ["Unai Emery", "Steven Gerrard", "Tim Sherwood"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "avfc_030",
+    "question": "What year did Villa last win the league title?",
+    "options": ["1979", "1981", "1983"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "avfc_031",
+    "question": "Which Norwegian striker scored 59 goals for Villa in the 1990s?",
+    "options": ["Ole Gunnar Solskjær", "John Carew", "Savo Milošević"],
+    "answerIndex": 2,
+    "difficulty": "hard"
+  },
+  {
+    "id": "avfc_032",
+    "question": "Who managed Villa to their 1996 League Cup victory?",
+    "options": ["Ron Atkinson", "Brian Little", "John Gregory"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "avfc_033",
+    "question": "Which former England manager managed Villa from 1987-1990?",
+    "options": ["Bobby Robson", "Graham Taylor", "Terry Venables"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "avfc_034",
+    "question": "What was special about Villa's 2023-24 season under Emery?",
+    "options": ["Won a trophy", "Qualified for Champions League", "Promoted"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "avfc_035",
+    "question": "Which Argentine midfielder joined Villa from Tottenham in 2024?",
+    "options": ["Giovani Lo Celso", "Erik Lamela", "Emiliano Buendía"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "avfc_036",
+    "question": "Who was Villa's captain during the 2019 promotion season?",
+    "options": ["John Terry", "Jack Grealish", "James Chester"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "avfc_037",
+    "question": "Which goalkeeper joined from Arsenal in 2020?",
+    "options": ["Emiliano Martínez", "Pepe Reina", "Tom Heaton"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "avfc_038",
+    "question": "What nationality is Emiliano Martínez?",
+    "options": ["Brazilian", "Argentine", "Spanish"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "avfc_039",
+    "question": "Which striker joined from Brentford in 2022?",
+    "options": ["Danny Ings", "Ollie Watkins", "Ivan Toney"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "avfc_040",
+    "question": "How many League Cups has Aston Villa won?",
+    "options": ["3", "5", "7"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "avfc_041",
+    "question": "Which Irish international was a Villa legend in the 1990s?",
+    "options": ["Roy Keane", "Paul McGrath", "Steve Staunton"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "avfc_042",
+    "question": "Who wore the number 10 shirt before Jack Grealish?",
+    "options": ["Gabriel Agbonlahor", "Andreas Weimann", "Fabian Delph"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "avfc_043",
+    "question": "What year did Villa get relegated from the Premier League?",
+    "options": ["2014", "2016", "2018"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "avfc_044",
+    "question": "Which club did Ollie Watkins join Villa from?",
+    "options": ["Exeter City", "Brentford", "Leeds United"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "avfc_045",
+    "question": "Who scored a famous hat-trick vs Birmingham City in 2019?",
+    "options": ["Jack Grealish", "Tammy Abraham", "Wesley"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "avfc_046",
+    "question": "Which manager signed Emiliano Martínez?",
+    "options": ["Steven Gerrard", "Dean Smith", "Unai Emery"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "avfc_047",
+    "question": "What is the name of Villa's training ground?",
+    "options": ["Bodymoor Heath", "Villa Park Training", "Aston Complex"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "avfc_048",
+    "question": "Which defender joined from Manchester United in 2019?",
+    "options": ["Axel Tuanzebe", "Tyrone Mings", "Ezri Konsa"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "avfc_049",
+    "question": "Who was Villa's manager when they were relegated in 2016?",
+    "options": ["Tim Sherwood", "Rémi Garde", "Steve Bruce"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "avfc_050",
+    "question": "Which competition did Unai Emery previously win four times?",
+    "options": ["Champions League", "Europa League", "La Liga"],
+    "answerIndex": 1,
+    "difficulty": "medium"
   }
 ]

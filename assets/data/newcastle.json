@@ -103,5 +103,250 @@
     "options": ["1881", "1892", "1905"],
     "answerIndex": 1,
     "difficulty": "hard"
+  },
+  {
+    "id": "nufc_016",
+    "question": "How many league titles has Newcastle won?",
+    "options": ["2", "4", "6"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "nufc_017",
+    "question": "Which striker was known as 'Wor Jackie'?",
+    "options": ["Alan Shearer", "Jackie Milburn", "Malcolm Macdonald"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_018",
+    "question": "What record fee did Newcastle pay for Alan Shearer in 1996?",
+    "options": ["£10 million", "£15 million", "£20 million"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "nufc_019",
+    "question": "How many goals did Alan Shearer score for Newcastle?",
+    "options": ["148", "206", "260"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "nufc_020",
+    "question": "Which manager replaced Kevin Keegan in 1997?",
+    "options": ["Kenny Dalglish", "Ruud Gullit", "Bobby Robson"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_021",
+    "question": "What was the nickname of the 1995-96 Newcastle team?",
+    "options": ["The Entertainers", "The Magpie Army", "Keegan's Boys"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_022",
+    "question": "How many FA Cups has Newcastle won?",
+    "options": ["4", "6", "8"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "nufc_023",
+    "question": "Which Colombian striker played for Newcastle from 1996-1997?",
+    "options": ["Faustino Asprilla", "James Rodríguez", "Carlos Valderrama"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_024",
+    "question": "Who captained Newcastle to third place in the 2002-03 season?",
+    "options": ["Gary Speed", "Alan Shearer", "Nicky Butt"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_025",
+    "question": "Which manager took Newcastle back to the Champions League in 2023?",
+    "options": ["Steve Bruce", "Eddie Howe", "Rafa Benítez"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "nufc_026",
+    "question": "What is the famous statue outside St James' Park?",
+    "options": ["Bobby Robson statue", "Alan Shearer statue", "Both of these"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_027",
+    "question": "Which Peruvian striker joined Newcastle in 1996?",
+    "options": ["Paolo Guerrero", "Nolberto Solano", "Claudio Pizarro"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_028",
+    "question": "What position did Nolberto Solano play?",
+    "options": ["Striker", "Winger/Midfielder", "Defender"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_029",
+    "question": "Which goalkeeper was nicknamed 'Shaka' at Newcastle?",
+    "options": ["Shay Given", "Pavel Srníček", "Steve Harper"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "nufc_030",
+    "question": "What year did Newcastle get relegated from the Premier League for the first time?",
+    "options": ["2009", "2016", "2019"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "nufc_031",
+    "question": "Which English midfielder wore the number 8 shirt from 2019-2023?",
+    "options": ["Jonjo Shelvey", "Joe Willock", "Sean Longstaff"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_032",
+    "question": "Who scored a famous 4-4 equalizer vs Arsenal in 2011?",
+    "options": ["Andy Carroll", "Cheick Tioté", "Kevin Nolan"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "nufc_033",
+    "question": "Which Swedish striker played for Newcastle from 2005-2007?",
+    "options": ["Henrik Larsson", "Michael Owen", "Michael Chopra"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_034",
+    "question": "Who was Newcastle's manager during the 2021 Saudi takeover?",
+    "options": ["Steve Bruce", "Eddie Howe", "Rafa Benítez"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "nufc_035",
+    "question": "Which goalkeeper made over 400 appearances for Newcastle?",
+    "options": ["Steve Harper", "Shay Given", "Tim Krul"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_036",
+    "question": "What nationality is Alexander Isak?",
+    "options": ["Norwegian", "Swedish", "Danish"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "nufc_037",
+    "question": "Who was the first manager after the 2021 takeover?",
+    "options": ["Steve Bruce", "Eddie Howe", "Graeme Jones"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "nufc_038",
+    "question": "Which English winger joined from Southampton in 2017?",
+    "options": ["Matt Ritchie", "Dwight Gayle", "Christian Atsu"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_039",
+    "question": "What is the name of Newcastle fans?",
+    "options": ["Mackems", "Geordies", "Smoggies"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "nufc_040",
+    "question": "Who was Newcastle's top scorer in the 2022-23 Champions League qualification season?",
+    "options": ["Callum Wilson", "Alexander Isak", "Miguel Almirón"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_041",
+    "question": "Which manager won promotion with Newcastle in 2010 and 2017?",
+    "options": ["Chris Hughton", "Rafa Benítez", "Alan Pardew"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_042",
+    "question": "Who scored Newcastle's fastest ever Premier League goal?",
+    "options": ["Alan Shearer", "Andy Carroll", "Papiss Cissé"],
+    "answerIndex": 2,
+    "difficulty": "hard"
+  },
+  {
+    "id": "nufc_043",
+    "question": "Which Dutch defender was captain during the early 2020s?",
+    "options": ["Jamaal Lascelles", "Fabian Schär", "Sven Botman"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_044",
+    "question": "What trophy did Newcastle win in 1969?",
+    "options": ["League Cup", "Inter-Cities Fairs Cup", "FA Cup"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "nufc_045",
+    "question": "Which striker scored the famous volley vs Chelsea in 2012?",
+    "options": ["Demba Ba", "Papiss Cissé", "Ben Arfa"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "nufc_046",
+    "question": "Who was known as 'Supermac' at Newcastle?",
+    "options": ["Malcolm Macdonald", "Michael Owen", "Andy Carroll"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_047",
+    "question": "Which manager led Newcastle to fifth place in the 2011-12 season?",
+    "options": ["Chris Hughton", "Alan Pardew", "Steve McClaren"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_048",
+    "question": "What nationality is Bruno Guimarães?",
+    "options": ["Portuguese", "Brazilian", "Spanish"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "nufc_049",
+    "question": "Which club did Alexander Isak join from?",
+    "options": ["Borussia Dortmund", "Real Sociedad", "Barcelona"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_050",
+    "question": "What year did Newcastle last reach an FA Cup Final?",
+    "options": ["1998", "1999", "2000"],
+    "answerIndex": 1,
+    "difficulty": "hard"
   }
 ]

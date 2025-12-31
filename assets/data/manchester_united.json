@@ -80,7 +80,7 @@
     "id": "manu_012",
     "question": "How many Premier League titles has Manchester United won?",
     "options": ["18", "20", "13"],
-    "answerIndex": 1,
+    "answerIndex": 2,
     "difficulty": "medium"
   },
   {
@@ -103,5 +103,250 @@
     "options": ["1878", "1902", "1910"],
     "answerIndex": 0,
     "difficulty": "hard"
+  },
+  {
+    "id": "manu_016",
+    "question": "Which team did United beat in the 1999 Champions League Final?",
+    "options": ["Juventus", "Bayern Munich", "Real Madrid"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "manu_017",
+    "question": "Who scored United's equalizer in the 1999 Champions League Final?",
+    "options": ["Ole Gunnar Solskjær", "Teddy Sheringham", "Andy Cole"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "manu_018",
+    "question": "Which Welshman made the most appearances for Manchester United?",
+    "options": ["Mark Hughes", "Ryan Giggs", "Gary Speed"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "manu_019",
+    "question": "What was Manchester United originally called when founded?",
+    "options": ["Manchester FC", "Newton Heath", "United FC"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "manu_020",
+    "question": "Which French striker scored 20+ goals for 4 consecutive seasons?",
+    "options": ["Eric Cantona", "Louis Saha", "Anthony Martial"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "manu_021",
+    "question": "Who was known as 'The King' at Old Trafford?",
+    "options": ["Wayne Rooney", "Eric Cantona", "George Best"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "manu_022",
+    "question": "How many European Cups/Champions League titles has United won?",
+    "options": ["2", "3", "4"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "manu_023",
+    "question": "Which striker partnership was known as 'SAS'?",
+    "options": ["Sheringham and Solskjær", "Cole and Yorke", "Rooney and Ronaldo"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "manu_024",
+    "question": "Who managed United immediately after Sir Alex Ferguson?",
+    "options": ["Louis van Gaal", "David Moyes", "José Mourinho"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "manu_025",
+    "question": "Which defender was part of the famous 'Class of 92'?",
+    "options": ["Rio Ferdinand", "Gary Neville", "Wes Brown"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "manu_026",
+    "question": "What year did Sir Alex Ferguson retire?",
+    "options": ["2011", "2012", "2013"],
+    "answerIndex": 2,
+    "difficulty": "easy"
+  },
+  {
+    "id": "manu_027",
+    "question": "Which Northern Irish legend won the Ballon d'Or in 1968?",
+    "options": ["George Best", "Pat Jennings", "Danny Blanchflower"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "manu_028",
+    "question": "Who scored a hat-trick on his United debut in 1995?",
+    "options": ["Eric Cantona", "Andy Cole", "Ole Gunnar Solskjær"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "manu_029",
+    "question": "Which team are Manchester United's biggest rivals?",
+    "options": ["Liverpool", "Manchester City", "Leeds United"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "manu_030",
+    "question": "What is the capacity of Old Trafford?",
+    "options": ["About 60,000", "About 74,000", "About 82,000"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "manu_031",
+    "question": "Which Portuguese midfielder joined United in 2020?",
+    "options": ["Bernardo Silva", "Bruno Fernandes", "João Moutinho"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "manu_032",
+    "question": "Who was United's captain when they won the 1999 treble?",
+    "options": ["Roy Keane", "Peter Schmeichel", "Gary Neville"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "manu_033",
+    "question": "Which player was banned for kung-fu kicking a fan in 1995?",
+    "options": ["Roy Keane", "Eric Cantona", "Mark Hughes"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "manu_034",
+    "question": "How many league titles did Sir Alex Ferguson win at United?",
+    "options": ["11", "13", "15"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "manu_035",
+    "question": "Which Dutch striker was signed from PSV in 2022?",
+    "options": ["Memphis Depay", "Robin van Persie", "Wout Weghorst"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "manu_036",
+    "question": "Who scored the winner in the 2016 FA Cup Final?",
+    "options": ["Anthony Martial", "Jesse Lingard", "Juan Mata"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "manu_037",
+    "question": "Which defender was known as 'The Wall'?",
+    "options": ["Gary Pallister", "Jaap Stam", "Nemanja Vidić"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "manu_038",
+    "question": "What was Sir Matt Busby's young team nicknamed?",
+    "options": ["The Young Ones", "The Busby Babes", "Matt's Men"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "manu_039",
+    "question": "Which player scored United's first Premier League goal?",
+    "options": ["Mark Hughes", "Ryan Giggs", "Eric Cantona"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "manu_040",
+    "question": "Who was the first British club to win the European Cup?",
+    "options": ["Liverpool", "Celtic", "Manchester United"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "manu_041",
+    "question": "Which stadium did United play at during WWII bomb damage repairs?",
+    "options": ["Anfield", "Maine Road", "Wembley"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "manu_042",
+    "question": "Who was Manchester United's most expensive signing until 2016?",
+    "options": ["Angel Di María", "Juan Mata", "Ander Herrera"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "manu_043",
+    "question": "Which English striker joined from Everton in 2004?",
+    "options": ["Michael Owen", "Wayne Rooney", "Andy Johnson"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "manu_044",
+    "question": "How old was Wayne Rooney when he joined Manchester United?",
+    "options": ["16", "18", "20"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "manu_045",
+    "question": "Which trophy did United win by beating Ajax in 2017?",
+    "options": ["Champions League", "Europa League", "FA Cup"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "manu_046",
+    "question": "Who scored a bicycle kick goal against Manchester City in 2011?",
+    "options": ["Nani", "Wayne Rooney", "Dimitar Berbatov"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "manu_047",
+    "question": "Which goalkeeper holds the record for most clean sheets for United?",
+    "options": ["Peter Schmeichel", "David de Gea", "Edwin van der Sar"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "manu_048",
+    "question": "What was Sir Alex Ferguson's last match as manager?",
+    "options": ["Loss vs Man City", "Win vs West Brom", "Win vs Swansea"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "manu_049",
+    "question": "Which shirt number did David Beckham famously wear?",
+    "options": ["7", "10", "23"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "manu_050",
+    "question": "Who managed Manchester United to their 2008 Champions League win?",
+    "options": ["Sir Matt Busby", "Sir Alex Ferguson", "José Mourinho"],
+    "answerIndex": 1,
+    "difficulty": "easy"
   }
 ]

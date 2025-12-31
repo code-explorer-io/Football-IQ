@@ -13,6 +13,10 @@ import '../services/unlock_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/pitch_background.dart';
 import '../widgets/animated_answer_button.dart';
+import '../widgets/xp_award_display.dart';
+import '../widgets/unlock_celebration.dart';
+import '../widgets/error_state_widget.dart';
+import '../widgets/new_record_badge.dart';
 import 'home_screen.dart';
 
 class TimedBlitzIntroScreen extends StatelessWidget {
@@ -230,6 +234,11 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
   void _startTimer() {
     _timerAnimationController.forward();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
+
       setState(() {
         _secondsRemaining--;
       });
@@ -272,6 +281,7 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
 
     // Quick flash feedback then immediately advance
     Future.delayed(const Duration(milliseconds: 300), () {
+      if (!mounted) return;
       if (_secondsRemaining > 0) {
         _nextQuestion();
       }
@@ -328,51 +338,9 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
             onPressed: () => Navigator.pop(context),
           ),
         ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.error_outline,
-                  size: 64,
-                  color: AppTheme.textMuted,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Unable to load questions',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.textPrimary,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Please check your connection and try again',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppTheme.textSecondary,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  onPressed: _loadQuestions,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: widget.mode.color,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Text('Try Again'),
-                ),
-              ],
-            ),
-          ),
+        body: ErrorStateWidget(
+          onRetry: _loadQuestions,
+          buttonColor: widget.mode.color,
         ),
       );
     }
@@ -507,6 +475,7 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
                     ...List.generate(
                       (question['options'] as List).length,
                       (index) => AnimatedAnswerButton(
+                        key: ValueKey('q${_currentIndex}_opt$index'),
                         text: question['options'][index],
                         index: index,
                         isSelected: _selectedAnswer == index,
@@ -643,24 +612,7 @@ class _TimedBlitzResultsScreenState extends State<TimedBlitzResultsScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Spacer(),
-                if (_isNewBest)
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    margin: const EdgeInsets.only(bottom: 16),
-                    decoration: BoxDecoration(
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Text(
-                      'NEW RECORD',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                ),
+                if (_isNewBest) const NewRecordBadge(),
               Icon(
                 Icons.flash_on,
                 size: 80,
@@ -723,53 +675,12 @@ class _TimedBlitzResultsScreenState extends State<TimedBlitzResultsScreen> {
               // XP earned
               if (_xpAward != null) ...[
                 const SizedBox(height: 20),
-                _BlitzXPRow(xpAward: _xpAward!, streak: _dailyStreak),
+                XPAwardDisplay(xpAward: _xpAward!, streak: _dailyStreak),
               ],
               // Mode unlock celebration
               if (_unlockResult != null && _unlockResult!.didUnlock) ...[
                 const SizedBox(height: 16),
-                TweenAnimationBuilder<double>(
-                  tween: Tween(begin: 0.8, end: 1.0),
-                  duration: const Duration(milliseconds: 600),
-                  curve: Curves.elasticOut,
-                  builder: (context, scale, child) {
-                    return Transform.scale(scale: scale, child: child);
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          AppTheme.gold,
-                          AppTheme.gold.withValues(alpha: 0.8),
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppTheme.gold.withValues(alpha: 0.4),
-                          blurRadius: 12,
-                          spreadRadius: 2,
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.lock_open, color: Colors.black, size: 20),
-                        const SizedBox(width: 8),
-                        Text(
-                          '${_unlockResult!.unlockedModeName} Unlocked!',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                UnlockCelebration(unlockResult: _unlockResult!),
               ],
               const Spacer(),
               SizedBox(
@@ -856,109 +767,6 @@ class _TimedBlitzResultsScreenState extends State<TimedBlitzResultsScreen> {
           ),
         ),
       ],
-    );
-  }
-}
-
-/// XP earned display for blitz results
-class _BlitzXPRow extends StatelessWidget {
-  final XPAward xpAward;
-  final int streak;
-
-  const _BlitzXPRow({
-    required this.xpAward,
-    required this.streak,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: AppTheme.surface,
-        borderRadius: BorderRadius.circular(AppTheme.radiusMD),
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.star, color: AppTheme.highlight, size: 20),
-              const SizedBox(width: 8),
-              Text(
-                '+${xpAward.totalXPEarned} XP',
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.highlight,
-                ),
-              ),
-              if (streak > 1) ...[
-                const SizedBox(width: 12),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFF6B35).withValues(alpha: 0.2),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.local_fire_department, color: Color(0xFFFF6B35), size: 16),
-                      const SizedBox(width: 4),
-                      Text(
-                        '$streak',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFFFF6B35),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ],
-          ),
-          if (xpAward.bonusReasons.isNotEmpty) ...[
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
-              runSpacing: 4,
-              alignment: WrapAlignment.center,
-              children: xpAward.bonusReasons.map((reason) => Text(
-                reason,
-                style: const TextStyle(fontSize: 12, color: AppTheme.textMuted),
-              )).toList(),
-            ),
-          ],
-          if (xpAward.leveledUp) ...[
-            const SizedBox(height: 8),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: AppTheme.gold.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.arrow_upward, color: AppTheme.gold, size: 16),
-                  const SizedBox(width: 4),
-                  Text(
-                    'Level ${xpAward.newLevel} - ${XPService.getLevelTitle(xpAward.newLevel)}',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: AppTheme.gold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ],
-      ),
     );
   }
 }

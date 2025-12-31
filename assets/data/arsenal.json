@@ -278,5 +278,75 @@
     "options": ["1970-71", "1988-89", "1997-98"],
     "answerIndex": 0,
     "difficulty": "hard"
+  },
+  {
+    "id": "ars_041",
+    "question": "Which midfielder captained Arsenal from 2019 onwards?",
+    "options": ["Pierre-Emerick Aubameyang", "Martin Ødegaard", "Alexandre Lacazette"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "ars_042",
+    "question": "What is the capacity of the Emirates Stadium?",
+    "options": ["About 50,000", "About 60,000", "About 70,000"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "ars_043",
+    "question": "Which Brazilian defender joined Arsenal from Chelsea in 2020?",
+    "options": ["David Luiz", "Gabriel Magalhães", "Willian"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "ars_044",
+    "question": "Who was Arsenal's Player of the Year for 2022-23?",
+    "options": ["Martin Ødegaard", "Bukayo Saka", "William Saliba"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "ars_045",
+    "question": "Which club did Arsenal sign Martin Ødegaard from?",
+    "options": ["Bayern Munich", "Real Madrid", "Barcelona"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "ars_046",
+    "question": "How many consecutive FA Cups did Arsenal win from 2014-2017?",
+    "options": ["2", "3", "4"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "ars_047",
+    "question": "Which English winger came through Arsenal's Hale End academy?",
+    "options": ["Jadon Sancho", "Bukayo Saka", "Callum Hudson-Odoi"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "ars_048",
+    "question": "What is the name of Arsenal's academy?",
+    "options": ["Cobham", "Hale End", "Carrington"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "ars_049",
+    "question": "Who was Arsenal's first £100 million striker signing?",
+    "options": ["Alexandre Lacazette", "Nicolas Pépé", "Pierre-Emerick Aubameyang"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "ars_050",
+    "question": "Which manager directly preceded Mikel Arteta at Arsenal?",
+    "options": ["Arsène Wenger", "Unai Emery", "Freddie Ljungberg"],
+    "answerIndex": 2,
+    "difficulty": "hard"
   }
 ]

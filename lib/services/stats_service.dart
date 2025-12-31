@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Stats tracking service for Football IQ rating and form guide
@@ -28,17 +29,27 @@ class StatsService {
 
   /// Get current Football IQ rating
   static Future<int> getFootballIQ() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getInt(_iqKey) ?? startingIQ;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getInt(_iqKey) ?? startingIQ;
+    } catch (e) {
+      debugPrint('Error getting Football IQ: $e');
+      return startingIQ;
+    }
   }
 
   /// Get form guide as list of results (W, D, L)
   /// Returns most recent first, max 5 entries
   static Future<List<String>> getFormGuide() async {
-    final prefs = await SharedPreferences.getInstance();
-    final formString = prefs.getString(_formKey) ?? '';
-    if (formString.isEmpty) return [];
-    return formString.split(',').take(5).toList();
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final formString = prefs.getString(_formKey) ?? '';
+      if (formString.isEmpty) return [];
+      return formString.split(',').take(5).toList();
+    } catch (e) {
+      debugPrint('Error getting form guide: $e');
+      return [];
+    }
   }
 
   /// Record a quiz result and update all stats
@@ -48,79 +59,95 @@ class StatsService {
     required int totalQuestions,
     required String modeId,
   }) async {
-    final prefs = await SharedPreferences.getInstance();
+    try {
+      final prefs = await SharedPreferences.getInstance();
 
-    // Calculate percentage
-    final percentage = (score / totalQuestions) * 100;
-    final isPerfect = score == totalQuestions;
+      // Calculate percentage
+      final percentage = (score / totalQuestions) * 100;
+      final isPerfect = score == totalQuestions;
 
-    // Update form guide
-    String result;
-    if (percentage >= 80) {
-      result = 'W';
-    } else if (percentage >= 50) {
-      result = 'D';
-    } else {
-      result = 'L';
+      // Update form guide
+      String result;
+      if (percentage >= 80) {
+        result = 'W';
+      } else if (percentage >= 50) {
+        result = 'D';
+      } else {
+        result = 'L';
+      }
+
+      final currentForm = await getFormGuide();
+      final newForm = [result, ...currentForm].take(5).join(',');
+      await prefs.setString(_formKey, newForm);
+
+      // Update totals
+      final totalCorrect = (prefs.getInt(_totalCorrectKey) ?? 0) + score;
+      final totalQuestions_ = (prefs.getInt(_totalQuestionsKey) ?? 0) + totalQuestions;
+      final quizzesPlayed = (prefs.getInt(_quizzesPlayedKey) ?? 0) + 1;
+      final perfectScores = (prefs.getInt(_perfectScoresKey) ?? 0) + (isPerfect ? 1 : 0);
+
+      await prefs.setInt(_totalCorrectKey, totalCorrect);
+      await prefs.setInt(_totalQuestionsKey, totalQuestions_);
+      await prefs.setInt(_quizzesPlayedKey, quizzesPlayed);
+      await prefs.setInt(_perfectScoresKey, perfectScores);
+
+      // Calculate new Football IQ
+      final currentIQ = prefs.getInt(_iqKey) ?? startingIQ;
+      int iqChange = 0;
+
+      // IQ adjustment based on performance
+      if (isPerfect) {
+        iqChange = 3; // Perfect score = big boost
+      } else if (percentage >= 80) {
+        iqChange = 2; // Great performance
+      } else if (percentage >= 60) {
+        iqChange = 1; // Good performance
+      } else if (percentage >= 40) {
+        iqChange = 0; // Average - no change
+      } else {
+        iqChange = -1; // Poor performance
+      }
+
+      // Bonus for streaks (consecutive Ws in form)
+      final newFormList = newForm.split(',');
+      if (newFormList.length >= 3 &&
+          newFormList.take(3).every((r) => r == 'W')) {
+        iqChange += 1; // Streak bonus
+      }
+
+      final newIQ = (currentIQ + iqChange).clamp(minIQ, maxIQ);
+      await prefs.setInt(_iqKey, newIQ);
+
+      // Update last played date
+      await prefs.setString(_lastPlayedKey, DateTime.now().toIso8601String());
+
+      return (newIQ: newIQ, change: iqChange, isPerfect: isPerfect);
+    } catch (e) {
+      debugPrint('Error recording quiz result: $e');
+      // Return safe defaults
+      return (newIQ: startingIQ, change: 0, isPerfect: score == totalQuestions);
     }
-
-    final currentForm = await getFormGuide();
-    final newForm = [result, ...currentForm].take(5).join(',');
-    await prefs.setString(_formKey, newForm);
-
-    // Update totals
-    final totalCorrect = (prefs.getInt(_totalCorrectKey) ?? 0) + score;
-    final totalQuestions_ = (prefs.getInt(_totalQuestionsKey) ?? 0) + totalQuestions;
-    final quizzesPlayed = (prefs.getInt(_quizzesPlayedKey) ?? 0) + 1;
-    final perfectScores = (prefs.getInt(_perfectScoresKey) ?? 0) + (isPerfect ? 1 : 0);
-
-    await prefs.setInt(_totalCorrectKey, totalCorrect);
-    await prefs.setInt(_totalQuestionsKey, totalQuestions_);
-    await prefs.setInt(_quizzesPlayedKey, quizzesPlayed);
-    await prefs.setInt(_perfectScoresKey, perfectScores);
-
-    // Calculate new Football IQ
-    final currentIQ = prefs.getInt(_iqKey) ?? startingIQ;
-    int iqChange = 0;
-
-    // IQ adjustment based on performance
-    if (isPerfect) {
-      iqChange = 3; // Perfect score = big boost
-    } else if (percentage >= 80) {
-      iqChange = 2; // Great performance
-    } else if (percentage >= 60) {
-      iqChange = 1; // Good performance
-    } else if (percentage >= 40) {
-      iqChange = 0; // Average - no change
-    } else {
-      iqChange = -1; // Poor performance
-    }
-
-    // Bonus for streaks (consecutive Ws in form)
-    final newFormList = newForm.split(',');
-    if (newFormList.length >= 3 &&
-        newFormList.take(3).every((r) => r == 'W')) {
-      iqChange += 1; // Streak bonus
-    }
-
-    final newIQ = (currentIQ + iqChange).clamp(minIQ, maxIQ);
-    await prefs.setInt(_iqKey, newIQ);
-
-    // Update last played date
-    await prefs.setString(_lastPlayedKey, DateTime.now().toIso8601String());
-
-    return (newIQ: newIQ, change: iqChange, isPerfect: isPerfect);
   }
 
   /// Get total stats
   static Future<Map<String, int>> getTotalStats() async {
-    final prefs = await SharedPreferences.getInstance();
-    return {
-      'totalCorrect': prefs.getInt(_totalCorrectKey) ?? 0,
-      'totalQuestions': prefs.getInt(_totalQuestionsKey) ?? 0,
-      'quizzesPlayed': prefs.getInt(_quizzesPlayedKey) ?? 0,
-      'perfectScores': prefs.getInt(_perfectScoresKey) ?? 0,
-    };
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return {
+        'totalCorrect': prefs.getInt(_totalCorrectKey) ?? 0,
+        'totalQuestions': prefs.getInt(_totalQuestionsKey) ?? 0,
+        'quizzesPlayed': prefs.getInt(_quizzesPlayedKey) ?? 0,
+        'perfectScores': prefs.getInt(_perfectScoresKey) ?? 0,
+      };
+    } catch (e) {
+      debugPrint('Error getting total stats: $e');
+      return {
+        'totalCorrect': 0,
+        'totalQuestions': 0,
+        'quizzesPlayed': 0,
+        'perfectScores': 0,
+      };
+    }
   }
 
   /// Get IQ tier name (like FIFA card ratings)

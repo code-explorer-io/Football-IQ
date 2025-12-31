@@ -103,5 +103,250 @@
     "options": ["About 54,000", "About 61,000", "About 75,000"],
     "answerIndex": 0,
     "difficulty": "hard"
+  },
+  {
+    "id": "lfc_016",
+    "question": "Which team did Liverpool beat in the 2019 Champions League Final?",
+    "options": ["Barcelona", "Tottenham Hotspur", "Real Madrid"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "lfc_017",
+    "question": "What year was Liverpool Football Club founded?",
+    "options": ["1882", "1892", "1902"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "lfc_018",
+    "question": "Who scored a famous late goal vs Newcastle to keep Liverpool's 2019 title hopes alive?",
+    "options": ["Sadio Mané", "Divock Origi", "Roberto Firmino"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "lfc_019",
+    "question": "Which defender joined from Southampton in 2018 for a world-record fee?",
+    "options": ["Joël Matip", "Virgil van Dijk", "Joe Gomez"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "lfc_020",
+    "question": "What is Liverpool's nickname?",
+    "options": ["The Reds", "The Red Devils", "The Redmen"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "lfc_021",
+    "question": "Which Brazilian goalkeeper joined Liverpool in 2018?",
+    "options": ["Ederson", "Alisson", "Weverton"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "lfc_022",
+    "question": "Who did Liverpool famously beat 4-0 in the 2019 Champions League semi-final second leg?",
+    "options": ["Bayern Munich", "Barcelona", "Roma"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "lfc_023",
+    "question": "Which striker scored a famous hat-trick in the 2001 UEFA Cup Final?",
+    "options": ["Robbie Fowler", "Michael Owen", "Emile Heskey"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "lfc_024",
+    "question": "What is the name of Liverpool's training ground?",
+    "options": ["Melwood", "AXA Training Centre", "Carrington"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "lfc_025",
+    "question": "Who was Liverpool's manager before Jürgen Klopp?",
+    "options": ["Kenny Dalglish", "Brendan Rodgers", "Roy Hodgson"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "lfc_026",
+    "question": "Which Scottish player-manager won the league with Liverpool in 1990?",
+    "options": ["Graeme Souness", "Kenny Dalglish", "Alex Ferguson"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "lfc_027",
+    "question": "How many league titles has Liverpool won in total?",
+    "options": ["18", "19", "20"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "lfc_028",
+    "question": "Who scored the opening goal in the 2005 Champions League Final?",
+    "options": ["Steven Gerrard", "Paolo Maldini", "Xabi Alonso"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "lfc_029",
+    "question": "Which team are Liverpool's biggest local rivals?",
+    "options": ["Manchester United", "Everton", "Manchester City"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "lfc_030",
+    "question": "What is the derby between Liverpool and Everton called?",
+    "options": ["The North West Derby", "The Merseyside Derby", "The Red-Blue Derby"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "lfc_031",
+    "question": "Which Japanese midfielder played for Liverpool from 2020-2024?",
+    "options": ["Shinji Kagawa", "Takumi Minamino", "Daichi Kamada"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "lfc_032",
+    "question": "Who was known as 'God' by Liverpool fans?",
+    "options": ["Kenny Dalglish", "Robbie Fowler", "Steven Gerrard"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "lfc_033",
+    "question": "Which Spanish midfielder won the Champions League with Liverpool in 2005?",
+    "options": ["Fernando Torres", "Xabi Alonso", "Luis Garcia"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "lfc_034",
+    "question": "What was special about Liverpool's 2019-20 Premier League campaign?",
+    "options": ["Unbeaten season", "Most points ever", "Both of these"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "lfc_035",
+    "question": "Which full-back has made the most appearances for Liverpool?",
+    "options": ["Jamie Carragher", "Ian Callaghan", "Steve Nicol"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "lfc_036",
+    "question": "Who scored the 'ghost goal' against Chelsea in 2005?",
+    "options": ["Steven Gerrard", "Luis Garcia", "Milan Baroš"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "lfc_037",
+    "question": "Which club did Mo Salah join Liverpool from?",
+    "options": ["Chelsea", "Roma", "Fiorentina"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "lfc_038",
+    "question": "How many goals did Mo Salah score in his debut Premier League season?",
+    "options": ["28", "32", "36"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "lfc_039",
+    "question": "Which manager built Liverpool's famous 1970s/80s dynasty?",
+    "options": ["Bill Shankly", "Bob Paisley", "Joe Fagan"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "lfc_040",
+    "question": "What tragedy occurred at Hillsborough in 1989?",
+    "options": ["Stadium collapse", "Crowd crush killing 97 fans", "Fire disaster"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "lfc_041",
+    "question": "Which Scottish right-back was a key player in the 2000s?",
+    "options": ["Steve Finnan", "Gary McAllister", "Steve Nicol"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "lfc_042",
+    "question": "Who was Liverpool's captain during the 2013-14 title challenge?",
+    "options": ["Jordan Henderson", "Steven Gerrard", "Daniel Agger"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "lfc_043",
+    "question": "Which Senegalese forward formed part of Liverpool's famous front three?",
+    "options": ["Sadio Mané", "Ismaïla Sarr", "Papiss Cissé"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "lfc_044",
+    "question": "What was the final score when Liverpool beat Barcelona 4-0 at Anfield?",
+    "options": ["4-0 (4-3 on aggregate)", "4-0 (5-4 on aggregate)", "4-0 (4-4 on aggregate, won on away goals)"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "lfc_045",
+    "question": "Which club did Virgil van Dijk captain before joining Liverpool?",
+    "options": ["Celtic", "Southampton", "Groningen"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "lfc_046",
+    "question": "Who scored twice in the 2022 League Cup Final vs Chelsea?",
+    "options": ["Mohamed Salah", "Sadio Mané", "Diogo Jota"],
+    "answerIndex": 2,
+    "difficulty": "hard"
+  },
+  {
+    "id": "lfc_047",
+    "question": "What is the name of the iconic gate at Anfield?",
+    "options": ["The Shankly Gates", "The Kop Gates", "The Anfield Gates"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "lfc_048",
+    "question": "Which defender scored in the 2005 Champions League Final?",
+    "options": ["Jamie Carragher", "Djimi Traoré", "Sami Hyypiä"],
+    "answerIndex": 2,
+    "difficulty": "hard"
+  },
+  {
+    "id": "lfc_049",
+    "question": "Who was Liverpool's first-ever £100m+ signing?",
+    "options": ["Virgil van Dijk", "Darwin Núñez", "Alisson"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "lfc_050",
+    "question": "Which trophy did Liverpool win by beating Chelsea on penalties in 2022?",
+    "options": ["FA Cup", "League Cup", "Both of these"],
+    "answerIndex": 2,
+    "difficulty": "medium"
   }
 ]

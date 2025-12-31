@@ -92,91 +92,115 @@ class _ResultsScreenState extends State<ResultsScreen>
   }
 
   Future<void> _loadAndSaveScore() async {
-    // Use club-specific score storage
-    final isNewBest = await ScoreService.saveBestScore(
-      'quiz_your_club',
-      widget.score,
-      clubId: widget.club.id,
-    );
-    final bestScore = await ScoreService.getBestScore(
-      'quiz_your_club',
-      clubId: widget.club.id,
-    );
+    try {
+      // Use club-specific score storage
+      final isNewBest = await ScoreService.saveBestScore(
+        'quiz_your_club',
+        widget.score,
+        clubId: widget.club.id,
+      );
+      final bestScore = await ScoreService.getBestScore(
+        'quiz_your_club',
+        clubId: widget.club.id,
+      );
 
-    // Update stats and get new IQ
-    final statsResult = await StatsService.recordQuizResult(
-      score: widget.score,
-      totalQuestions: widget.totalQuestions,
-      modeId: 'quiz_your_club',
-    );
+      // Update stats and get new IQ
+      final statsResult = await StatsService.recordQuizResult(
+        score: widget.score,
+        totalQuestions: widget.totalQuestions,
+        modeId: 'quiz_your_club',
+      );
 
-    // Record streak activity
-    final streakResult = await StreakService.recordActivity();
+      // Record streak activity
+      final streakResult = await StreakService.recordActivity();
 
-    // Award XP
-    final isPerfect = widget.score == widget.totalQuestions;
-    final xpAward = await XPService.awardXP(
-      correctAnswers: widget.score,
-      totalQuestions: widget.totalQuestions,
-      modeId: 'quiz_your_club',
-      streakDays: streakResult.streak,
-      isPerfect: isPerfect,
-      fastAnswerCount: widget.fastAnswerCount,
-    );
+      // Award XP
+      final isPerfect = widget.score == widget.totalQuestions;
+      final xpAward = await XPService.awardXP(
+        correctAnswers: widget.score,
+        totalQuestions: widget.totalQuestions,
+        modeId: 'quiz_your_club',
+        streakDays: streakResult.streak,
+        isPerfect: isPerfect,
+        fastAnswerCount: widget.fastAnswerCount,
+      );
 
-    // Check for achievements
-    final stats = await StatsService.getTotalStats();
-    final form = await StatsService.getFormGuide();
-    final achievements = await AchievementService.checkAndUnlockAchievements(
-      score: widget.score,
-      totalQuestions: widget.totalQuestions,
-      modeId: 'quiz_your_club',
-      totalCorrectAnswers: stats['totalCorrect'],
-      perfectScoreCount: stats['perfectScores'],
-      footballIQ: statsResult.newIQ,
-      formGuide: form,
-    );
+      // Check for achievements
+      final stats = await StatsService.getTotalStats();
+      final form = await StatsService.getFormGuide();
+      final achievements = await AchievementService.checkAndUnlockAchievements(
+        score: widget.score,
+        totalQuestions: widget.totalQuestions,
+        modeId: 'quiz_your_club',
+        totalCorrectAnswers: stats['totalCorrect'],
+        perfectScoreCount: stats['perfectScores'],
+        footballIQ: statsResult.newIQ,
+        formGuide: form,
+      );
 
-    // Record club quiz completion for unlock progression
-    final unlockResult = await UnlockService.recordClubQuizCompleted();
+      // Record club quiz completion for unlock progression
+      final unlockResult = await UnlockService.recordClubQuizCompleted();
 
-    setState(() {
-      _bestScore = bestScore;
-      _isNewBest = isNewBest;
-      _footballIQ = statsResult.newIQ;
-      _iqChange = statsResult.change;
-      _newAchievements = achievements;
-      _xpAward = xpAward;
-      _currentStreak = streakResult.streak;
-      _unlockResult = unlockResult;
-    });
+      if (!mounted) return;
 
-    // Start animations
-    _fadeInController.forward();
-    await Future.delayed(const Duration(milliseconds: 300));
-    _scoreAnimController.forward();
+      setState(() {
+        _bestScore = bestScore;
+        _isNewBest = isNewBest;
+        _footballIQ = statsResult.newIQ;
+        _iqChange = statsResult.change;
+        _newAchievements = achievements;
+        _xpAward = xpAward;
+        _currentStreak = streakResult.streak;
+        _unlockResult = unlockResult;
+      });
 
-    // Celebrate perfect score, new best, level up, or mode unlock with confetti
-    if (isPerfect || isNewBest || xpAward.leveledUp || unlockResult.didUnlock) {
-      HapticService.celebrate();
-      SoundService.levelUp();
-      _confettiController.play();
+      // Start animations
+      _fadeInController.forward();
+      await Future.delayed(const Duration(milliseconds: 300));
+      if (!mounted) return;
+      _scoreAnimController.forward();
+
+      // Celebrate perfect score, new best, level up, or mode unlock with confetti
+      if (isPerfect || isNewBest || xpAward.leveledUp || unlockResult.didUnlock) {
+        HapticService.celebrate();
+        SoundService.levelUp();
+        _confettiController.play();
+      }
+
+      // Track analytics (non-critical, fire and forget)
+      _trackAnalytics(isPerfect, xpAward);
+    } catch (e) {
+      // Log error but don't crash - show results with defaults
+      debugPrint('Error saving score/stats: $e');
+      if (!mounted) return;
+
+      // Still start animations even if save failed
+      _fadeInController.forward();
+      await Future.delayed(const Duration(milliseconds: 300));
+      if (!mounted) return;
+      _scoreAnimController.forward();
     }
+  }
 
-    // Track analytics
-    AnalyticsService.logGameCompleted(
-      modeName: 'Quiz Your Club',
-      score: widget.score,
-      totalQuestions: widget.totalQuestions,
-      xpEarned: xpAward.totalXPEarned,
-      clubName: widget.club.name,
-    );
-    if (isPerfect) {
-      AnalyticsService.logPerfectScore('Quiz Your Club');
-    }
-    if (xpAward.leveledUp) {
-      final levelTitle = XPService.getLevelTitle(xpAward.newLevel);
-      AnalyticsService.logLevelUp(xpAward.newLevel, levelTitle);
+  void _trackAnalytics(bool isPerfect, XPAward xpAward) {
+    try {
+      AnalyticsService.logGameCompleted(
+        modeName: 'Quiz Your Club',
+        score: widget.score,
+        totalQuestions: widget.totalQuestions,
+        xpEarned: xpAward.totalXPEarned,
+        clubName: widget.club.name,
+      );
+      if (isPerfect) {
+        AnalyticsService.logPerfectScore('Quiz Your Club');
+      }
+      if (xpAward.leveledUp) {
+        final levelTitle = XPService.getLevelTitle(xpAward.newLevel);
+        AnalyticsService.logLevelUp(xpAward.newLevel, levelTitle);
+      }
+    } catch (e) {
+      // Analytics failures are non-critical
+      debugPrint('Analytics error (non-critical): $e');
     }
   }
 

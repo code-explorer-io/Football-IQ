@@ -40,7 +40,6 @@ final List<Club> clubs = [
     primaryColor: const Color(0xFF6CABDD), // Sky blue
     secondaryColor: const Color(0xFFFFFFFF), // White
     dataFile: 'assets/data/manchester_city.json',
-    isFree: true, // TODO: Set back to false for production
   ),
   Club(
     id: 'arsenal',
@@ -48,7 +47,6 @@ final List<Club> clubs = [
     primaryColor: const Color(0xFFEF0107), // Red
     secondaryColor: const Color(0xFFFFFFFF), // White
     dataFile: 'assets/data/arsenal.json',
-    isFree: true, // TODO: Set back to false for production
   ),
   Club(
     id: 'liverpool',

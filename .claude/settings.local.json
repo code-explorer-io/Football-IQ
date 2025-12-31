@@ -72,7 +72,9 @@
       "Bash(cmd.exe /c \"echo %CLAUDE_CODE_GIT_BASH_PATH%\")",
       "Bash(cmd.exe /c \"set CLAUDE\")",
       "Bash(cmd.exe /c 'setx CLAUDE_CODE_GIT_BASH_PATH \"\"C:\\Program Files\\Git\\bin\\bash.exe\"\"')",
-      "Bash(taskkill:*)"
+      "Bash(taskkill:*)",
+      "Bash(for f in *.json)",
+      "Bash(PATH=\"/c/Program Files/Git/cmd:$PATH\" /c/Flutter/flutter/bin/flutter analyze:*)"
     ]
   }
 }

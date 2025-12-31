@@ -7,6 +7,8 @@ import '../services/sound_service.dart';
 import '../services/unlock_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/pitch_background.dart';
+import '../widgets/unlock_celebration.dart';
+import '../widgets/error_state_widget.dart';
 import 'home_screen.dart';
 
 // Cup stages in order
@@ -312,7 +314,7 @@ class CupMatchScreen extends StatefulWidget {
 }
 
 class _CupMatchScreenState extends State<CupMatchScreen> {
-  List<dynamic> _questions = [];
+  List<Map<String, dynamic>> _questions = [];
   int _currentIndex = 0;
   int _score = 0;
   bool _isLoading = true;
@@ -341,8 +343,35 @@ class _CupMatchScreenState extends State<CupMatchScreen> {
           .loadString(widget.mode.dataFile!);
       final List<dynamic> jsonList = jsonDecode(jsonString);
 
-      jsonList.shuffle();
-      _questions = jsonList.take(10).toList();
+      // Validate and cast each question
+      final validQuestions = <Map<String, dynamic>>[];
+      for (final item in jsonList) {
+        if (item is! Map<String, dynamic>) continue;
+
+        // Validate required fields exist
+        if (item['question'] == null ||
+            item['options'] == null ||
+            item['answerIndex'] == null) continue;
+
+        // Validate types
+        if (item['question'] is! String) continue;
+        if (item['options'] is! List) continue;
+        if (item['answerIndex'] is! int) continue;
+
+        // Validate answer index is in range
+        final options = item['options'] as List;
+        final answerIndex = item['answerIndex'] as int;
+        if (answerIndex < 0 || answerIndex >= options.length) continue;
+
+        validQuestions.add(item);
+      }
+
+      if (validQuestions.isEmpty) {
+        throw Exception('No valid questions found in data file');
+      }
+
+      validQuestions.shuffle();
+      _questions = validQuestions.take(10).toList();
 
       setState(() {
         _isLoading = false;
@@ -378,6 +407,7 @@ class _CupMatchScreenState extends State<CupMatchScreen> {
     });
 
     Future.delayed(const Duration(milliseconds: 1000), () {
+      if (!mounted) return;
       if (_currentIndex < _questions.length - 1) {
         setState(() {
           _currentIndex++;
@@ -442,38 +472,9 @@ class _CupMatchScreenState extends State<CupMatchScreen> {
             onPressed: () => Navigator.pop(context),
           ),
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.error_outline,
-                size: 64,
-                color: AppTheme.textMuted,
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'Unable to load questions',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: AppTheme.textSecondary,
-                ),
-              ),
-              const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: _loadQuestions,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: widget.mode.color,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: const Text('Try Again'),
-              ),
-            ],
-          ),
+        body: ErrorStateWidget(
+          onRetry: _loadQuestions,
+          buttonColor: widget.mode.color,
         ),
       );
     }
@@ -781,48 +782,7 @@ class _CupResultScreenState extends State<CupResultScreen> {
               // Mode unlock celebration (for future Tournament Mode)
               if (_unlockResult != null && _unlockResult!.didUnlock) ...[
                 const SizedBox(height: 20),
-                TweenAnimationBuilder<double>(
-                  tween: Tween(begin: 0.8, end: 1.0),
-                  duration: const Duration(milliseconds: 600),
-                  curve: Curves.elasticOut,
-                  builder: (context, scale, child) {
-                    return Transform.scale(scale: scale, child: child);
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          AppTheme.gold,
-                          AppTheme.gold.withValues(alpha: 0.8),
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppTheme.gold.withValues(alpha: 0.4),
-                          blurRadius: 12,
-                          spreadRadius: 2,
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.lock_open, color: Colors.black, size: 20),
-                        const SizedBox(width: 8),
-                        Text(
-                          '${_unlockResult!.unlockedModeName} Unlocked!',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                UnlockCelebration(unlockResult: _unlockResult!),
               ],
               const Spacer(),
               if (widget.didAdvance && !_isWinner)

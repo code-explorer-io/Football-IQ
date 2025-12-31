@@ -103,5 +103,250 @@
     "options": ["Retractable roof", "Retractable pitch for NFL games", "Underground car park"],
     "answerIndex": 1,
     "difficulty": "medium"
+  },
+  {
+    "id": "thfc_016",
+    "question": "What does 'Audere est Facere' mean in English?",
+    "options": ["To Dare is to Do", "Glory to Spurs", "Victory or Nothing"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "thfc_017",
+    "question": "What year was Tottenham Hotspur founded?",
+    "options": ["1882", "1892", "1902"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "thfc_018",
+    "question": "Which team did Spurs beat in the 1991 FA Cup Final?",
+    "options": ["Arsenal", "Nottingham Forest", "Manchester United"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "thfc_019",
+    "question": "Who scored the winning goal in the 1991 FA Cup Final?",
+    "options": ["Gary Lineker", "Paul Gascoigne", "Stuart Pearce (own goal)"],
+    "answerIndex": 2,
+    "difficulty": "hard"
+  },
+  {
+    "id": "thfc_020",
+    "question": "How many goals did Harry Kane score for Tottenham?",
+    "options": ["180", "213", "280"],
+    "answerIndex": 2,
+    "difficulty": "hard"
+  },
+  {
+    "id": "thfc_021",
+    "question": "Which club did Harry Kane join in 2023?",
+    "options": ["Real Madrid", "Bayern Munich", "Manchester United"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "thfc_022",
+    "question": "Who did Tottenham lose to in the 2019 Champions League Final?",
+    "options": ["Real Madrid", "Liverpool", "Barcelona"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "thfc_023",
+    "question": "What is the North London Derby?",
+    "options": ["Spurs vs Chelsea", "Spurs vs Arsenal", "Spurs vs West Ham"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "thfc_024",
+    "question": "Which South Korean winger has been a star for Spurs since 2015?",
+    "options": ["Park Ji-sung", "Son Heung-min", "Ki Sung-yueng"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "thfc_025",
+    "question": "Which legendary England striker played for Spurs in the late 1980s?",
+    "options": ["Alan Shearer", "Gary Lineker", "Peter Beardsley"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "thfc_026",
+    "question": "What was special about Tottenham's 1960-61 season?",
+    "options": ["First FA Cup win", "First League and FA Cup Double of 20th century", "First European trophy"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "thfc_027",
+    "question": "Which manager won the Double with Spurs in 1961?",
+    "options": ["Bill Nicholson", "Keith Burkinshaw", "Terry Venables"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "thfc_028",
+    "question": "What trophy did Tottenham win in 1963, becoming the first British club to win a European trophy?",
+    "options": ["European Cup", "Cup Winners' Cup", "UEFA Cup"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "thfc_029",
+    "question": "Which legendary midfielder wore number 8 for Spurs from 1992-2003?",
+    "options": ["David Ginola", "Darren Anderton", "Glenn Hoddle"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "thfc_030",
+    "question": "Who scored a famous free-kick vs Arsenal in the 1991 FA Cup semi-final?",
+    "options": ["Paul Gascoigne", "Gary Lineker", "Teddy Sheringham"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "thfc_031",
+    "question": "How many FA Cups has Tottenham won?",
+    "options": ["6", "8", "10"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "thfc_032",
+    "question": "Which defender was Spurs captain during the Pochettino era?",
+    "options": ["Jan Vertonghen", "Hugo Lloris", "Toby Alderweireld"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "thfc_033",
+    "question": "What nationality is Hugo Lloris?",
+    "options": ["Belgian", "French", "German"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "thfc_034",
+    "question": "Which Argentinian midfielder joined Spurs from Real Betis in 2020?",
+    "options": ["Erik Lamela", "Giovani Lo Celso", "Cristian Romero"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "thfc_035",
+    "question": "Who was Tottenham's manager before Mauricio Pochettino?",
+    "options": ["André Villas-Boas", "Tim Sherwood", "Harry Redknapp"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "thfc_036",
+    "question": "Which Welsh winger joined Spurs from Southampton in 2007?",
+    "options": ["Aaron Lennon", "Gareth Bale", "David Bentley"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "thfc_037",
+    "question": "What position did Gareth Bale originally play at Tottenham?",
+    "options": ["Right wing", "Left back", "Striker"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "thfc_038",
+    "question": "How much did Real Madrid pay for Gareth Bale in 2013?",
+    "options": ["About £50m", "About £85m", "About £100m"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "thfc_039",
+    "question": "Which stadium did Spurs use temporarily while their new stadium was built?",
+    "options": ["The Emirates", "Wembley", "Olympic Stadium"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "thfc_040",
+    "question": "Who scored a famous hat-trick vs Inter Milan in the Champions League in 2010?",
+    "options": ["Jermain Defoe", "Gareth Bale", "Peter Crouch"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "thfc_041",
+    "question": "What is the name of Spurs' training ground?",
+    "options": ["Hotspur Way", "Spurs Lodge", "The Training Ground"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "thfc_042",
+    "question": "Which Croatian midfielder joined from Real Madrid in 2012?",
+    "options": ["Ivan Rakitić", "Luka Modrić", "Niko Kranjčar"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "thfc_043",
+    "question": "Who holds the record for most Premier League goals in a calendar year for Spurs?",
+    "options": ["Teddy Sheringham", "Harry Kane", "Robbie Keane"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "thfc_044",
+    "question": "Which manager replaced Mauricio Pochettino in 2019?",
+    "options": ["Antonio Conte", "José Mourinho", "Nuno Espírito Santo"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "thfc_045",
+    "question": "What was the final match played at White Hart Lane?",
+    "options": ["Spurs 2-1 Man United", "Spurs 1-0 Arsenal", "Spurs 2-1 Manchester City"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "thfc_046",
+    "question": "Which Danish midfielder joined from Ajax in 2013?",
+    "options": ["Christian Eriksen", "Pierre-Emile Højbjerg", "Viktor Fischer"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "thfc_047",
+    "question": "What year did Tottenham open their new stadium?",
+    "options": ["2018", "2019", "2020"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "thfc_048",
+    "question": "Which striker scored the first competitive goal at Tottenham Hotspur Stadium?",
+    "options": ["Harry Kane", "Son Heung-min", "Lucas Moura"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "thfc_049",
+    "question": "Who scored a hat-trick in the 2019 Champions League semi-final second leg vs Ajax?",
+    "options": ["Harry Kane", "Son Heung-min", "Lucas Moura"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "thfc_050",
+    "question": "How many League Cup titles has Tottenham won?",
+    "options": ["2", "4", "6"],
+    "answerIndex": 1,
+    "difficulty": "medium"
   }
 ]

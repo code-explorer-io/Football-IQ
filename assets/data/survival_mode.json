@@ -418,5 +418,285 @@
     "options": ["Pep Guardiola", "Jose Mourinho", "Carlo Ancelotti"],
     "answerIndex": 1,
     "difficulty": "easy"
+  },
+  {
+    "id": "surv_061",
+    "question": "Which club won the Premier League and Champions League in the same season in 2019?",
+    "options": ["Manchester City", "Liverpool", "Chelsea"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_062",
+    "question": "Who won the Ballon d'Or in 2022?",
+    "options": ["Lionel Messi", "Karim Benzema", "Robert Lewandowski"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_063",
+    "question": "What nationality is N'Golo Kanté?",
+    "options": ["Senegalese", "French", "Malian"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_064",
+    "question": "Which club did Harry Kane join in 2023?",
+    "options": ["Real Madrid", "Bayern Munich", "Manchester United"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_065",
+    "question": "Who managed Liverpool before Jürgen Klopp?",
+    "options": ["Kenny Dalglish", "Brendan Rodgers", "Roy Hodgson"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_066",
+    "question": "What is the nickname of Wolverhampton Wanderers?",
+    "options": ["The Wolves", "The Wanderers", "The Pack"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_067",
+    "question": "Which country does Bukayo Saka represent?",
+    "options": ["Nigeria", "England", "France"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_068",
+    "question": "Who has scored the most Champions League goals ever?",
+    "options": ["Lionel Messi", "Cristiano Ronaldo", "Robert Lewandowski"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_069",
+    "question": "What year did Leicester City win the Premier League?",
+    "options": ["2015", "2016", "2017"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_070",
+    "question": "Which club plays at Molineux?",
+    "options": ["Wolverhampton", "Aston Villa", "West Brom"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_071",
+    "question": "Who holds the record for fastest Premier League goal?",
+    "options": ["Shane Long", "Ledley King", "Christian Eriksen"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "surv_072",
+    "question": "What nationality is Erling Haaland?",
+    "options": ["Swedish", "Norwegian", "Danish"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_073",
+    "question": "Which club did Wayne Rooney start his career at?",
+    "options": ["Manchester United", "Everton", "Liverpool"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_074",
+    "question": "How many red cards has a player received the most in Premier League history?",
+    "options": ["6", "8", "10"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "surv_075",
+    "question": "Which club won the first FA Cup Final at Wembley?",
+    "options": ["Arsenal", "Bolton Wanderers", "West Ham"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "surv_076",
+    "question": "What is Brighton's home stadium called?",
+    "options": ["Amex Stadium", "Falmer Stadium", "Brighton Arena"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_077",
+    "question": "Who was the first English player to win league titles in four countries?",
+    "options": ["David Beckham", "Michael Owen", "Paul Ince"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "surv_078",
+    "question": "Which club does Marcus Rashford play for?",
+    "options": ["Manchester City", "Manchester United", "Chelsea"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_079",
+    "question": "What is the capacity of Old Trafford?",
+    "options": ["About 65,000", "About 74,000", "About 82,000"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_080",
+    "question": "Which manager won the Premier League with two different clubs?",
+    "options": ["Carlo Ancelotti", "Jose Mourinho", "Manuel Pellegrini"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_081",
+    "question": "What is Brentford's home stadium called?",
+    "options": ["Griffin Park", "Gtech Community Stadium", "Brentford Arena"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_082",
+    "question": "Who scored the winning goal in the 2022 World Cup Final?",
+    "options": ["Kylian Mbappé", "Lionel Messi", "Ángel Di María"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_083",
+    "question": "Which English club has never been relegated from the top flight?",
+    "options": ["Liverpool", "Arsenal", "Everton"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "surv_084",
+    "question": "What year did Pep Guardiola join Manchester City?",
+    "options": ["2015", "2016", "2017"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_085",
+    "question": "Who is the only player to win the Premier League with three different clubs?",
+    "options": ["Ashley Cole", "Nicolas Anelka", "Henning Berg"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "surv_086",
+    "question": "What nationality is Martin Ødegaard?",
+    "options": ["Swedish", "Norwegian", "Danish"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_087",
+    "question": "Which club plays at Selhurst Park?",
+    "options": ["Fulham", "Crystal Palace", "Charlton"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_088",
+    "question": "Who was the first player to score five goals in a Premier League match?",
+    "options": ["Alan Shearer", "Andy Cole", "Jermain Defoe"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "surv_089",
+    "question": "What is the record for most consecutive Premier League wins?",
+    "options": ["14", "16", "18"],
+    "answerIndex": 2,
+    "difficulty": "hard"
+  },
+  {
+    "id": "surv_090",
+    "question": "Which country won the 2022 FIFA World Cup?",
+    "options": ["France", "Argentina", "Brazil"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_091",
+    "question": "Who scored a hat-trick for Real Madrid in the 2018 Champions League Final?",
+    "options": ["Cristiano Ronaldo", "Gareth Bale", "Karim Benzema"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "surv_092",
+    "question": "What is Nottingham Forest's home stadium called?",
+    "options": ["The City Ground", "Meadow Lane", "Forest Park"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_093",
+    "question": "Which player scored the most own goals in Premier League history?",
+    "options": ["Richard Dunne", "Jamie Carragher", "Martin Skrtel"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "surv_094",
+    "question": "Who managed Tottenham to the 2019 Champions League Final?",
+    "options": ["José Mourinho", "Mauricio Pochettino", "Antonio Conte"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_095",
+    "question": "What nationality is Declan Rice?",
+    "options": ["English", "Irish", "Welsh"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "surv_096",
+    "question": "Which club won the FA Cup in 2023?",
+    "options": ["Manchester United", "Manchester City", "Arsenal"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_097",
+    "question": "What is the record for most Premier League goals in a single match by one player?",
+    "options": ["4", "5", "6"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_098",
+    "question": "Which club plays at Craven Cottage?",
+    "options": ["Crystal Palace", "Fulham", "Brentford"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_099",
+    "question": "Who was the first foreign manager to win the Premier League?",
+    "options": ["Ruud Gullit", "Arsène Wenger", "José Mourinho"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "surv_100",
+    "question": "What nationality is Casemiro?",
+    "options": ["Portuguese", "Brazilian", "Spanish"],
+    "answerIndex": 1,
+    "difficulty": "easy"
   }
 ]
