@@ -27,6 +27,15 @@ enum BackgroundZone {
   /// Screens: All Results Screens
   results,
 
+  /// Win results - Locker room celebration
+  resultsWin,
+
+  /// Loss results - Locker room disappointment
+  resultsLoss,
+
+  /// Trophy room - Cup mode special
+  trophy,
+
   /// Death/Failure zone (Survival Only) - Pure black, no comfort
   /// This is CODE, not an image - abrupt, final
   void_,
@@ -76,7 +85,11 @@ class PitchBackground extends StatelessWidget {
       case BackgroundZone.dugout:
         return 0.5; // Medium-heavy (50% dark) for text readability
       case BackgroundZone.results:
+      case BackgroundZone.resultsWin:
+      case BackgroundZone.resultsLoss:
         return 0.3; // Light (30% dark)
+      case BackgroundZone.trophy:
+        return 0.4; // Medium (40% dark)
       case BackgroundZone.void_:
         return 1.0; // Pure black
     }
@@ -87,16 +100,19 @@ class PitchBackground extends StatelessWidget {
     if (zone != null) {
       switch (zone!) {
         case BackgroundZone.stadium:
-          return 'assets/images/stadium_night.png';
+          return 'assets/images/stadium_night_new.png';
         case BackgroundZone.tunnel:
-          // Falls back to stadium_night until tunnel.png is added
           return 'assets/images/tunnel.png';
         case BackgroundZone.dugout:
-          // Falls back to stadium_night until dugout.png is added
-          return 'assets/images/dugout.png';
+          return 'assets/images/pitch.png';
         case BackgroundZone.results:
-          // Uses stadium_night (or pitch_empty for survival - handled by caller)
-          return 'assets/images/stadium_night.png';
+          return 'assets/images/stadium_night_new.png';
+        case BackgroundZone.resultsWin:
+          return 'assets/images/locker_win.png';
+        case BackgroundZone.resultsLoss:
+          return 'assets/images/locker_loss.png';
+        case BackgroundZone.trophy:
+          return 'assets/images/trophy.png';
         case BackgroundZone.void_:
           return null; // Pure black, no image
       }
@@ -106,9 +122,9 @@ class PitchBackground extends StatelessWidget {
     if (!useStadiumImage) return null;
     switch (background) {
       case StadiumBackground.night:
-        return 'assets/images/stadium_night.png';
+        return 'assets/images/stadium_night_new.png';
       case StadiumBackground.day:
-        return 'assets/images/stadium_day.png'; // Future
+        return 'assets/images/stadium_day.png';
       case StadiumBackground.classic:
         return null;
     }

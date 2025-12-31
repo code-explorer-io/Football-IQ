@@ -20,7 +20,7 @@ class HigherOrLowerIntroScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1A1A2E),
+      backgroundColor: AppTheme.background,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -125,6 +125,7 @@ class _HigherOrLowerGameScreenState extends State<HigherOrLowerGameScreen> {
   int _currentIndex = 0;
   int _score = 0;
   bool _isLoading = true;
+  bool _hasError = false;
   bool _answered = false;
   bool _isCorrect = false;
   bool _showValue = false;
@@ -136,7 +137,16 @@ class _HigherOrLowerGameScreenState extends State<HigherOrLowerGameScreen> {
   }
 
   Future<void> _loadComparisons() async {
+    setState(() {
+      _isLoading = true;
+      _hasError = false;
+    });
+
     try {
+      if (widget.mode.dataFile == null) {
+        throw Exception('No data file configured for this mode');
+      }
+
       final String jsonString = await DefaultAssetBundle.of(context)
           .loadString(widget.mode.dataFile!);
       final List<dynamic> jsonList = jsonDecode(jsonString);
@@ -150,6 +160,7 @@ class _HigherOrLowerGameScreenState extends State<HigherOrLowerGameScreen> {
     } catch (e) {
       setState(() {
         _isLoading = false;
+        _hasError = true;
       });
     }
   }
@@ -161,8 +172,14 @@ class _HigherOrLowerGameScreenState extends State<HigherOrLowerGameScreen> {
     final value1 = comparison['item1']['value'] as num;
     final value2 = comparison['item2']['value'] as num;
 
-    final isHigher = value2 > value1;
-    final isCorrect = guessedHigher == isHigher;
+    // Handle equal values - either guess is correct when values are equal
+    final bool isCorrect;
+    if (value2 == value1) {
+      isCorrect = true; // Both answers are valid when equal
+    } else {
+      final isHigher = value2 > value1;
+      isCorrect = guessedHigher == isHigher;
+    }
 
     // Haptic and sound feedback
     if (isCorrect) {
@@ -209,18 +226,69 @@ class _HigherOrLowerGameScreenState extends State<HigherOrLowerGameScreen> {
   Widget build(BuildContext context) {
     if (_isLoading) {
       return Scaffold(
-        backgroundColor: const Color(0xFF1A1A2E),
+        backgroundColor: AppTheme.background,
         body: const Center(
-          child: CircularProgressIndicator(color: Colors.white),
+          child: CircularProgressIndicator(color: AppTheme.highlight),
         ),
       );
     }
 
-    if (_comparisons.isEmpty) {
+    if (_hasError || _comparisons.isEmpty) {
       return Scaffold(
-        backgroundColor: const Color(0xFF1A1A2E),
-        body: const Center(
-          child: Text('No data available', style: TextStyle(color: Colors.white)),
+        backgroundColor: AppTheme.background,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.error_outline,
+                  size: 64,
+                  color: AppTheme.textMuted,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Unable to load data',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Please check your connection and try again',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: AppTheme.textSecondary,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 24),
+                ElevatedButton(
+                  onPressed: _loadComparisons,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: widget.mode.color,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: const Text('Try Again'),
+                ),
+              ],
+            ),
+          ),
         ),
       );
     }
@@ -231,7 +299,7 @@ class _HigherOrLowerGameScreenState extends State<HigherOrLowerGameScreen> {
     final category = comparison['category'];
 
     return Scaffold(
-      backgroundColor: const Color(0xFF1A1A2E),
+      backgroundColor: AppTheme.background,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -331,7 +399,7 @@ class _HigherOrLowerGameScreenState extends State<HigherOrLowerGameScreen> {
                       width: 60,
                       height: 60,
                       decoration: BoxDecoration(
-                        color: const Color(0xFF1A1A2E),
+                        color: AppTheme.background,
                         shape: BoxShape.circle,
                         border: Border.all(color: Colors.white24, width: 2),
                       ),
@@ -621,12 +689,21 @@ class _HigherOrLowerResultsScreenState extends State<HigherOrLowerResultsScreen>
     return Icons.trending_down;
   }
 
+  BackgroundZone _getResultsZone() {
+    final percentage = (widget.score / widget.totalQuestions) * 100;
+    if (percentage >= 50) {
+      return BackgroundZone.resultsWin;
+    } else {
+      return BackgroundZone.resultsLoss;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1A1A2E),
+      backgroundColor: AppTheme.background,
       body: PitchBackground.zone(
-        zone: BackgroundZone.results,
+        zone: _getResultsZone(),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(24.0),

@@ -111,7 +111,7 @@ class _CupModeIntroScreenState extends State<CupModeIntroScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1A1A2E),
+      backgroundColor: AppTheme.background,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -135,7 +135,7 @@ class _CupModeIntroScreenState extends State<CupModeIntroScreen> {
                       height: 120,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          colors: [widget.mode.color, widget.mode.color.withAlpha(180)],
+                          colors: [widget.mode.color, widget.mode.color.withValues(alpha: 0.7)],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
@@ -174,7 +174,7 @@ class _CupModeIntroScreenState extends State<CupModeIntroScreen> {
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white.withAlpha(13),
+                        color: Colors.white.withValues(alpha: 0.05),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Column(
@@ -247,7 +247,7 @@ class _CupModeIntroScreenState extends State<CupModeIntroScreen> {
                       ? Colors.green
                       : isCurrentStage
                           ? widget.mode.color
-                          : Colors.white.withAlpha(26),
+                          : Colors.white.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                   border: isCurrentStage
                       ? Border.all(color: Colors.white, width: 2)
@@ -316,6 +316,7 @@ class _CupMatchScreenState extends State<CupMatchScreen> {
   int _currentIndex = 0;
   int _score = 0;
   bool _isLoading = true;
+  bool _hasError = false;
   int? _selectedAnswer;
   bool _answered = false;
 
@@ -326,7 +327,16 @@ class _CupMatchScreenState extends State<CupMatchScreen> {
   }
 
   Future<void> _loadQuestions() async {
+    setState(() {
+      _isLoading = true;
+      _hasError = false;
+    });
+
     try {
+      if (widget.mode.dataFile == null) {
+        throw Exception('No data file configured for this mode');
+      }
+
       final String jsonString = await DefaultAssetBundle.of(context)
           .loadString(widget.mode.dataFile!);
       final List<dynamic> jsonList = jsonDecode(jsonString);
@@ -340,6 +350,7 @@ class _CupMatchScreenState extends State<CupMatchScreen> {
     } catch (e) {
       setState(() {
         _isLoading = false;
+        _hasError = true;
       });
     }
   }
@@ -398,7 +409,7 @@ class _CupMatchScreenState extends State<CupMatchScreen> {
 
   Color _getButtonColor(int index) {
     if (!_answered) {
-      return Colors.white.withAlpha(26);
+      return Colors.white.withValues(alpha: 0.1);
     }
     if (index == _questions[_currentIndex]['answerIndex']) {
       return Colors.green;
@@ -406,25 +417,63 @@ class _CupMatchScreenState extends State<CupMatchScreen> {
     if (_selectedAnswer == index) {
       return Colors.red;
     }
-    return Colors.white.withAlpha(26);
+    return Colors.white.withValues(alpha: 0.1);
   }
 
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
       return Scaffold(
-        backgroundColor: const Color(0xFF1A1A2E),
+        backgroundColor: AppTheme.background,
         body: const Center(
           child: CircularProgressIndicator(color: Colors.white),
         ),
       );
     }
 
-    if (_questions.isEmpty) {
+    if (_hasError || _questions.isEmpty) {
       return Scaffold(
-        backgroundColor: const Color(0xFF1A1A2E),
-        body: const Center(
-          child: Text('No questions available', style: TextStyle(color: Colors.white)),
+        backgroundColor: AppTheme.background,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.error_outline,
+                size: 64,
+                color: AppTheme.textMuted,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'Unable to load questions',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: AppTheme.textSecondary,
+                ),
+              ),
+              const SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: _loadQuestions,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: widget.mode.color,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: const Text('Try Again'),
+              ),
+            ],
+          ),
         ),
       );
     }
@@ -432,7 +481,7 @@ class _CupMatchScreenState extends State<CupMatchScreen> {
     final question = _questions[_currentIndex];
 
     return Scaffold(
-      backgroundColor: const Color(0xFF1A1A2E),
+      backgroundColor: AppTheme.background,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -542,7 +591,7 @@ class _CupMatchScreenState extends State<CupMatchScreen> {
                             width: 32,
                             height: 32,
                             decoration: BoxDecoration(
-                              color: Colors.white.withAlpha(51),
+                              color: Colors.white.withValues(alpha: 0.2),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Center(
@@ -653,12 +702,25 @@ class _CupResultScreenState extends State<CupResultScreen> {
     return 'You needed ${widget.stage.requiredScore} to advance';
   }
 
+  BackgroundZone _getResultsZone() {
+    // Cup winner gets trophy room
+    if (_isWinner) {
+      return BackgroundZone.trophy;
+    }
+    // Advanced = win locker, knocked out = loss locker
+    if (widget.didAdvance) {
+      return BackgroundZone.resultsWin;
+    } else {
+      return BackgroundZone.resultsLoss;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1A1A2E),
+      backgroundColor: AppTheme.background,
       body: PitchBackground.zone(
-        zone: BackgroundZone.results,
+        zone: _getResultsZone(),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(24.0),
@@ -670,7 +732,7 @@ class _CupResultScreenState extends State<CupResultScreen> {
                 Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
-                  color: widget.mode.color.withAlpha(51),
+                  color: widget.mode.color.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(

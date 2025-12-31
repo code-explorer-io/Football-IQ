@@ -1,0 +1,107 @@
+[
+  {
+    "id": "manu_001",
+    "question": "What is Manchester United's home stadium called?",
+    "options": ["Old Trafford", "Etihad Stadium", "Anfield"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "manu_002",
+    "question": "What nickname is given to Old Trafford?",
+    "options": ["The Theatre of Dreams", "The Cathedral", "The Fortress"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "manu_003",
+    "question": "Which manager won the most trophies at Manchester United?",
+    "options": ["José Mourinho", "Sir Matt Busby", "Sir Alex Ferguson"],
+    "answerIndex": 2,
+    "difficulty": "easy"
+  },
+  {
+    "id": "manu_004",
+    "question": "In which year did Manchester United win the treble?",
+    "options": ["1998", "1999", "2000"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "manu_005",
+    "question": "Who is Manchester United's all-time top goalscorer?",
+    "options": ["Bobby Charlton", "Wayne Rooney", "Ryan Giggs"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "manu_006",
+    "question": "What is Manchester United's famous end of the stadium called?",
+    "options": ["The Kop", "The Stretford End", "The Holte End"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "manu_007",
+    "question": "Which Portuguese player wore the number 7 shirt from 2003-2009?",
+    "options": ["Bruno Fernandes", "Cristiano Ronaldo", "Nani"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "manu_008",
+    "question": "What tragedy struck Manchester United in 1958?",
+    "options": ["Stadium fire", "Munich air disaster", "Heysel disaster"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "manu_009",
+    "question": "Who scored the winning goal in the 1999 Champions League Final?",
+    "options": ["Teddy Sheringham", "Ole Gunnar Solskjær", "David Beckham"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "manu_010",
+    "question": "What is Manchester United's nickname?",
+    "options": ["The Reds", "The Red Devils", "The United"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "manu_011",
+    "question": "Which academy is famous for producing United stars like Beckham and Giggs?",
+    "options": ["La Masia", "The Academy", "Class of '92"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "manu_012",
+    "question": "How many Premier League titles has Manchester United won?",
+    "options": ["18", "20", "13"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "manu_013",
+    "question": "Who captained Manchester United to the 2008 Champions League victory?",
+    "options": ["Rio Ferdinand", "Gary Neville", "Ryan Giggs"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "manu_014",
+    "question": "Which goalkeeper made the famous penalty save in the 2008 Champions League Final?",
+    "options": ["Peter Schmeichel", "Edwin van der Sar", "David de Gea"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "manu_015",
+    "question": "What year was Manchester United founded?",
+    "options": ["1878", "1902", "1910"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  }
+]

@@ -136,77 +136,79 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: PitchBackground(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Gamification stats row
-              _GamificationHeader(
-                streak: _currentStreak,
-                level: _currentLevel,
-                levelProgress: _levelProgress,
-                streakAtRisk: _streakAtRisk,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const StatsScreen()),
-                  ).then((_) => _loadAllData());
-                },
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                'Select Mode',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.textPrimary,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Gamification stats row
+                _GamificationHeader(
+                  streak: _currentStreak,
+                  level: _currentLevel,
+                  levelProgress: _levelProgress,
+                  streakAtRisk: _streakAtRisk,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const StatsScreen()),
+                    ).then((_) => _loadAllData());
+                  },
                 ),
-              ),
-              const SizedBox(height: 8),
-              const Text(
-                'Test your football knowledge',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: AppTheme.textSecondary,
-                ),
-              ),
-              const SizedBox(height: 16),
-              Expanded(
-                child: _isLoadingUnlocks
-                    ? const Center(child: CircularProgressIndicator(color: AppTheme.highlight))
-                    : ListView.builder(
-                        itemCount: gameModes.length,
-                        itemBuilder: (context, index) {
-                          final mode = gameModes[index];
-                          final isUnlocked = _unlockedModes[mode.id] ?? false;
-                          final progress = _unlockProgress[mode.id] ?? 0.0;
-                          return _GameModeCard(
-                            mode: mode,
-                            isUnlocked: isUnlocked,
-                            unlockProgress: progress,
-                            onRefresh: _loadAllData,
-                          );
-                        },
-                      ),
-              ),
-              // Premium unlock all button
-              if (!PurchaseService.isPremium)
-                Padding(
-                  padding: const EdgeInsets.only(top: 8, bottom: 8),
-                  child: _UnlockAllButton(
-                    onTap: () async {
-                      final purchased = await Navigator.push<bool>(
-                        context,
-                        MaterialPageRoute(builder: (context) => const PaywallScreen()),
-                      );
-                      if (purchased == true) {
-                        _loadAllData();
-                      }
-                    },
+                const SizedBox(height: 20),
+                const Text(
+                  'Select Mode',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.textPrimary,
                   ),
                 ),
-            ],
+                const SizedBox(height: 8),
+                const Text(
+                  'Test your football knowledge',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: AppTheme.textSecondary,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Expanded(
+                  child: _isLoadingUnlocks
+                      ? const Center(child: CircularProgressIndicator(color: AppTheme.highlight))
+                      : ListView.builder(
+                          itemCount: gameModes.length,
+                          itemBuilder: (context, index) {
+                            final mode = gameModes[index];
+                            final isUnlocked = _unlockedModes[mode.id] ?? false;
+                            final progress = _unlockProgress[mode.id] ?? 0.0;
+                            return _GameModeCard(
+                              mode: mode,
+                              isUnlocked: isUnlocked,
+                              unlockProgress: progress,
+                              onRefresh: _loadAllData,
+                            );
+                          },
+                        ),
+                ),
+                // Premium unlock all button
+                if (!PurchaseService.isPremium)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8, bottom: 4),
+                    child: _UnlockAllButton(
+                      onTap: () async {
+                        final purchased = await Navigator.push<bool>(
+                          context,
+                          MaterialPageRoute(builder: (context) => const PaywallScreen()),
+                        );
+                        if (purchased == true) {
+                          _loadAllData();
+                        }
+                      },
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       ),
@@ -502,6 +504,7 @@ class _GameModeCardState extends State<_GameModeCard>
   @override
   Widget build(BuildContext context) {
     final isLocked = !widget.isUnlocked;
+    final accentColor = isLocked ? AppTheme.textMuted : widget.mode.color;
 
     return GestureDetector(
       onTapDown: _onTapDown,
@@ -515,124 +518,169 @@ class _GameModeCardState extends State<_GameModeCard>
           animation: _glowAnimation,
           builder: (context, child) {
             return Container(
-              margin: const EdgeInsets.only(bottom: 16),
+              margin: const EdgeInsets.only(bottom: 12),
               decoration: BoxDecoration(
+                // Gradient from accent color on left to dark surface on right
                 gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
                   colors: isLocked
-                      ? [Colors.grey.shade700, Colors.grey.shade800]
-                      : [widget.mode.color, widget.mode.color.withValues(alpha: 0.7)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+                      ? [AppTheme.surface, AppTheme.surface]
+                      : [
+                          Color.lerp(accentColor, AppTheme.surface, 0.85)!,
+                          AppTheme.surface,
+                        ],
+                  stops: const [0.0, 0.4],
                 ),
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: isLocked
+                      ? AppTheme.textMuted.withValues(alpha: 0.15)
+                      : accentColor.withValues(alpha: _isPressed ? 0.4 : 0.3),
+                  width: 1,
+                ),
                 boxShadow: [
                   BoxShadow(
-                    color: (isLocked ? Colors.grey : widget.mode.color)
-                        .withValues(alpha: _isPressed ? 0.2 : (isLocked ? 0.3 : _glowAnimation.value)),
-                    blurRadius: _isPressed ? 4 : (isLocked ? 8 : 16),
-                    offset: Offset(0, _isPressed ? 2 : 6),
-                    spreadRadius: _isPressed ? 0 : (isLocked ? 0 : 2),
+                    color: Colors.black.withValues(alpha: _isPressed ? 0.2 : 0.4),
+                    blurRadius: _isPressed ? 4 : 10,
+                    offset: Offset(0, _isPressed ? 1 : 4),
                   ),
                 ],
               ),
               child: child,
             );
           },
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 60,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: isLocked ? 0.1 : 0.2),
-                        borderRadius: BorderRadius.circular(12),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Row(
+              children: [
+                // Left accent stripe - thicker for more impact
+                Container(
+                  width: 5,
+                  height: 84,
+                  decoration: BoxDecoration(
+                    color: accentColor,
+                    boxShadow: isLocked ? null : [
+                      BoxShadow(
+                        color: accentColor.withValues(alpha: 0.4),
+                        blurRadius: 8,
+                        offset: const Offset(2, 0),
                       ),
-                      child: Icon(
-                        widget.mode.icon,
-                        color: Colors.white.withValues(alpha: isLocked ? 0.5 : 1.0),
-                        size: 32,
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.mode.name,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white.withValues(alpha: isLocked ? 0.7 : 1.0),
+                    ],
+                  ),
+                ),
+                // Main content
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+                    child: Row(
+                      children: [
+                        // Icon container with accent color
+                        Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: accentColor.withValues(alpha: isLocked ? 0.08 : 0.2),
+                            borderRadius: BorderRadius.circular(10),
+                            border: isLocked ? null : Border.all(
+                              color: accentColor.withValues(alpha: 0.3),
+                              width: 1,
                             ),
                           ),
-                          const SizedBox(height: 4),
-                          if (isLocked && !widget.mode.isPremiumOnly)
-                            // Show unlock progress
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  _progressText ?? 'Locked',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.white.withValues(alpha: 0.6),
-                                  ),
+                          child: Icon(
+                            widget.mode.icon,
+                            color: isLocked
+                                ? AppTheme.textMuted
+                                : accentColor,
+                            size: 24,
+                          ),
+                        ),
+                        const SizedBox(width: 14),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                widget.mode.name,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: isLocked
+                                      ? AppTheme.textSecondary
+                                      : AppTheme.textPrimary,
+                                  letterSpacing: -0.2,
                                 ),
-                                const SizedBox(height: 6),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(4),
-                                  child: SizedBox(
-                                    height: 4,
-                                    child: LinearProgressIndicator(
-                                      value: widget.unlockProgress,
-                                      backgroundColor: Colors.white.withValues(alpha: 0.2),
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.white.withValues(alpha: 0.8),
+                              ),
+                              const SizedBox(height: 2),
+                              if (isLocked && !widget.mode.isPremiumOnly)
+                                // Show unlock progress
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      _progressText ?? 'Locked',
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        color: AppTheme.textMuted,
                                       ),
                                     ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          else if (isLocked && widget.mode.isPremiumOnly)
-                            Row(
-                              children: [
-                                const Icon(Icons.star, color: AppTheme.gold, size: 16),
-                                const SizedBox(width: 4),
+                                    const SizedBox(height: 5),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(2),
+                                      child: SizedBox(
+                                        height: 3,
+                                        child: LinearProgressIndicator(
+                                          value: widget.unlockProgress,
+                                          backgroundColor: AppTheme.elevated,
+                                          valueColor: AlwaysStoppedAnimation<Color>(
+                                            AppTheme.textSecondary,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              else if (isLocked && widget.mode.isPremiumOnly)
+                                Row(
+                                  children: [
+                                    Icon(Icons.star, color: AppTheme.gold, size: 13),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      'Premium',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: AppTheme.gold,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              else
                                 Text(
-                                  'Premium',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: AppTheme.gold.withValues(alpha: 0.9),
-                                    fontWeight: FontWeight.w500,
+                                  widget.mode.description,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: AppTheme.textSecondary,
                                   ),
                                 ),
-                              ],
-                            )
-                          else
-                            Text(
-                              widget.mode.description,
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.white.withValues(alpha: 0.8),
-                              ),
-                            ),
-                        ],
-                      ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Icon(
+                          isLocked ? Icons.lock_outline : Icons.chevron_right,
+                          color: isLocked
+                              ? AppTheme.textMuted
+                              : AppTheme.textSecondary,
+                          size: 20,
+                        ),
+                      ],
                     ),
-                    Icon(
-                      isLocked ? Icons.lock : Icons.arrow_forward_ios,
-                      color: Colors.white.withValues(alpha: isLocked ? 0.5 : 1.0),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -755,7 +803,7 @@ class GenericQuizIntroScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1A1A2E),
+      backgroundColor: AppTheme.background,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -935,7 +983,7 @@ class _GenericQuestionScreenState extends State<GenericQuestionScreen> {
   Widget build(BuildContext context) {
     if (_isLoading) {
       return Scaffold(
-        backgroundColor: const Color(0xFF1A1A2E),
+        backgroundColor: AppTheme.background,
         body: const Center(
           child: CircularProgressIndicator(color: Colors.white),
         ),
@@ -945,7 +993,7 @@ class _GenericQuestionScreenState extends State<GenericQuestionScreen> {
     final question = _questions[_currentIndex];
 
     return Scaffold(
-      backgroundColor: const Color(0xFF1A1A2E),
+      backgroundColor: AppTheme.background,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -1050,7 +1098,6 @@ class _GenericResultsScreenState extends State<GenericResultsScreen> {
   List<Achievement> _newAchievements = [];
   XPAward? _xpAward;
   int _currentStreak = 0;
-  UnlockResult? _unlockResult;
 
   late ConfettiController _confettiController;
 

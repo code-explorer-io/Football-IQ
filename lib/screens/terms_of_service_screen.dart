@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/app_theme.dart';
 
 class TermsOfServiceScreen extends StatelessWidget {
   const TermsOfServiceScreen({super.key});
@@ -6,10 +7,10 @@ class TermsOfServiceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1A1A2E),
+      backgroundColor: AppTheme.background,
       appBar: AppBar(
         title: const Text('Terms of Service'),
-        backgroundColor: const Color(0xFF1A1A2E),
+        backgroundColor: AppTheme.background,
         foregroundColor: Colors.white,
         elevation: 0,
       ),

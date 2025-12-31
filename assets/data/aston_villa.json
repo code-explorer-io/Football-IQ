@@ -1,0 +1,107 @@
+[
+  {
+    "id": "avfc_001",
+    "question": "What is Aston Villa's home stadium called?",
+    "options": ["Villa Park", "St Andrew's", "Molineux"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "avfc_002",
+    "question": "What are Aston Villa's traditional home colours?",
+    "options": ["Blue and white", "Claret and blue", "Red and white"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "avfc_003",
+    "question": "In which year did Aston Villa win the European Cup?",
+    "options": ["1980", "1981", "1982"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "avfc_004",
+    "question": "Which city is Aston Villa based in?",
+    "options": ["Manchester", "Birmingham", "Liverpool"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "avfc_005",
+    "question": "Who is Aston Villa's all-time top goalscorer?",
+    "options": ["Gabriel Agbonlahor", "Billy Walker", "Peter Withe"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "avfc_006",
+    "question": "Which team are Aston Villa's biggest local rivals?",
+    "options": ["Wolves", "Birmingham City", "West Brom"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "avfc_007",
+    "question": "What is the Second City Derby?",
+    "options": ["Villa vs Wolves", "Villa vs Birmingham City", "Villa vs West Brom"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "avfc_008",
+    "question": "Which English international left Villa for Manchester City in 2021?",
+    "options": ["Jack Grealish", "Tyrone Mings", "John McGinn"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "avfc_009",
+    "question": "What is Aston Villa's nickname?",
+    "options": ["The Villans", "The Lions", "Both of these"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "avfc_010",
+    "question": "Which manager led Aston Villa to their European Cup triumph?",
+    "options": ["Ron Saunders", "Tony Barton", "Graham Taylor"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "avfc_011",
+    "question": "Aston Villa are one of the founding members of which league?",
+    "options": ["Premier League", "Football League", "Championship"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "avfc_012",
+    "question": "Which Spanish manager took charge of Villa in 2022?",
+    "options": ["Pep Guardiola", "Unai Emery", "Mikel Arteta"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "avfc_013",
+    "question": "How many league titles has Aston Villa won?",
+    "options": ["5", "7", "9"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "avfc_014",
+    "question": "What animal appears on Aston Villa's crest?",
+    "options": ["Eagle", "Lion", "Dragon"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "avfc_015",
+    "question": "In which year was Aston Villa founded?",
+    "options": ["1874", "1885", "1892"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  }
+]

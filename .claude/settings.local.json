@@ -67,7 +67,12 @@
       "Bash(\"/c/Program Files/Git/mingw64/bin/git-lfs.exe\" version)",
       "Bash(\"/c/Program Files/Git/git-cmd.exe\" --version)",
       "Bash(\"/c/Program Files/Git/bin/bash.exe\" -c \"git --version\")",
-      "Bash(\"/c/Program Files/Git/mingw64/libexec/git-core/git.exe\" --version)"
+      "Bash(\"/c/Program Files/Git/mingw64/libexec/git-core/git.exe\" --version)",
+      "Bash(bash:*)",
+      "Bash(cmd.exe /c \"echo %CLAUDE_CODE_GIT_BASH_PATH%\")",
+      "Bash(cmd.exe /c \"set CLAUDE\")",
+      "Bash(cmd.exe /c 'setx CLAUDE_CODE_GIT_BASH_PATH \"\"C:\\Program Files\\Git\\bin\\bash.exe\"\"')",
+      "Bash(taskkill:*)"
     ]
   }
 }

@@ -22,8 +22,9 @@ class Club {
   bool get isLocked => !isFree && !PurchaseService.isPremium;
 }
 
-// Predefined clubs
+// Predefined clubs - 10 Premier League teams
 final List<Club> clubs = [
+  // Free club
   Club(
     id: 'west_ham',
     name: 'West Ham United',
@@ -32,13 +33,14 @@ final List<Club> clubs = [
     dataFile: 'assets/data/west_ham.json',
     isFree: true, // West Ham is the free club
   ),
+  // Big Six
   Club(
     id: 'manchester_city',
     name: 'Manchester City',
     primaryColor: const Color(0xFF6CABDD), // Sky blue
     secondaryColor: const Color(0xFFFFFFFF), // White
     dataFile: 'assets/data/manchester_city.json',
-    isFree: false, // Requires premium
+    isFree: true, // TODO: Set back to false for production
   ),
   Club(
     id: 'arsenal',
@@ -46,6 +48,56 @@ final List<Club> clubs = [
     primaryColor: const Color(0xFFEF0107), // Red
     secondaryColor: const Color(0xFFFFFFFF), // White
     dataFile: 'assets/data/arsenal.json',
-    isFree: false, // Requires premium
+    isFree: true, // TODO: Set back to false for production
+  ),
+  Club(
+    id: 'liverpool',
+    name: 'Liverpool',
+    primaryColor: const Color(0xFFC8102E), // Red
+    secondaryColor: const Color(0xFFFFFFFF), // White
+    dataFile: 'assets/data/liverpool.json',
+  ),
+  Club(
+    id: 'manchester_united',
+    name: 'Manchester United',
+    primaryColor: const Color(0xFFDA291C), // Red
+    secondaryColor: const Color(0xFFFFFFFF), // White
+    dataFile: 'assets/data/manchester_united.json',
+  ),
+  Club(
+    id: 'chelsea',
+    name: 'Chelsea',
+    primaryColor: const Color(0xFF034694), // Blue
+    secondaryColor: const Color(0xFFFFFFFF), // White
+    dataFile: 'assets/data/chelsea.json',
+  ),
+  Club(
+    id: 'tottenham',
+    name: 'Tottenham Hotspur',
+    primaryColor: const Color(0xFF132257), // Navy
+    secondaryColor: const Color(0xFFFFFFFF), // White
+    dataFile: 'assets/data/tottenham.json',
+  ),
+  // Fan favorites
+  Club(
+    id: 'newcastle',
+    name: 'Newcastle United',
+    primaryColor: const Color(0xFF241F20), // Black
+    secondaryColor: const Color(0xFFFFFFFF), // White
+    dataFile: 'assets/data/newcastle.json',
+  ),
+  Club(
+    id: 'aston_villa',
+    name: 'Aston Villa',
+    primaryColor: const Color(0xFF670E36), // Claret
+    secondaryColor: const Color(0xFF95BFE5), // Sky blue
+    dataFile: 'assets/data/aston_villa.json',
+  ),
+  Club(
+    id: 'everton',
+    name: 'Everton',
+    primaryColor: const Color(0xFF003399), // Royal blue
+    secondaryColor: const Color(0xFFFFFFFF), // White
+    dataFile: 'assets/data/everton.json',
   ),
 ];

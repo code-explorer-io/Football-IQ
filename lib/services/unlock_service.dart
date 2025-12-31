@@ -6,10 +6,11 @@ import 'purchase_service.dart';
 /// Unlock Flow:
 /// 1. Club Quiz - Always unlocked (starting mode)
 /// 2. Survival Mode - Complete 5 Club Quizzes
-/// 3. Timed Blitz - Get 10+ streak in Survival
-/// 4. Higher or Lower - Score 15+ in Timed Blitz
-/// 5. Cup Mode - Win 3 Higher or Lower games
-/// 6. Tournament Mode - Win a Cup (future)
+/// 3. Higher or Lower - Get 10+ streak in Survival
+/// 4. Cup Mode - Win 3 Higher or Lower games
+/// 5. Tournament Mode - Win a Cup (future)
+///
+/// PARKED: Timed Blitz (similar to Survival, will introduce later)
 ///
 /// Premium users have all modes unlocked immediately.
 class UnlockService {
@@ -18,14 +19,12 @@ class UnlockService {
 
   static const String _keyClubQuizzesCompleted = 'unlock_club_quizzes_completed';
   static const String _keyBestSurvivalStreak = 'unlock_best_survival_streak';
-  static const String _keyBestTimedBlitzScore = 'unlock_best_timed_blitz_score';
   static const String _keyHigherOrLowerWins = 'unlock_higher_or_lower_wins';
   static const String _keyCupWins = 'unlock_cup_wins';
 
   // Unlock thresholds
   static const int survivalUnlockQuizzes = 5;
-  static const int timedBlitzUnlockStreak = 10;
-  static const int higherOrLowerUnlockScore = 15;
+  static const int higherOrLowerUnlockStreak = 10; // Streak in Survival to unlock H/L
   static const int cupModeUnlockWins = 3;
   static const int tournamentUnlockCupWins = 1;
 
@@ -47,13 +46,9 @@ class UnlockService {
         final quizzes = prefs.getInt(_keyClubQuizzesCompleted) ?? 0;
         return quizzes >= survivalUnlockQuizzes;
 
-      case 'timed_blitz':
-        final streak = prefs.getInt(_keyBestSurvivalStreak) ?? 0;
-        return streak >= timedBlitzUnlockStreak;
-
       case 'higher_or_lower':
-        final score = prefs.getInt(_keyBestTimedBlitzScore) ?? 0;
-        return score >= higherOrLowerUnlockScore;
+        final streak = prefs.getInt(_keyBestSurvivalStreak) ?? 0;
+        return streak >= higherOrLowerUnlockStreak;
 
       case 'international_cup':
         final wins = prefs.getInt(_keyHigherOrLowerWins) ?? 0;
@@ -84,13 +79,9 @@ class UnlockService {
         final quizzes = prefs.getInt(_keyClubQuizzesCompleted) ?? 0;
         return (quizzes / survivalUnlockQuizzes).clamp(0.0, 1.0);
 
-      case 'timed_blitz':
-        final streak = prefs.getInt(_keyBestSurvivalStreak) ?? 0;
-        return (streak / timedBlitzUnlockStreak).clamp(0.0, 1.0);
-
       case 'higher_or_lower':
-        final score = prefs.getInt(_keyBestTimedBlitzScore) ?? 0;
-        return (score / higherOrLowerUnlockScore).clamp(0.0, 1.0);
+        final streak = prefs.getInt(_keyBestSurvivalStreak) ?? 0;
+        return (streak / higherOrLowerUnlockStreak).clamp(0.0, 1.0);
 
       case 'international_cup':
         final wins = prefs.getInt(_keyHigherOrLowerWins) ?? 0;
@@ -110,10 +101,8 @@ class UnlockService {
     switch (modeId) {
       case 'survival_mode':
         return 'Complete $survivalUnlockQuizzes Club Quizzes';
-      case 'timed_blitz':
-        return 'Get $timedBlitzUnlockStreak+ streak in Survival';
       case 'higher_or_lower':
-        return 'Score $higherOrLowerUnlockScore+ in Timed Blitz';
+        return 'Get $higherOrLowerUnlockStreak+ streak in Survival';
       case 'international_cup':
         return 'Win $cupModeUnlockWins Higher or Lower games';
       case 'tournament_mode':
@@ -133,12 +122,9 @@ class UnlockService {
       case 'survival_mode':
         final quizzes = prefs.getInt(_keyClubQuizzesCompleted) ?? 0;
         return '$quizzes/$survivalUnlockQuizzes quizzes';
-      case 'timed_blitz':
-        final streak = prefs.getInt(_keyBestSurvivalStreak) ?? 0;
-        return '$streak/$timedBlitzUnlockStreak streak';
       case 'higher_or_lower':
-        final score = prefs.getInt(_keyBestTimedBlitzScore) ?? 0;
-        return '$score/$higherOrLowerUnlockScore score';
+        final streak = prefs.getInt(_keyBestSurvivalStreak) ?? 0;
+        return '$streak/$higherOrLowerUnlockStreak streak';
       case 'international_cup':
         final wins = prefs.getInt(_keyHigherOrLowerWins) ?? 0;
         return '$wins/$cupModeUnlockWins wins';
@@ -169,7 +155,7 @@ class UnlockService {
     return UnlockResult();
   }
 
-  /// Record best survival streak (for Timed Blitz unlock)
+  /// Record best survival streak (for Higher or Lower unlock)
   static Future<UnlockResult> recordSurvivalStreak(int streak) async {
     final prefs = await SharedPreferences.getInstance();
     final current = prefs.getInt(_keyBestSurvivalStreak) ?? 0;
@@ -177,33 +163,21 @@ class UnlockService {
     if (streak > current) {
       await prefs.setInt(_keyBestSurvivalStreak, streak);
 
-      // Check if this unlocked Timed Blitz
-      if (current < timedBlitzUnlockStreak && streak >= timedBlitzUnlockStreak) {
-        return UnlockResult(
-          unlockedModeId: 'timed_blitz',
-          unlockedModeName: 'Timed Blitz',
-        );
-      }
-    }
-    return UnlockResult();
-  }
-
-  /// Record best timed blitz score (for Higher or Lower unlock)
-  static Future<UnlockResult> recordTimedBlitzScore(int score) async {
-    final prefs = await SharedPreferences.getInstance();
-    final current = prefs.getInt(_keyBestTimedBlitzScore) ?? 0;
-
-    if (score > current) {
-      await prefs.setInt(_keyBestTimedBlitzScore, score);
-
       // Check if this unlocked Higher or Lower
-      if (current < higherOrLowerUnlockScore && score >= higherOrLowerUnlockScore) {
+      if (current < higherOrLowerUnlockStreak && streak >= higherOrLowerUnlockStreak) {
         return UnlockResult(
           unlockedModeId: 'higher_or_lower',
           unlockedModeName: 'Higher or Lower',
         );
       }
     }
+    return UnlockResult();
+  }
+
+  /// PARKED: Record timed blitz score (Timed Blitz mode is parked)
+  /// Keeping this method so the screen code still compiles
+  static Future<UnlockResult> recordTimedBlitzScore(int score) async {
+    // Timed Blitz is parked - this method does nothing
     return UnlockResult();
   }
 
@@ -249,7 +223,6 @@ class UnlockService {
     return {
       'clubQuizzesCompleted': prefs.getInt(_keyClubQuizzesCompleted) ?? 0,
       'bestSurvivalStreak': prefs.getInt(_keyBestSurvivalStreak) ?? 0,
-      'bestTimedBlitzScore': prefs.getInt(_keyBestTimedBlitzScore) ?? 0,
       'higherOrLowerWins': prefs.getInt(_keyHigherOrLowerWins) ?? 0,
       'cupWins': prefs.getInt(_keyCupWins) ?? 0,
     };
@@ -260,7 +233,6 @@ class UnlockService {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_keyClubQuizzesCompleted);
     await prefs.remove(_keyBestSurvivalStreak);
-    await prefs.remove(_keyBestTimedBlitzScore);
     await prefs.remove(_keyHigherOrLowerWins);
     await prefs.remove(_keyCupWins);
   }

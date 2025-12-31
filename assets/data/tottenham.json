@@ -1,0 +1,107 @@
+[
+  {
+    "id": "thfc_001",
+    "question": "What is Tottenham Hotspur's home stadium called?",
+    "options": ["White Hart Lane", "Tottenham Hotspur Stadium", "Wembley"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "thfc_002",
+    "question": "What is Tottenham's nickname?",
+    "options": ["The Lillywhites", "Spurs", "Both of these"],
+    "answerIndex": 2,
+    "difficulty": "easy"
+  },
+  {
+    "id": "thfc_003",
+    "question": "In which year did Tottenham last win the league title?",
+    "options": ["1951", "1961", "1971"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "thfc_004",
+    "question": "Who is Tottenham's all-time top goalscorer?",
+    "options": ["Harry Kane", "Jimmy Greaves", "Glenn Hoddle"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "thfc_005",
+    "question": "What bird appears on Tottenham's crest?",
+    "options": ["Eagle", "Rooster/Cockerel", "Swan"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "thfc_006",
+    "question": "Which manager took Spurs to the 2019 Champions League Final?",
+    "options": ["José Mourinho", "Mauricio Pochettino", "Antonio Conte"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "thfc_007",
+    "question": "What is Tottenham's Latin motto?",
+    "options": ["Glory Glory", "Audere est Facere", "Come On You Spurs"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "thfc_008",
+    "question": "Which Spurs striker became England's all-time top scorer in 2023?",
+    "options": ["Harry Kane", "Son Heung-min", "Jermain Defoe"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "thfc_009",
+    "question": "In which part of London is Tottenham located?",
+    "options": ["South London", "North London", "West London"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "thfc_010",
+    "question": "What was Tottenham's previous stadium called?",
+    "options": ["Highbury", "White Hart Lane", "The Den"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "thfc_011",
+    "question": "Which Tottenham legend is considered one of England's greatest ever players?",
+    "options": ["Glenn Hoddle", "Jimmy Greaves", "Paul Gascoigne"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "thfc_012",
+    "question": "Who scored a hat-trick for Spurs in the 2019 Champions League quarter-final vs Man City?",
+    "options": ["Harry Kane", "Son Heung-min", "Fernando Llorente"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "thfc_013",
+    "question": "What is the capacity of Tottenham Hotspur Stadium?",
+    "options": ["About 62,000", "About 52,000", "About 72,000"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "thfc_014",
+    "question": "Which team are Tottenham's biggest local rivals?",
+    "options": ["Chelsea", "Arsenal", "West Ham"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "thfc_015",
+    "question": "What unique feature does the new Tottenham stadium have?",
+    "options": ["Retractable roof", "Retractable pitch for NFL games", "Underground car park"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  }
+]

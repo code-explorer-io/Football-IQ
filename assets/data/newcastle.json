@@ -1,0 +1,107 @@
+[
+  {
+    "id": "nufc_001",
+    "question": "What is Newcastle United's home stadium called?",
+    "options": ["St James' Park", "Stadium of Light", "Riverside Stadium"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "nufc_002",
+    "question": "What are Newcastle's traditional home colours?",
+    "options": ["Red and white stripes", "Black and white stripes", "All black"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "nufc_003",
+    "question": "What is Newcastle United's nickname?",
+    "options": ["The Magpies", "The Toon", "Both of these"],
+    "answerIndex": 2,
+    "difficulty": "easy"
+  },
+  {
+    "id": "nufc_004",
+    "question": "Who is Newcastle's all-time top goalscorer?",
+    "options": ["Alan Shearer", "Jackie Milburn", "Malcolm Macdonald"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "nufc_005",
+    "question": "Which consortium bought Newcastle United in 2021?",
+    "options": ["American investors", "Saudi Arabian PIF", "Chinese investors"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "nufc_006",
+    "question": "In which year did Newcastle last win a major trophy (FA Cup)?",
+    "options": ["1955", "1969", "1998"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "nufc_007",
+    "question": "Which manager led Newcastle to consecutive second-place finishes in the 1990s?",
+    "options": ["Bobby Robson", "Kevin Keegan", "Kenny Dalglish"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_008",
+    "question": "What is Kevin Keegan's famous quote about title rivals Manchester United?",
+    "options": ["I will love it if we beat them", "We fear no one", "They're not that good"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_009",
+    "question": "Which French winger was a fan favorite at Newcastle in the 2000s?",
+    "options": ["David Ginola", "Laurent Robert", "Yohan Cabaye"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_010",
+    "question": "What is the approximate capacity of St James' Park?",
+    "options": ["42,000", "52,000", "62,000"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_011",
+    "question": "Which local team are Newcastle's biggest rivals?",
+    "options": ["Middlesbrough", "Sunderland", "Leeds United"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "nufc_012",
+    "question": "Who managed Newcastle from 1999 to 2004?",
+    "options": ["Ruud Gullit", "Bobby Robson", "Graeme Souness"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_013",
+    "question": "What is the derby between Newcastle and Sunderland called?",
+    "options": ["North East Derby", "Tyne-Wear Derby", "Geordie Derby"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "nufc_014",
+    "question": "Which Brazilian midfielder joined Newcastle in 2023?",
+    "options": ["Bruno Guimarães", "Joelinton", "Lucas Paquetá"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "nufc_015",
+    "question": "What year was Newcastle United founded?",
+    "options": ["1881", "1892", "1905"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  }
+]

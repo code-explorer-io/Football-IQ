@@ -44,7 +44,6 @@ class _ResultsScreenState extends State<ResultsScreen>
   List<Achievement> _newAchievements = [];
   XPAward? _xpAward;
   int _currentStreak = 0;
-  bool _dataLoaded = false;
   UnlockResult? _unlockResult;
 
   late ConfettiController _confettiController;
@@ -149,7 +148,6 @@ class _ResultsScreenState extends State<ResultsScreen>
       _newAchievements = achievements;
       _xpAward = xpAward;
       _currentStreak = streakResult.streak;
-      _dataLoaded = true;
       _unlockResult = unlockResult;
     });
 
@@ -208,6 +206,17 @@ class _ResultsScreenState extends State<ResultsScreen>
     }
   }
 
+  BackgroundZone _getResultsZone() {
+    final percentage = (widget.score / widget.totalQuestions) * 100;
+    // 50% or higher = win (celebration locker room)
+    // Below 50% = loss (disappointed locker room)
+    if (percentage >= 50) {
+      return BackgroundZone.resultsWin;
+    } else {
+      return BackgroundZone.resultsLoss;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -215,7 +224,7 @@ class _ResultsScreenState extends State<ResultsScreen>
       body: Stack(
         children: [
           PitchBackground.zone(
-            zone: BackgroundZone.results,
+            zone: _getResultsZone(),
             child: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.all(24.0),
@@ -558,7 +567,7 @@ class _ResultsScreenState extends State<ResultsScreen>
                               );
                             },
                             child: const Text(
-                              'Back to Home',
+                              'Back to Menu',
                               style: TextStyle(
                                 color: AppTheme.textSecondary,
                                 fontSize: 14,

@@ -1,0 +1,107 @@
+[
+  {
+    "id": "cfc_001",
+    "question": "What is Chelsea FC's home stadium called?",
+    "options": ["Wembley", "Stamford Bridge", "The Emirates"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "cfc_002",
+    "question": "What are Chelsea's traditional home colours?",
+    "options": ["Red", "Royal blue", "Sky blue"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "cfc_003",
+    "question": "Which billionaire bought Chelsea in 2003?",
+    "options": ["Sheikh Mansour", "Roman Abramovich", "Stan Kroenke"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "cfc_004",
+    "question": "Who is Chelsea's all-time top goalscorer?",
+    "options": ["Didier Drogba", "Frank Lampard", "Bobby Tambling"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_005",
+    "question": "In which year did Chelsea win their first Champions League?",
+    "options": ["2012", "2015", "2021"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "cfc_006",
+    "question": "Which manager led Chelsea to their first Premier League title?",
+    "options": ["Carlo Ancelotti", "José Mourinho", "Claudio Ranieri"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "cfc_007",
+    "question": "Who scored Chelsea's winning penalty in the 2012 Champions League Final?",
+    "options": ["Frank Lampard", "Didier Drogba", "John Terry"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_008",
+    "question": "What is Chelsea's nickname?",
+    "options": ["The Blues", "The Pensioners", "Both of these"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_009",
+    "question": "Which Chelsea captain famously slipped against Liverpool in 2014?",
+    "options": ["Frank Lampard", "John Terry", "Steven Gerrard"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_010",
+    "question": "Who was Chelsea's manager when they won the 2021 Champions League?",
+    "options": ["Frank Lampard", "Thomas Tuchel", "Maurizio Sarri"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "cfc_011",
+    "question": "What is the name of Chelsea's famous stand?",
+    "options": ["The Kop", "The Shed End", "The Stretford End"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_012",
+    "question": "Which goalkeeper made a record-breaking appearance count for Chelsea?",
+    "options": ["Petr Čech", "Thibaut Courtois", "Carlo Cudicini"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_013",
+    "question": "In which London borough is Stamford Bridge located?",
+    "options": ["Westminster", "Hammersmith & Fulham", "Kensington & Chelsea"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "cfc_014",
+    "question": "How many Premier League titles has Chelsea won?",
+    "options": ["4", "5", "6"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "cfc_015",
+    "question": "Which Eden played for Chelsea from 2012-2019?",
+    "options": ["Eden Dzeko", "Eden Hazard", "Eden Silva"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  }
+]

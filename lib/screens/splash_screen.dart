@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
 import 'package:video_player/video_player.dart';
+import '../theme/app_theme.dart';
 import '../widgets/pitch_background.dart';
 import 'home_screen.dart';
 
@@ -55,12 +56,18 @@ class _SplashScreenState extends State<SplashScreen>
 
   Future<void> _initializeVideo() async {
     try {
-      // Check if video asset exists
-      await rootBundle.load('assets/images/tunnel.mp4');
+      // Check if video asset exists with a timeout
+      await rootBundle.load('assets/images/tunnel.mp4').timeout(
+        const Duration(seconds: 2),
+        onTimeout: () => throw Exception('Video load timeout'),
+      );
 
-      // Video exists, initialize player
+      // Video exists, initialize player with timeout
       _videoController = VideoPlayerController.asset('assets/images/tunnel.mp4');
-      await _videoController!.initialize();
+      await _videoController!.initialize().timeout(
+        const Duration(seconds: 3),
+        onTimeout: () => throw Exception('Video init timeout'),
+      );
 
       if (mounted) {
         setState(() {
@@ -71,9 +78,14 @@ class _SplashScreenState extends State<SplashScreen>
         // Play video and navigate when complete
         _videoController!.play();
         _videoController!.addListener(_onVideoProgress);
+
+        // Safety timeout - navigate after max 5 seconds even if video doesn't complete
+        Future.delayed(const Duration(milliseconds: 5000), () {
+          if (mounted) _navigateToHome();
+        });
       }
     } catch (e) {
-      // Video doesn't exist, use static fallback
+      // Video doesn't exist or failed to load, use static fallback
       _startStaticSplash();
     }
   }
@@ -184,7 +196,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     // Static fallback with tunnel background
     return Scaffold(
-      backgroundColor: const Color(0xFF1A1A2E),
+      backgroundColor: AppTheme.background,
       body: PitchBackground.zone(
         zone: BackgroundZone.tunnel,
         child: Center(

@@ -23,7 +23,7 @@ class TimedBlitzIntroScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1A1A2E),
+      backgroundColor: AppTheme.background,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -163,6 +163,7 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
   int _score = 0;
   int _totalAnswered = 0;
   bool _isLoading = true;
+  bool _hasError = false;
   int? _selectedAnswer;
   bool _answered = false;
 
@@ -196,7 +197,16 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
   }
 
   Future<void> _loadQuestions() async {
+    setState(() {
+      _isLoading = true;
+      _hasError = false;
+    });
+
     try {
+      if (widget.mode.dataFile == null) {
+        throw Exception('No data file configured for this mode');
+      }
+
       final String jsonString = await DefaultAssetBundle.of(context)
           .loadString(widget.mode.dataFile!);
       final List<dynamic> jsonList = jsonDecode(jsonString);
@@ -212,6 +222,7 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
     } catch (e) {
       setState(() {
         _isLoading = false;
+        _hasError = true;
       });
     }
   }
@@ -299,18 +310,69 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
   Widget build(BuildContext context) {
     if (_isLoading) {
       return Scaffold(
-        backgroundColor: const Color(0xFF1A1A2E),
+        backgroundColor: AppTheme.background,
         body: const Center(
-          child: CircularProgressIndicator(color: Colors.white),
+          child: CircularProgressIndicator(color: AppTheme.highlight),
         ),
       );
     }
 
-    if (_questions.isEmpty) {
+    if (_hasError || _questions.isEmpty) {
       return Scaffold(
-        backgroundColor: const Color(0xFF1A1A2E),
-        body: const Center(
-          child: Text('No questions available', style: TextStyle(color: Colors.white)),
+        backgroundColor: AppTheme.background,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.error_outline,
+                  size: 64,
+                  color: AppTheme.textMuted,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Unable to load questions',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Please check your connection and try again',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: AppTheme.textSecondary,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 24),
+                ElevatedButton(
+                  onPressed: _loadQuestions,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: widget.mode.color,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: const Text('Try Again'),
+                ),
+              ],
+            ),
+          ),
         ),
       );
     }
@@ -319,7 +381,7 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
     final isUrgent = _secondsRemaining <= 10;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF1A1A2E),
+      backgroundColor: AppTheme.background,
       body: PitchBackground.zone(
         zone: BackgroundZone.dugout,
         child: SafeArea(
@@ -364,7 +426,10 @@ class _TimedBlitzQuestionScreenState extends State<TimedBlitzQuestionScreen>
                 children: [
                   IconButton(
                     icon: const Icon(Icons.close, color: Colors.white),
-                    onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),
+                    onPressed: () {
+                      _timer?.cancel(); // Cancel timer before navigating
+                      Navigator.popUntil(context, (route) => route.isFirst);
+                    },
                   ),
                   // Timer display
                   AnimatedBuilder(
@@ -552,6 +617,15 @@ class _TimedBlitzResultsScreenState extends State<TimedBlitzResultsScreen> {
     return 'Rusty';
   }
 
+  BackgroundZone _getResultsZone() {
+    // 7+ correct in 60 seconds is a solid performance
+    if (widget.score >= 7) {
+      return BackgroundZone.resultsWin;
+    } else {
+      return BackgroundZone.resultsLoss;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final accuracy = widget.totalAnswered > 0
@@ -559,9 +633,9 @@ class _TimedBlitzResultsScreenState extends State<TimedBlitzResultsScreen> {
         : 0;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF1A1A2E),
+      backgroundColor: AppTheme.background,
       body: PitchBackground.zone(
-        zone: BackgroundZone.results,
+        zone: _getResultsZone(),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(24.0),
@@ -587,9 +661,10 @@ class _TimedBlitzResultsScreenState extends State<TimedBlitzResultsScreen> {
                     ),
                   ),
                 ),
-              const Text(
-                '⚡',
-                style: TextStyle(fontSize: 80),
+              Icon(
+                Icons.flash_on,
+                size: 80,
+                color: AppTheme.gold,
               ),
               const SizedBox(height: 24),
               const Text(

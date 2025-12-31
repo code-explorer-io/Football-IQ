@@ -230,7 +230,7 @@ class _QuestionScreenState extends State<QuestionScreen>
   Widget build(BuildContext context) {
     if (_isLoading) {
       return Scaffold(
-        backgroundColor: const Color(0xFF1A1A2E),
+        backgroundColor: AppTheme.background,
         body: const Center(
           child: CircularProgressIndicator(color: Colors.white),
         ),
@@ -240,7 +240,7 @@ class _QuestionScreenState extends State<QuestionScreen>
     final question = _questions[_currentIndex];
 
     return Scaffold(
-      backgroundColor: const Color(0xFF1A1A2E),
+      backgroundColor: AppTheme.background,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,

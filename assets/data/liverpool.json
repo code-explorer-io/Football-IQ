@@ -1,0 +1,107 @@
+[
+  {
+    "id": "lfc_001",
+    "question": "What is Liverpool FC's home stadium called?",
+    "options": ["Old Trafford", "Anfield", "Goodison Park"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "lfc_002",
+    "question": "What song do Liverpool fans famously sing before matches?",
+    "options": ["Blue Moon", "You'll Never Walk Alone", "Glory Glory Man United"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "lfc_003",
+    "question": "How many European Cups/Champions League titles has Liverpool won?",
+    "options": ["4", "5", "6"],
+    "answerIndex": 2,
+    "difficulty": "medium"
+  },
+  {
+    "id": "lfc_004",
+    "question": "Which manager led Liverpool to their 2019 Champions League triumph?",
+    "options": ["Brendan Rodgers", "Jürgen Klopp", "Rafael Benítez"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "lfc_005",
+    "question": "What is Liverpool's famous home stand called?",
+    "options": ["The Kop", "The Stretford End", "The Shed End"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "lfc_006",
+    "question": "Who is Liverpool's all-time top goalscorer?",
+    "options": ["Steven Gerrard", "Ian Rush", "Kenny Dalglish"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "lfc_007",
+    "question": "In which year did Liverpool win their first Premier League title?",
+    "options": ["2019", "2020", "2021"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "lfc_008",
+    "question": "What are Liverpool's traditional home colours?",
+    "options": ["Blue and white", "All red", "Red and white stripes"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "lfc_009",
+    "question": "Which Liverpool captain lifted the 2005 Champions League trophy?",
+    "options": ["Jamie Carragher", "Steven Gerrard", "Sami Hyypiä"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "lfc_010",
+    "question": "What was the famous scoreline in Liverpool's 2005 Champions League Final comeback?",
+    "options": ["3-0 down at half-time", "2-0 down at half-time", "3-1 down at half-time"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "lfc_011",
+    "question": "Which Egyptian player joined Liverpool in 2017 and became a club legend?",
+    "options": ["Mohamed Salah", "Ahmed Hegazi", "Mohamed Elneny"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "lfc_012",
+    "question": "What is the name of Liverpool's famous boot room tradition?",
+    "options": ["The Anfield Way", "The Boot Room", "The Red Room"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "lfc_013",
+    "question": "Who scored Liverpool's winning goal in the 2019 Champions League Final?",
+    "options": ["Mohamed Salah", "Divock Origi", "Sadio Mané"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "lfc_014",
+    "question": "Which manager won Liverpool the most league titles?",
+    "options": ["Bob Paisley", "Bill Shankly", "Kenny Dalglish"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "lfc_015",
+    "question": "What is the capacity of Anfield stadium?",
+    "options": ["About 54,000", "About 61,000", "About 75,000"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  }
+]

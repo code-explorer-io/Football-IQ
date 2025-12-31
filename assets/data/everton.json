@@ -1,0 +1,107 @@
+[
+  {
+    "id": "efc_001",
+    "question": "What is Everton's home stadium called?",
+    "options": ["Anfield", "Goodison Park", "Old Trafford"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "efc_002",
+    "question": "What are Everton's traditional home colours?",
+    "options": ["Royal blue", "Sky blue", "Navy blue"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "efc_003",
+    "question": "What is Everton's nickname?",
+    "options": ["The Blues", "The Toffees", "Both of these"],
+    "answerIndex": 2,
+    "difficulty": "easy"
+  },
+  {
+    "id": "efc_004",
+    "question": "Which team are Everton's biggest rivals?",
+    "options": ["Manchester United", "Liverpool", "Manchester City"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "efc_005",
+    "question": "What is the derby between Everton and Liverpool called?",
+    "options": ["North West Derby", "Merseyside Derby", "Red vs Blue Derby"],
+    "answerIndex": 1,
+    "difficulty": "easy"
+  },
+  {
+    "id": "efc_006",
+    "question": "Who is Everton's all-time top goalscorer?",
+    "options": ["Dixie Dean", "Graeme Sharp", "Duncan Ferguson"],
+    "answerIndex": 0,
+    "difficulty": "medium"
+  },
+  {
+    "id": "efc_007",
+    "question": "How many league goals did Dixie Dean score in the 1927-28 season?",
+    "options": ["50", "60", "70"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "efc_008",
+    "question": "In which year did Everton last win the league title?",
+    "options": ["1985", "1987", "1995"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "efc_009",
+    "question": "What is the name of Everton's new stadium currently under construction?",
+    "options": ["New Goodison", "Bramley-Moore Dock Stadium", "Everton Stadium"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "efc_010",
+    "question": "Which manager led Everton to FA Cup glory in 1995?",
+    "options": ["Howard Kendall", "Joe Royle", "Walter Smith"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "efc_011",
+    "question": "Everton were founding members of which competition?",
+    "options": ["FA Cup", "Football League", "League Cup"],
+    "answerIndex": 1,
+    "difficulty": "medium"
+  },
+  {
+    "id": "efc_012",
+    "question": "Which cult hero striker was known as 'Big Dunc'?",
+    "options": ["Duncan Ferguson", "Duncan Edwards", "Duncan Watmore"],
+    "answerIndex": 0,
+    "difficulty": "easy"
+  },
+  {
+    "id": "efc_013",
+    "question": "What tower stands prominently in the Goodison Park skyline?",
+    "options": ["St Luke's Church", "Everton Tower", "Dixie Dean Stand"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  },
+  {
+    "id": "efc_014",
+    "question": "How many league titles has Everton won in total?",
+    "options": ["7", "9", "11"],
+    "answerIndex": 1,
+    "difficulty": "hard"
+  },
+  {
+    "id": "efc_015",
+    "question": "In which year was Everton Football Club founded?",
+    "options": ["1878", "1885", "1892"],
+    "answerIndex": 0,
+    "difficulty": "hard"
+  }
+]
