@@ -13,8 +13,13 @@ import 'results_screen.dart';
 
 class QuestionScreen extends StatefulWidget {
   final Club club;
+  final QuizDifficulty difficulty;
 
-  const QuestionScreen({super.key, required this.club});
+  const QuestionScreen({
+    super.key,
+    required this.club,
+    this.difficulty = QuizDifficulty.normal,
+  });
 
   @override
   State<QuestionScreen> createState() => _QuestionScreenState();
@@ -36,7 +41,7 @@ class _QuestionScreenState extends State<QuestionScreen>
 
   // Timer for questions
   late AnimationController _timerController;
-  static const int _questionTimeSeconds = 12; // Time per question
+  int get _questionTimeSeconds => widget.difficulty.timePerQuestion;
   static const int _fastAnswerThreshold = 5; // Seconds for "fast answer" bonus
   bool _timeExpired = false;
   int _fastAnswerCount = 0; // Track fast correct answers for bonus XP
@@ -59,8 +64,9 @@ class _QuestionScreenState extends State<QuestionScreen>
     ).animate(CurvedAnimation(parent: _animController, curve: Curves.easeOut));
 
     // Timer controller - counts down from 1.0 to 0.0
+    // Duration is set later after first build since widget.difficulty isn't available yet
     _timerController = AnimationController(
-      duration: Duration(seconds: _questionTimeSeconds),
+      duration: Duration(seconds: widget.difficulty.timePerQuestion),
       vsync: this,
     );
     _timerController.addStatusListener(_onTimerStatusChanged);
@@ -137,6 +143,7 @@ class _QuestionScreenState extends State<QuestionScreen>
             score: _score,
             totalQuestions: _questions.length,
             fastAnswerCount: _fastAnswerCount,
+            difficulty: widget.difficulty,
           ),
           transitionsBuilder:
               (context, animation, secondaryAnimation, child) {

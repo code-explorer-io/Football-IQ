@@ -14,6 +14,7 @@ import '../theme/app_theme.dart';
 import '../widgets/animated_button.dart';
 import '../widgets/form_guide.dart';
 import '../widgets/pitch_background.dart';
+import '../models/question.dart';
 import 'home_screen.dart';
 import 'question_screen.dart';
 
@@ -22,6 +23,7 @@ class ResultsScreen extends StatefulWidget {
   final int score;
   final int totalQuestions;
   final int fastAnswerCount;
+  final QuizDifficulty difficulty;
 
   const ResultsScreen({
     super.key,
@@ -29,6 +31,7 @@ class ResultsScreen extends StatefulWidget {
     required this.score,
     required this.totalQuestions,
     this.fastAnswerCount = 0,
+    this.difficulty = QuizDifficulty.normal,
   });
 
   @override
@@ -239,6 +242,120 @@ class _ResultsScreenState extends State<ResultsScreen>
     } else {
       return BackgroundZone.resultsLoss;
     }
+  }
+
+  /// Determines if we should offer a different difficulty based on score
+  /// High score (9-10/10) = offer harder difficulty
+  /// Low score (0-3/10) = offer easier difficulty
+  QuizDifficulty? _getSuggestedDifficulty() {
+    final percentage = (widget.score / widget.totalQuestions) * 100;
+
+    // High performer: offer harder difficulty if available
+    if (percentage >= 90 && widget.difficulty.harder != null) {
+      return widget.difficulty.harder;
+    }
+
+    // Struggling: offer easier difficulty if available
+    if (percentage <= 30 && widget.difficulty.easier != null) {
+      return widget.difficulty.easier;
+    }
+
+    return null; // No suggestion
+  }
+
+  Widget _buildDifficultyOffer() {
+    final suggestedDifficulty = _getSuggestedDifficulty();
+    if (suggestedDifficulty == null) return const SizedBox.shrink();
+
+    final isHarder = suggestedDifficulty == widget.difficulty.harder;
+    final percentage = (widget.score / widget.totalQuestions) * 100;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: (isHarder ? AppTheme.gold : AppTheme.highlight).withValues(alpha: 0.15),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: (isHarder ? AppTheme.gold : AppTheme.highlight).withValues(alpha: 0.3),
+          ),
+        ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Icon(
+                  isHarder ? Icons.trending_up : Icons.trending_down,
+                  color: isHarder ? AppTheme.gold : AppTheme.highlight,
+                  size: 24,
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    isHarder
+                        ? 'Impressive! Ready for a challenge?'
+                        : 'Want to try an easier level?',
+                    style: TextStyle(
+                      color: isHarder ? AppTheme.gold : AppTheme.highlight,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              isHarder
+                  ? 'You scored ${percentage.toInt()}%! Try ${suggestedDifficulty.displayName} mode with less time per question.'
+                  : 'No worries! ${suggestedDifficulty.displayName} mode gives you more time to think.',
+              style: const TextStyle(
+                color: AppTheme.textSecondary,
+                fontSize: 13,
+              ),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton(
+                onPressed: () {
+                  HapticService.tap();
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          QuestionScreen(
+                            club: widget.club,
+                            difficulty: suggestedDifficulty,
+                          ),
+                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                        return FadeTransition(opacity: animation, child: child);
+                      },
+                      transitionDuration: const Duration(milliseconds: 300),
+                    ),
+                  );
+                },
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: isHarder ? AppTheme.gold : AppTheme.highlight,
+                  side: BorderSide(
+                    color: isHarder ? AppTheme.gold : AppTheme.highlight,
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: Text(
+                  'Try ${suggestedDifficulty.displayName} Mode',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
@@ -555,6 +672,8 @@ class _ResultsScreenState extends State<ResultsScreen>
                       opacity: _fadeAnimation,
                       child: Column(
                         children: [
+                          // Difficulty challenge offer (adaptive based on score)
+                          _buildDifficultyOffer(),
                           // Play Again button
                           PrimaryButton(
                             text: 'Kick Off Again',
@@ -565,7 +684,10 @@ class _ResultsScreenState extends State<ResultsScreen>
                                 context,
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation, secondaryAnimation) =>
-                                      QuestionScreen(club: widget.club),
+                                      QuestionScreen(
+                                        club: widget.club,
+                                        difficulty: widget.difficulty,
+                                      ),
                                   transitionsBuilder: (context, animation, secondaryAnimation, child) {
                                     return FadeTransition(opacity: animation, child: child);
                                   },

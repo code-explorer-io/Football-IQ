@@ -1,3 +1,60 @@
+/// Quiz difficulty level (affects timer and question selection)
+enum QuizDifficulty {
+  easy,   // 15 seconds per question, easier questions prioritized
+  normal, // 12 seconds per question, mixed questions
+  hard,   // 8 seconds per question, harder questions prioritized
+}
+
+extension QuizDifficultyExtension on QuizDifficulty {
+  /// Time in seconds per question
+  int get timePerQuestion {
+    switch (this) {
+      case QuizDifficulty.easy:
+        return 15;
+      case QuizDifficulty.normal:
+        return 12;
+      case QuizDifficulty.hard:
+        return 8;
+    }
+  }
+
+  /// Display name for UI
+  String get displayName {
+    switch (this) {
+      case QuizDifficulty.easy:
+        return 'Easy';
+      case QuizDifficulty.normal:
+        return 'Normal';
+      case QuizDifficulty.hard:
+        return 'Hard';
+    }
+  }
+
+  /// Next difficulty level up (returns null if already at max)
+  QuizDifficulty? get harder {
+    switch (this) {
+      case QuizDifficulty.easy:
+        return QuizDifficulty.normal;
+      case QuizDifficulty.normal:
+        return QuizDifficulty.hard;
+      case QuizDifficulty.hard:
+        return null;
+    }
+  }
+
+  /// Next difficulty level down (returns null if already at min)
+  QuizDifficulty? get easier {
+    switch (this) {
+      case QuizDifficulty.easy:
+        return null;
+      case QuizDifficulty.normal:
+        return QuizDifficulty.easy;
+      case QuizDifficulty.hard:
+        return QuizDifficulty.normal;
+    }
+  }
+}
+
 class Question {
   final String id;
   final String question;
