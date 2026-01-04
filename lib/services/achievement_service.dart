@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'analytics_service.dart';
 
 /// Achievement definitions with football-themed names
 /// Design principle: Earned, not given. Sophisticated, not childish.
@@ -68,6 +69,8 @@ class AchievementService {
         '$_unlockedAtPrefix${achievement.id}',
         DateTime.now().toIso8601String(),
       );
+      // Track achievement unlock
+      AnalyticsService.logAchievementUnlocked(achievement.id, achievement.title);
       return true;
     }
     return false;

@@ -761,6 +761,7 @@ class _HigherOrLowerResultsScreenState extends State<HigherOrLowerResultsScreen>
                 text: 'Play Again',
                 backgroundColor: widget.mode.color,
                 onTap: () {
+                  AnalyticsService.logPlayAgain('Higher or Lower');
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(

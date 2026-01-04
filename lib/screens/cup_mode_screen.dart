@@ -656,6 +656,14 @@ class _CupResultScreenState extends State<CupResultScreen> {
   }
 
   Future<void> _checkWinner() async {
+    // Track game completion
+    AnalyticsService.logGameCompleted(
+      modeName: 'International Cup',
+      score: widget.score,
+      totalQuestions: widget.totalQuestions,
+      xpEarned: 0, // Cup mode doesn't award XP per match
+    );
+
     // If won the final, increment cups won and record for unlock progression
     if (widget.didAdvance && widget.stage == CupStage.final_) {
       await ScoreService.incrementCupsWon();
@@ -797,6 +805,7 @@ class _CupResultScreenState extends State<CupResultScreen> {
                   text: 'Try Again',
                   backgroundColor: widget.mode.color,
                   onTap: () {
+                    AnalyticsService.logPlayAgain('International Cup');
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
@@ -813,6 +822,7 @@ class _CupResultScreenState extends State<CupResultScreen> {
                   text: 'Defend Your Title',
                   backgroundColor: Colors.amber,
                   onTap: () {
+                    AnalyticsService.logPlayAgain('International Cup');
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

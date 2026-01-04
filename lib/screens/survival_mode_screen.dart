@@ -643,6 +643,7 @@ class _SurvivalResultsScreenState extends State<SurvivalResultsScreen> {
                 text: 'Try Again',
                 backgroundColor: widget.mode.color,
                 onTap: () {
+                  AnalyticsService.logPlayAgain('Survival Mode');
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
