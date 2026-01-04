@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'analytics_service.dart';
 
 /// Daily streak tracking service
 /// Tracks consecutive days of app usage (playing at least one quiz)
@@ -81,7 +82,17 @@ class StreakService {
       await prefs.setInt(_longestStreakKey, currentStreak);
     }
 
+    // Track streak milestones (7, 14, 30, 60, 100 days)
+    if (increased && _isStreakMilestone(currentStreak)) {
+      AnalyticsService.logStreakMilestone(currentStreak);
+    }
+
     return (streak: currentStreak, increased: increased, isNewRecord: isNewRecord);
+  }
+
+  /// Check if streak count is a milestone worth tracking
+  static bool _isStreakMilestone(int streak) {
+    return streak == 7 || streak == 14 || streak == 30 || streak == 60 || streak == 100;
   }
 
   /// Check if user has played today
