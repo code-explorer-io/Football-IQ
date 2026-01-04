@@ -6,6 +6,7 @@ import '../services/haptic_service.dart';
 import '../services/sound_service.dart';
 import '../services/unlock_service.dart';
 import '../theme/app_theme.dart';
+import '../widgets/animated_button.dart';
 import '../widgets/pitch_background.dart';
 import '../widgets/unlock_celebration.dart';
 import '../widgets/error_state_widget.dart';
@@ -191,36 +192,20 @@ class _CupModeIntroScreenState extends State<CupModeIntroScreen> {
                     ),
                     const SizedBox(height: 32),
                     // Start button
-                    SizedBox(
-                      width: double.infinity,
-                      height: 56,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CupMatchScreen(
-                                mode: widget.mode,
-                                stage: _currentStage,
-                              ),
+                    PrimaryButton(
+                      text: 'Begin ${_currentStage.displayName}',
+                      backgroundColor: widget.mode.color,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CupMatchScreen(
+                              mode: widget.mode,
+                              stage: _currentStage,
                             ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: widget.mode.color,
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
                           ),
-                        ),
-                        child: Text(
-                          'Start ${_currentStage.displayName}',
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -351,7 +336,9 @@ class _CupMatchScreenState extends State<CupMatchScreen> {
         // Validate required fields exist
         if (item['question'] == null ||
             item['options'] == null ||
-            item['answerIndex'] == null) continue;
+            item['answerIndex'] == null) {
+          continue;
+        }
 
         // Validate types
         if (item['question'] is! String) continue;
@@ -786,128 +773,63 @@ class _CupResultScreenState extends State<CupResultScreen> {
               ],
               const Spacer(),
               if (widget.didAdvance && !_isWinner)
-                SizedBox(
-                  width: double.infinity,
-                  height: 56,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CupMatchScreen(
-                            mode: widget.mode,
-                            stage: widget.stage.nextStage!,
-                          ),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: widget.mode.color,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                    child: Text(
-                      'Continue to ${widget.stage.nextStage?.displayName}',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              if (!widget.didAdvance)
-                SizedBox(
-                  width: double.infinity,
-                  height: 56,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CupMatchScreen(
-                            mode: widget.mode,
-                            stage: CupStage.groupStage, // Start over
-                          ),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: widget.mode.color,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                    child: const Text(
-                      'Try Again',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              if (_isWinner)
-                SizedBox(
-                  width: double.infinity,
-                  height: 56,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CupMatchScreen(
-                            mode: widget.mode,
-                            stage: CupStage.groupStage, // New tournament
-                          ),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.amber,
-                      foregroundColor: Colors.black,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                    child: const Text(
-                      'Defend Your Title',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              const SizedBox(height: 12),
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: OutlinedButton(
-                  onPressed: () {
-                    Navigator.pushAndRemoveUntil(
+                PrimaryButton(
+                  text: 'Continue to ${widget.stage.nextStage?.displayName}',
+                  backgroundColor: widget.mode.color,
+                  onTap: () {
+                    Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const HomeScreen()),
-                      (route) => false,
+                      MaterialPageRoute(
+                        builder: (context) => CupMatchScreen(
+                          mode: widget.mode,
+                          stage: widget.stage.nextStage!,
+                        ),
+                      ),
                     );
                   },
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    side: const BorderSide(color: Colors.white54),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
-                  child: const Text(
-                    'Back to Menu',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                 ),
+              if (!widget.didAdvance)
+                PrimaryButton(
+                  text: 'Try Again',
+                  backgroundColor: widget.mode.color,
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CupMatchScreen(
+                          mode: widget.mode,
+                          stage: CupStage.groupStage,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              if (_isWinner)
+                PrimaryButton(
+                  text: 'Defend Your Title',
+                  backgroundColor: Colors.amber,
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CupMatchScreen(
+                          mode: widget.mode,
+                          stage: CupStage.groupStage,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              const SizedBox(height: 12),
+              SecondaryButton(
+                text: 'Back to Menu',
+                onTap: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                    (route) => false,
+                  );
+                },
               ),
               const SizedBox(height: 24),
             ],

@@ -847,42 +847,36 @@ class GenericQuizIntroScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
-              Text(
-                '10 Questions\nMixed Difficulty',
-                style: const TextStyle(
-                  fontSize: 18,
+              const Text(
+                '10 Questions • Mixed Difficulty',
+                style: TextStyle(
+                  fontSize: 16,
                   color: Colors.white70,
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 48),
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => GenericQuestionScreen(mode: mode),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: mode.color,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
-                  child: const Text(
-                    'Start Quiz',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+              const SizedBox(height: 8),
+              Text(
+                'Test your knowledge',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.white.withValues(alpha: 0.5),
+                  fontStyle: FontStyle.italic,
                 ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 48),
+              PrimaryButton(
+                text: 'Begin',
+                backgroundColor: mode.color,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => GenericQuestionScreen(mode: mode),
+                    ),
+                  );
+                },
               ),
             ],
           ),

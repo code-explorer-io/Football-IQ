@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/club.dart';
+import '../services/haptic_service.dart';
 import '../theme/app_theme.dart';
 import 'quiz_intro_screen.dart';
 import 'paywall_screen.dart';
@@ -74,6 +75,7 @@ class _ClubCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
+        HapticService.tap();
         if (club.isLocked) {
           // Show paywall for locked clubs
           final purchased = await Navigator.push<bool>(
@@ -137,7 +139,7 @@ class _ClubCard extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          club.isLocked ? 'Locked' : 'Tap to play',
+                          club.isLocked ? 'Premium' : 'Ready to play',
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.white.withValues(alpha: 0.8),

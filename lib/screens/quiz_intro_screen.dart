@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/club.dart';
 import '../theme/app_theme.dart';
+import '../widgets/animated_button.dart';
 import '../widgets/pitch_background.dart';
 import 'question_screen.dart';
 
@@ -59,41 +60,35 @@ class QuizIntroScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               const Text(
-                '10 Questions\nMixed Difficulty',
+                '10 Questions • Mixed Difficulty',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   color: Colors.white70,
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 48),
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => QuestionScreen(club: club),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: club.primaryColor,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
-                  child: const Text(
-                    'Start Quiz',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+              const SizedBox(height: 8),
+              Text(
+                'Prove you know your club',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.white.withValues(alpha: 0.5),
+                  fontStyle: FontStyle.italic,
                 ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 48),
+              PrimaryButton(
+                text: 'Kick Off',
+                backgroundColor: club.primaryColor,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => QuestionScreen(club: club),
+                    ),
+                  );
+                },
               ),
             ],
           ),

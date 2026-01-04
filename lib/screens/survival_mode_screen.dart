@@ -9,6 +9,7 @@ import '../services/xp_service.dart';
 import '../services/analytics_service.dart';
 import '../services/unlock_service.dart';
 import '../theme/app_theme.dart';
+import '../widgets/animated_button.dart';
 import '../widgets/pitch_background.dart';
 import '../widgets/animated_answer_button.dart';
 import '../widgets/xp_award_display.dart';
@@ -71,41 +72,35 @@ class SurvivalIntroScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 const Text(
-                  'One wrong answer.\nThat\'s all it takes.\nHow long can you survive?',
+                  'One wrong answer ends it all',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     color: Colors.white70,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 48),
-                SizedBox(
-                  width: double.infinity,
-                  height: 56,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SurvivalQuestionScreen(mode: mode),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: mode.color,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                    child: const Text(
-                      'Begin',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                const SizedBox(height: 8),
+                Text(
+                  'How long can you survive?',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white.withValues(alpha: 0.5),
+                    fontStyle: FontStyle.italic,
                   ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 48),
+                PrimaryButton(
+                  text: 'Enter the Arena',
+                  backgroundColor: mode.color,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SurvivalQuestionScreen(mode: mode),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -182,7 +177,9 @@ class _SurvivalQuestionScreenState extends State<SurvivalQuestionScreen>
         // Validate required fields exist
         if (item['question'] == null ||
             item['options'] == null ||
-            item['answerIndex'] == null) continue;
+            item['answerIndex'] == null) {
+          continue;
+        }
 
         // Validate types
         if (item['question'] is! String) continue;
@@ -639,61 +636,28 @@ class _SurvivalResultsScreenState extends State<SurvivalResultsScreen> {
                 UnlockCelebration(unlockResult: _unlockResult!),
               ],
               const Spacer(),
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SurvivalQuestionScreen(mode: widget.mode),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: widget.mode.color,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+              PrimaryButton(
+                text: 'Try Again',
+                backgroundColor: widget.mode.color,
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SurvivalQuestionScreen(mode: widget.mode),
                     ),
-                  ),
-                  child: const Text(
-                    'Kick Off Again',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+                  );
+                },
               ),
               const SizedBox(height: 12),
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: OutlinedButton(
-                  onPressed: () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomeScreen()),
-                      (route) => false,
-                    );
-                  },
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    side: const BorderSide(color: Colors.white54),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
-                  child: const Text(
-                    'Back to Menu',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+              SecondaryButton(
+                text: 'Back to Menu',
+                onTap: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                    (route) => false,
+                  );
+                },
               ),
               const SizedBox(height: 24),
             ],

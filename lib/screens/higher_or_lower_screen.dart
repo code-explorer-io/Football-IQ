@@ -9,6 +9,7 @@ import '../services/xp_service.dart';
 import '../services/analytics_service.dart';
 import '../services/unlock_service.dart';
 import '../theme/app_theme.dart';
+import '../widgets/animated_button.dart';
 import '../widgets/pitch_background.dart';
 import '../widgets/xp_award_display.dart';
 import '../widgets/unlock_celebration.dart';
@@ -70,41 +71,35 @@ class HigherOrLowerIntroScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 const Text(
-                  '10 Rounds.\nYou know the stats.\nOr do you?',
+                  '10 Rounds • Trust your instincts',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     color: Colors.white70,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 48),
-                SizedBox(
-                  width: double.infinity,
-                  height: 56,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HigherOrLowerGameScreen(mode: mode),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: mode.color,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                    child: const Text(
-                      'Begin',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                const SizedBox(height: 8),
+                Text(
+                  'You know the stats. Or do you?',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white.withValues(alpha: 0.5),
+                    fontStyle: FontStyle.italic,
                   ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 48),
+                PrimaryButton(
+                  text: 'Play the Odds',
+                  backgroundColor: mode.color,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HigherOrLowerGameScreen(mode: mode),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -759,61 +754,28 @@ class _HigherOrLowerResultsScreenState extends State<HigherOrLowerResultsScreen>
                 UnlockCelebration(unlockResult: _unlockResult!),
               ],
               const Spacer(),
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => HigherOrLowerGameScreen(mode: widget.mode),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: widget.mode.color,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+              PrimaryButton(
+                text: 'Play Again',
+                backgroundColor: widget.mode.color,
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HigherOrLowerGameScreen(mode: widget.mode),
                     ),
-                  ),
-                  child: const Text(
-                    'Kick Off Again',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+                  );
+                },
               ),
               const SizedBox(height: 12),
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: OutlinedButton(
-                  onPressed: () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomeScreen()),
-                      (route) => false,
-                    );
-                  },
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    side: const BorderSide(color: Colors.white54),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
-                  child: const Text(
-                    'Back to Menu',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+              SecondaryButton(
+                text: 'Back to Menu',
+                onTap: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                    (route) => false,
+                  );
+                },
               ),
               const SizedBox(height: 24),
             ],
