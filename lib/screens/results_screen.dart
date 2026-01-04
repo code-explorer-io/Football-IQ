@@ -560,6 +560,7 @@ class _ResultsScreenState extends State<ResultsScreen>
                             text: 'Kick Off Again',
                             backgroundColor: widget.club.primaryColor,
                             onTap: () {
+                              AnalyticsService.logPlayAgain('Quiz Your Club');
                               Navigator.pushReplacement(
                                 context,
                                 PageRouteBuilder(
@@ -573,10 +574,11 @@ class _ResultsScreenState extends State<ResultsScreen>
                               );
                             },
                           ),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 12),
                           // Home button
-                          TextButton(
-                            onPressed: () {
+                          SecondaryButton(
+                            text: 'Back to Menu',
+                            onTap: () {
                               Navigator.pushAndRemoveUntil(
                                 context,
                                 PageRouteBuilder(
@@ -590,13 +592,6 @@ class _ResultsScreenState extends State<ResultsScreen>
                                 (route) => false,
                               );
                             },
-                            child: const Text(
-                              'Back to Menu',
-                              style: TextStyle(
-                                color: AppTheme.textSecondary,
-                                fontSize: 14,
-                              ),
-                            ),
                           ),
                         ],
                       ),

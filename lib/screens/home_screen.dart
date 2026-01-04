@@ -867,7 +867,7 @@ class GenericQuizIntroScreen extends StatelessWidget {
               ),
               const SizedBox(height: 48),
               PrimaryButton(
-                text: 'Begin',
+                text: 'Kick Off',
                 backgroundColor: mode.color,
                 onTap: () {
                   Navigator.push(
@@ -1584,6 +1584,7 @@ class _StatsScreenState extends State<StatsScreen> {
   void initState() {
     super.initState();
     _loadAllStats();
+    AnalyticsService.logStatsViewed();
   }
 
   Future<void> _loadAllStats() async {

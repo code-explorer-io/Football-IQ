@@ -201,6 +201,9 @@ class _SurvivalQuestionScreenState extends State<SurvivalQuestionScreen>
       validQuestions.shuffle();
       _questions = validQuestions;
 
+      // Track game start
+      AnalyticsService.logGameStarted(modeName: 'Survival Mode');
+
       setState(() {
         _isLoading = false;
       });

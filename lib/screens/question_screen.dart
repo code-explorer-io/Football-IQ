@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/club.dart';
 import '../models/question.dart';
+import '../services/analytics_service.dart';
 import '../services/haptic_service.dart';
 import '../services/sound_service.dart';
 import '../theme/app_theme.dart';
@@ -160,6 +161,12 @@ class _QuestionScreenState extends State<QuestionScreen>
       setState(() {
         _isLoading = false;
       });
+
+      // Track game start
+      AnalyticsService.logGameStarted(
+        modeName: 'Quiz Your Club',
+        clubName: widget.club.name,
+      );
 
       // Start animation and timer
       _animController.forward();

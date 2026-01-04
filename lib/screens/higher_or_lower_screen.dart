@@ -180,6 +180,9 @@ class _HigherOrLowerGameScreenState extends State<HigherOrLowerGameScreen> {
       validComparisons.shuffle();
       _comparisons = validComparisons.take(10).toList();
 
+      // Track game start
+      AnalyticsService.logGameStarted(modeName: 'Higher or Lower');
+
       setState(() {
         _isLoading = false;
       });

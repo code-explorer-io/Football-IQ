@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../models/game_mode.dart';
+import '../services/analytics_service.dart';
 import '../services/score_service.dart';
 import '../services/haptic_service.dart';
 import '../services/sound_service.dart';
@@ -359,6 +360,9 @@ class _CupMatchScreenState extends State<CupMatchScreen> {
 
       validQuestions.shuffle();
       _questions = validQuestions.take(10).toList();
+
+      // Track game start
+      AnalyticsService.logGameStarted(modeName: 'International Cup');
 
       setState(() {
         _isLoading = false;
