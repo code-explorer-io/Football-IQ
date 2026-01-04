@@ -74,7 +74,10 @@
       "Bash(cmd.exe /c 'setx CLAUDE_CODE_GIT_BASH_PATH \"\"C:\\Program Files\\Git\\bin\\bash.exe\"\"')",
       "Bash(taskkill:*)",
       "Bash(for f in *.json)",
-      "Bash(PATH=\"/c/Program Files/Git/cmd:$PATH\" /c/Flutter/flutter/bin/flutter analyze:*)"
+      "Bash(PATH=\"/c/Program Files/Git/cmd:$PATH\" /c/Flutter/flutter/bin/flutter analyze:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nAdd AI Autonomous App Progression Playbook\n\nReusable framework for AI-assisted app development with 15 high-leverage\nprompts covering code health, ASO, content audits, user journeys, and\nsession continuity. Includes anti-patterns and recommended workflow.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(/c/Flutter/flutter/bin/flutter analyze:*)"
     ]
   }
 }
