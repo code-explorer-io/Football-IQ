@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import '../services/purchase_service.dart';
 import '../services/analytics_service.dart';
+import '../services/haptic_service.dart';
 import '../theme/app_theme.dart';
 
 /// Premium upgrade screen.
@@ -51,6 +52,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }
 
   Future<void> _handlePurchase() async {
+    HapticService.tap();
     setState(() => _isPurchasing = true);
 
     final success = await PurchaseService.purchasePremium();
@@ -59,6 +61,8 @@ class _PaywallScreenState extends State<PaywallScreen> {
       setState(() => _isPurchasing = false);
 
       if (success) {
+        // Celebrate the purchase!
+        HapticService.celebrate();
         // Show success and pop back
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -72,6 +76,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }
 
   Future<void> _handleRestore() async {
+    HapticService.tap();
     setState(() => _isPurchasing = true);
 
     final success = await PurchaseService.restorePurchases();
@@ -80,6 +85,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
       setState(() => _isPurchasing = false);
 
       if (success) {
+        HapticService.celebrate();
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Purchase restored! Welcome back.'),
