@@ -548,21 +548,33 @@ class _GameModeCardState extends State<_GameModeCard>
           animation: _glowAnimation,
           builder: (context, child) {
             return Container(
-              margin: const EdgeInsets.only(bottom: 14),
+              margin: const EdgeInsets.only(bottom: 16),
               decoration: BoxDecoration(
-                color: AppTheme.surface,
-                borderRadius: BorderRadius.circular(AppTheme.radiusXL),
+                // Subtle gradient background for depth
+                gradient: LinearGradient(
+                  colors: isLocked
+                      ? [AppTheme.surface, AppTheme.surface]
+                      : [
+                          displayColor.withValues(alpha: 0.08),
+                          AppTheme.surface,
+                        ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(20),
                 border: Border.all(
                   color: isLocked
-                      ? AppTheme.glassBorder
-                      : displayColor.withValues(alpha: 0.3),
+                      ? Colors.white.withValues(alpha: 0.08)
+                      : displayColor.withValues(alpha: 0.25),
                   width: 1,
                 ),
-                boxShadow: isLocked ? null : [
+                boxShadow: [
                   BoxShadow(
-                    color: displayColor.withValues(alpha: _isPressed ? 0.1 : 0.2),
-                    blurRadius: _isPressed ? 4 : 12,
-                    offset: Offset(0, _isPressed ? 2 : 4),
+                    color: isLocked
+                        ? Colors.black.withValues(alpha: 0.2)
+                        : displayColor.withValues(alpha: _isPressed ? 0.15 : 0.25),
+                    blurRadius: _isPressed ? 6 : 16,
+                    offset: Offset(0, _isPressed ? 2 : 6),
                   ),
                 ],
               ),
@@ -570,27 +582,34 @@ class _GameModeCardState extends State<_GameModeCard>
             );
           },
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(AppTheme.radiusXL),
+            borderRadius: BorderRadius.circular(20),
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
               child: Row(
                 children: [
                   // Icon container with gradient for unlocked
                   Container(
-                    width: 56,
-                    height: 56,
+                    width: 54,
+                    height: 54,
                     decoration: BoxDecoration(
                       gradient: isLocked ? null : LinearGradient(
-                        colors: [displayColor, displayColor.withValues(alpha: 0.7)],
+                        colors: [displayColor, displayColor.withValues(alpha: 0.6)],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
-                      color: isLocked ? displayColor.withValues(alpha: 0.15) : null,
-                      borderRadius: BorderRadius.circular(16),
+                      color: isLocked ? displayColor.withValues(alpha: 0.12) : null,
+                      borderRadius: BorderRadius.circular(14),
+                      boxShadow: isLocked ? null : [
+                        BoxShadow(
+                          color: displayColor.withValues(alpha: 0.3),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
                     ),
                     child: Icon(
                       widget.mode.icon,
-                      color: isLocked ? displayColor : Colors.white,
+                      color: isLocked ? displayColor.withValues(alpha: 0.7) : Colors.white,
                       size: 26,
                     ),
                   ),
@@ -664,20 +683,26 @@ class _GameModeCardState extends State<_GameModeCard>
                       ],
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 12),
                   Container(
-                    width: 36,
-                    height: 36,
+                    width: 38,
+                    height: 38,
                     decoration: BoxDecoration(
                       color: isLocked
-                          ? AppTheme.glassWhite
-                          : displayColor.withValues(alpha: 0.15),
+                          ? Colors.white.withValues(alpha: 0.06)
+                          : displayColor.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: isLocked
+                            ? Colors.white.withValues(alpha: 0.08)
+                            : displayColor.withValues(alpha: 0.2),
+                        width: 1,
+                      ),
                     ),
                     child: Icon(
-                      isLocked ? Icons.lock_outline : Icons.arrow_forward_rounded,
+                      isLocked ? Icons.lock_outline : Icons.chevron_right_rounded,
                       color: isLocked ? AppTheme.textMuted : displayColor,
-                      size: 18,
+                      size: 20,
                     ),
                   ),
                 ],
@@ -754,11 +779,12 @@ class _UnlockAllButtonState extends State<_UnlockAllButton>
             return Container(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               decoration: BoxDecoration(
+                // Vibrant lime green like sports betting apps
                 gradient: LinearGradient(
-                  colors: const [
-                    AppTheme.primaryGreen,
-                    AppTheme.accentTeal,
-                    AppTheme.primaryGreen,
+                  colors: [
+                    AppTheme.accentLime,
+                    AppTheme.primaryGreenLight,
+                    AppTheme.accentLime,
                   ],
                   stops: [
                     0.0,
@@ -768,11 +794,11 @@ class _UnlockAllButtonState extends State<_UnlockAllButton>
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
-                borderRadius: BorderRadius.circular(AppTheme.radiusPill),
+                borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: AppTheme.primaryGreen.withValues(alpha: _isPressed ? 0.2 : 0.4),
-                    blurRadius: _isPressed ? 6 : 16,
+                    color: AppTheme.accentLime.withValues(alpha: _isPressed ? 0.25 : 0.5),
+                    blurRadius: _isPressed ? 8 : 20,
                     offset: Offset(0, _isPressed ? 2 : 6),
                   ),
                 ],
@@ -783,23 +809,34 @@ class _UnlockAllButtonState extends State<_UnlockAllButton>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.bolt, color: AppTheme.textOnGreen, size: 22),
+              Icon(
+                Icons.bolt,
+                color: Colors.black.withValues(alpha: 0.85),
+                size: 22,
+              ),
               const SizedBox(width: 8),
-              const Text(
+              Text(
                 'Unlock All Modes',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: AppTheme.textOnGreen,
+                  color: Colors.black.withValues(alpha: 0.85),
                 ),
               ),
               const SizedBox(width: 12),
-              Text(
-                _priceText,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: AppTheme.textOnGreen,
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.black.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  _priceText,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black.withValues(alpha: 0.85),
+                  ),
                 ),
               ),
             ],

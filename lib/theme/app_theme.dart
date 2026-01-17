@@ -14,7 +14,8 @@ class AppTheme {
   static const Color primaryGreenLight = Color(0xFF4ADE80); // Lighter green
   static const Color primaryGreenDark = Color(0xFF16A34A); // Darker green
   static const Color accentTeal = Color(0xFF14B8A6); // Teal accent
-  static const Color accentLime = Color(0xFF84CC16); // Lime accent
+  static const Color accentLime = Color(0xFFBEF264); // Bright lime (like sports betting apps)
+  static const Color neonLime = Color(0xFFD4FF00); // Neon lime for CTAs
 
   // The main gradient used throughout the app
   static const LinearGradient primaryGradient = LinearGradient(

@@ -66,123 +66,176 @@ class ClubSelectionScreen extends StatelessWidget {
   }
 }
 
-class _ClubCard extends StatelessWidget {
+class _ClubCard extends StatefulWidget {
   final Club club;
 
   const _ClubCard({required this.club});
 
   @override
+  State<_ClubCard> createState() => _ClubCardState();
+}
+
+class _ClubCardState extends State<_ClubCard> {
+  bool _isPressed = false;
+
+  @override
   Widget build(BuildContext context) {
+    final club = widget.club;
+
     return GestureDetector(
-      onTap: () async {
-        HapticService.tap();
-        if (club.isLocked) {
-          // Show paywall for locked clubs
-          final purchased = await Navigator.push<bool>(
-            context,
-            MaterialPageRoute(builder: (context) => const PaywallScreen()),
-          );
-          if (purchased != true) return;
-        }
-        // Navigate to quiz (either club was free or user just purchased)
-        if (context.mounted) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => QuestionScreen(club: club),
-            ),
-          );
-        }
+      onTapDown: (_) => setState(() => _isPressed = true),
+      onTapUp: (_) {
+        setState(() => _isPressed = false);
+        _handleTap();
       },
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 14),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [club.primaryColor, club.primaryColor.withValues(alpha: 0.7)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(AppTheme.radiusXL),
-          boxShadow: [
-            BoxShadow(
-              color: club.primaryColor.withValues(alpha: 0.3),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
+      onTapCancel: () => setState(() => _isPressed = false),
+      child: AnimatedScale(
+        scale: _isPressed ? 0.97 : 1.0,
+        duration: const Duration(milliseconds: 100),
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 14),
+          decoration: BoxDecoration(
+            // Subtle gradient from club color
+            gradient: LinearGradient(
+              colors: [
+                club.primaryColor.withValues(alpha: 0.15),
+                AppTheme.surface,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
-          ],
-        ),
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Row(
-                children: [
-                  // Club icon placeholder
-                  Container(
-                    width: 56,
-                    height: 56,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: const Icon(
-                      Icons.shield,
-                      color: AppTheme.textPrimary,
-                      size: 28,
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          club.name,
-                          style: const TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w600,
-                            color: AppTheme.textPrimary,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          club.isLocked ? 'Premium' : '10 Questions • Mixed Difficulty',
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.white.withValues(alpha: 0.8),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: 36,
-                    height: 36,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Icon(
-                      club.isLocked ? Icons.lock_outline : Icons.arrow_forward_rounded,
-                      color: AppTheme.textPrimary,
-                      size: 18,
-                    ),
-                  ),
-                ],
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: club.primaryColor.withValues(alpha: club.isLocked ? 0.15 : 0.3),
+              width: 1,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: club.primaryColor.withValues(alpha: _isPressed ? 0.15 : 0.25),
+                blurRadius: _isPressed ? 6 : 16,
+                offset: Offset(0, _isPressed ? 2 : 6),
               ),
-            ),
-            if (club.isLocked)
-              Positioned.fill(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.3),
-                    borderRadius: BorderRadius.circular(AppTheme.radiusXL),
-                  ),
+            ],
+          ),
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
+                child: Row(
+                  children: [
+                    // Club icon with gradient
+                    Container(
+                      width: 52,
+                      height: 52,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            club.primaryColor,
+                            club.primaryColor.withValues(alpha: 0.7),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(14),
+                        boxShadow: [
+                          BoxShadow(
+                            color: club.primaryColor.withValues(alpha: 0.4),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: const Icon(
+                        Icons.shield,
+                        color: Colors.white,
+                        size: 26,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            club.name,
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
+                              color: club.isLocked
+                                  ? AppTheme.textSecondary
+                                  : AppTheme.textPrimary,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            club.isLocked ? 'Premium' : '10 Questions • Mixed Difficulty',
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: club.isLocked
+                                  ? AppTheme.gold
+                                  : AppTheme.textSecondary,
+                              fontWeight: club.isLocked ? FontWeight.w500 : FontWeight.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: 38,
+                      height: 38,
+                      decoration: BoxDecoration(
+                        color: club.primaryColor.withValues(alpha: 0.12),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: club.primaryColor.withValues(alpha: 0.2),
+                          width: 1,
+                        ),
+                      ),
+                      child: Icon(
+                        club.isLocked ? Icons.lock_outline : Icons.chevron_right_rounded,
+                        color: club.isLocked
+                            ? AppTheme.textMuted
+                            : club.primaryColor,
+                        size: 20,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-          ],
+              if (club.isLocked)
+                Positioned.fill(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.25),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  void _handleTap() async {
+    HapticService.tap();
+    if (widget.club.isLocked) {
+      // Show paywall for locked clubs
+      final purchased = await Navigator.push<bool>(
+        context,
+        MaterialPageRoute(builder: (context) => const PaywallScreen()),
+      );
+      if (purchased != true) return;
+    }
+    // Navigate to quiz (either club was free or user just purchased)
+    if (mounted) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => QuestionScreen(club: widget.club),
+        ),
+      );
+    }
   }
 }
