@@ -12,10 +12,12 @@
 .swiftpm/
 migrate_working_dir/
 
-# Screenshots and temp files
+# Screenshots and temp files (but not app icons)
 *.png
 *.jpg
 *.jpeg
+!android/app/src/main/res/**/ic_launcher*.png
+!ios/Runner/Assets.xcassets/**/*.png
 
 # Claude Code local settings
 .claude/settings.local.json
