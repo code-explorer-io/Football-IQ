@@ -78,7 +78,19 @@
       "Bash(git add:*)",
       "Bash(git commit -m \"$(cat <<''EOF''\nAdd AI Autonomous App Progression Playbook\n\nReusable framework for AI-assisted app development with 15 high-leverage\nprompts covering code health, ASO, content audits, user journeys, and\nsession continuity. Includes anti-patterns and recommended workflow.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n)\")",
       "Bash(/c/Flutter/flutter/bin/flutter analyze:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(wc:*)",
+      "Bash(flutter devices:*)",
+      "Bash(C:Flutterflutterbinflutter.bat devices)",
+      "Bash(cmd /c \"dir C:\\Flutter\\flutter\\bin\\cache\\dart-sdk\\bin\")",
+      "Bash(cmd /c \"type C:\\Flutter\\flutter\\version\")",
+      "Bash(cmd /c \"dir C:\\Flutter\\flutter\\bin\\cache\")",
+      "Bash(flutter run:*)",
+      "Bash(flutter analyze:*)",
+      "Bash(flutter build:*)",
+      "Bash(git check-ignore:*)",
+      "Bash(git push:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nAdd critical BETA stability fixes\n\n- Wrap Firebase/RevenueCat/Sound init in try-catch with error screen\n- Call UnlockService.assertDevModeDisabled() at startup\n- Pull price dynamically from RevenueCat instead of hardcoded £2.99\n- Add error screen for fatal initialization failures\n\nThese fixes prevent app crashes when services fail to initialize\nand ensure pricing stays in sync with RevenueCat configuration.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n)\")"
     ]
   }
 }

@@ -372,136 +372,152 @@ class _GameModeCardState extends State<_GameModeCard>
     showModalBottomSheet(
       context: context,
       backgroundColor: AppTheme.surface,
+      isScrollControlled: true, // Allow proper sizing
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (context) => Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 60,
-              height: 60,
-              decoration: BoxDecoration(
-                color: widget.mode.color.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Icon(
-                widget.mode.icon,
-                color: widget.mode.color,
-                size: 32,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              widget.mode.name,
-              style: const TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: AppTheme.textPrimary,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.lock_outline, color: AppTheme.textMuted, size: 18),
-                const SizedBox(width: 8),
-                Text(
-                  requirement,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: AppTheme.textSecondary,
-                  ),
+      builder: (context) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Drag handle
+              Container(
+                width: 40,
+                height: 4,
+                margin: const EdgeInsets.only(bottom: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.3),
+                  borderRadius: BorderRadius.circular(2),
                 ),
-              ],
-            ),
-            if (!widget.mode.isPremiumOnly && widget.unlockProgress > 0) ...[
-              const SizedBox(height: 20),
-              // Progress bar
-              Column(
+              ),
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: widget.mode.color.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Icon(
+                  widget.mode.icon,
+                  color: widget.mode.color,
+                  size: 32,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                widget.mode.name,
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.textPrimary,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Progress',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: AppTheme.textMuted,
-                        ),
+                  const Icon(Icons.lock_outline, color: AppTheme.textMuted, size: 18),
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: Text(
+                      requirement,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: AppTheme.textSecondary,
                       ),
-                      Text(
-                        _progressText ?? '',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: AppTheme.textSecondary,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(6),
-                    child: LinearProgressIndicator(
-                      value: widget.unlockProgress,
-                      backgroundColor: AppTheme.elevated,
-                      valueColor: AlwaysStoppedAnimation<Color>(widget.mode.color),
-                      minHeight: 10,
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ],
               ),
-            ],
-            const SizedBox(height: 24),
-            // Unlock instantly button
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () async {
-                  Navigator.pop(context);
-                  final purchased = await Navigator.push<bool>(
-                    context,
-                    MaterialPageRoute(builder: (context) => const PaywallScreen()),
-                  );
-                  if (purchased == true) {
-                    widget.onRefresh();
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppTheme.gold,
-                  foregroundColor: Colors.black,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              if (!widget.mode.isPremiumOnly && widget.unlockProgress > 0) ...[
+                const SizedBox(height: 20),
+                // Progress bar
+                Column(
                   children: [
-                    const Icon(Icons.bolt, size: 20),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Unlock All Modes - $_priceText',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Progress',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: AppTheme.textMuted,
+                          ),
+                        ),
+                        Text(
+                          _progressText ?? '',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: AppTheme.textSecondary,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(6),
+                      child: LinearProgressIndicator(
+                        value: widget.unlockProgress,
+                        backgroundColor: AppTheme.elevated,
+                        valueColor: AlwaysStoppedAnimation<Color>(widget.mode.color),
+                        minHeight: 10,
                       ),
                     ),
                   ],
                 ),
+              ],
+              const SizedBox(height: 24),
+              // Unlock instantly button
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    Navigator.pop(context);
+                    final purchased = await Navigator.push<bool>(
+                      context,
+                      MaterialPageRoute(builder: (context) => const PaywallScreen()),
+                    );
+                    if (purchased == true) {
+                      widget.onRefresh();
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppTheme.gold,
+                    foregroundColor: Colors.black,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.bolt, size: 20),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Unlock All Modes - $_priceText',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 12),
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text(
-                'Keep Playing to Unlock',
-                style: TextStyle(color: AppTheme.textMuted),
+              const SizedBox(height: 12),
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text(
+                  'Keep Playing to Unlock',
+                  style: TextStyle(color: AppTheme.textMuted),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
