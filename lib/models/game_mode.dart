@@ -37,27 +37,6 @@ final List<GameMode> gameModes = [
     unlockOrder: 0, // Always unlocked - starting mode
   ),
   GameMode(
-    id: 'survival_mode',
-    name: 'Survival Mode',
-    description: 'One wrong answer ends it all',
-    icon: Icons.local_fire_department,
-    color: const Color(0xFFE65100), // Orange
-    requiresClubSelection: false,
-    dataFile: 'assets/data/survival_mode.json',
-    unlockOrder: 1, // Unlock after 5 Club Quizzes
-  ),
-  // PARKED: Timed Blitz - similar to Survival, will introduce later
-  // GameMode(
-  //   id: 'timed_blitz',
-  //   name: 'Timed Blitz',
-  //   description: 'Beat the clock',
-  //   icon: Icons.timer,
-  //   color: const Color(0xFFD32F2F), // Red
-  //   requiresClubSelection: false,
-  //   dataFile: 'assets/data/survival_mode.json',
-  //   unlockOrder: 2,
-  // ),
-  GameMode(
     id: 'higher_or_lower',
     name: 'Higher or Lower',
     description: 'The numbers game',
@@ -65,7 +44,17 @@ final List<GameMode> gameModes = [
     color: const Color(0xFF1565C0), // Blue
     requiresClubSelection: false,
     dataFile: 'assets/data/higher_or_lower.json',
-    unlockOrder: 2, // Unlock after 10+ streak in Survival
+    unlockOrder: 1, // Unlock after 2 Club Quizzes - fun casual mode
+  ),
+  GameMode(
+    id: 'survival_mode',
+    name: 'Survival Mode',
+    description: 'One wrong answer ends it all',
+    icon: Icons.local_fire_department,
+    color: const Color(0xFFE65100), // Orange
+    requiresClubSelection: false,
+    dataFile: 'assets/data/survival_mode.json',
+    unlockOrder: 2, // Unlock after 3 Higher or Lower wins - harder mode
   ),
   GameMode(
     id: 'international_cup',
@@ -75,7 +64,7 @@ final List<GameMode> gameModes = [
     color: const Color(0xFF00695C), // Teal
     requiresClubSelection: false,
     dataFile: 'assets/data/international_cup.json',
-    unlockOrder: 3, // Unlock after 3 Higher or Lower wins
+    unlockOrder: 3, // Unlock after 5 Survival streak
   ),
   GameMode(
     id: 'premier_league_legends',

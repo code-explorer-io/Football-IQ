@@ -11,6 +11,7 @@ class AnimatedAnswerButton extends StatefulWidget {
   final bool showResult;
   final VoidCallback onTap;
   final Color accentColor;
+  final bool isTimeExpired; // True if time ran out without an answer
 
   const AnimatedAnswerButton({
     super.key,
@@ -21,6 +22,7 @@ class AnimatedAnswerButton extends StatefulWidget {
     required this.showResult,
     required this.onTap,
     required this.accentColor,
+    this.isTimeExpired = false,
   });
 
   @override
@@ -126,15 +128,23 @@ class _AnimatedAnswerButtonState extends State<AnimatedAnswerButton>
 
   Color _getBackgroundColor() {
     if (!widget.showResult) {
-      return Colors.white.withValues(alpha: _isPressed ? 0.15 : 0.1);
+      // Increased from 0.1/0.15 to 0.15/0.22 for better visibility
+      return Colors.white.withValues(alpha: _isPressed ? 0.22 : 0.15);
     }
+    // If user selected this answer
+    if (widget.isSelected) {
+      return widget.isCorrect ? AppTheme.correct : AppTheme.incorrect;
+    }
+    // If time expired, show correct answer in blue (neutral, not green "success")
+    // This helps users learn without feeling like they got it right
+    if (widget.isTimeExpired && widget.isCorrect) {
+      return AppTheme.highlight; // Blue - neutral educational color
+    }
+    // Show correct answer when user answered wrong (so they can learn)
     if (widget.isCorrect) {
       return AppTheme.correct;
     }
-    if (widget.isSelected && !widget.isCorrect) {
-      return AppTheme.incorrect;
-    }
-    return Colors.white.withValues(alpha: 0.1);
+    return Colors.white.withValues(alpha: 0.15);
   }
 
   @override
@@ -177,10 +187,11 @@ class _AnimatedAnswerButtonState extends State<AnimatedAnswerButton>
             border: Border.all(
               color: widget.isSelected && !widget.showResult
                   ? widget.accentColor
-                  : Colors.transparent,
-              width: 2,
+                  : Colors.white.withValues(alpha: 0.2), // Subtle border for visibility
+              width: widget.isSelected && !widget.showResult ? 2 : 1,
             ),
-            boxShadow: widget.showResult && widget.isCorrect
+            // Glow effect based on answer state
+            boxShadow: widget.showResult && widget.isCorrect && !widget.isTimeExpired
                 ? [
                     BoxShadow(
                       color: AppTheme.correct.withValues(alpha: 0.4),
@@ -188,15 +199,24 @@ class _AnimatedAnswerButtonState extends State<AnimatedAnswerButton>
                       spreadRadius: 2,
                     ),
                   ]
-                : widget.showResult && widget.isSelected && !widget.isCorrect
+                : widget.showResult && widget.isTimeExpired && widget.isCorrect
                     ? [
+                        // Blue glow for "this was the answer" on timeout
                         BoxShadow(
-                          color: AppTheme.incorrect.withValues(alpha: 0.4),
-                          blurRadius: 8,
+                          color: AppTheme.highlight.withValues(alpha: 0.4),
+                          blurRadius: 10,
                           spreadRadius: 1,
                         ),
                       ]
-                    : null,
+                    : widget.showResult && widget.isSelected && !widget.isCorrect
+                        ? [
+                            BoxShadow(
+                              color: AppTheme.incorrect.withValues(alpha: 0.4),
+                              blurRadius: 8,
+                              spreadRadius: 1,
+                            ),
+                          ]
+                        : null,
           ),
           child: Row(
             children: [
@@ -227,7 +247,8 @@ class _AnimatedAnswerButtonState extends State<AnimatedAnswerButton>
                   ),
                 ),
               ),
-              if (widget.showResult && widget.isCorrect)
+              // Show checkmark if user answered correctly
+              if (widget.showResult && widget.isCorrect && !widget.isTimeExpired)
                 TweenAnimationBuilder<double>(
                   tween: Tween(begin: 0.0, end: 1.0),
                   duration: const Duration(milliseconds: 300),
@@ -239,6 +260,20 @@ class _AnimatedAnswerButtonState extends State<AnimatedAnswerButton>
                     );
                   },
                   child: const Icon(Icons.check_circle, color: Colors.white),
+                ),
+              // Show info icon when time expired to indicate "this was the answer"
+              if (widget.showResult && widget.isCorrect && widget.isTimeExpired)
+                TweenAnimationBuilder<double>(
+                  tween: Tween(begin: 0.0, end: 1.0),
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.elasticOut,
+                  builder: (context, value, child) {
+                    return Transform.scale(
+                      scale: value,
+                      child: child,
+                    );
+                  },
+                  child: const Icon(Icons.info_outline, color: Colors.white),
                 ),
               if (widget.showResult && widget.isSelected && !widget.isCorrect)
                 TweenAnimationBuilder<double>(

@@ -367,11 +367,19 @@ class _ResultsScreenState extends State<ResultsScreen>
           PitchBackground.zone(
             zone: _getResultsZone(),
             child: SafeArea(
-              child: Padding(
+              child: SingleChildScrollView(
                 padding: const EdgeInsets.all(24.0),
-                child: Column(
-                  children: [
-                    const Spacer(flex: 1),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: MediaQuery.of(context).size.height -
+                        MediaQuery.of(context).padding.top -
+                        MediaQuery.of(context).padding.bottom -
+                        48, // padding
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 16),
                     // NEW BEST badge with animation
                     FadeTransition(
                       opacity: _fadeAnimation,
@@ -666,7 +674,7 @@ class _ResultsScreenState extends State<ResultsScreen>
                         ),
                       ),
                     ],
-                    const Spacer(flex: 2),
+                    const SizedBox(height: 32),
                     // Action buttons
                     FadeTransition(
                       opacity: _fadeAnimation,
@@ -720,6 +728,7 @@ class _ResultsScreenState extends State<ResultsScreen>
                     ),
                     const SizedBox(height: 16),
                   ],
+                  ),
                 ),
               ),
             ),

@@ -35,8 +35,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentStreak = 0;
-  int _currentLevel = 1;
-  double _levelProgress = 0.0;
   bool _streakAtRisk = false;
   Map<String, bool> _unlockedModes = {};
   Map<String, double> _unlockProgress = {};
@@ -51,23 +49,29 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadAllData() async {
-    await Future.wait([
-      _loadGamificationData(),
-      _loadUnlockData(),
-    ]);
+    // Add timeout to prevent UI freeze if SharedPreferences is slow
+    try {
+      await Future.wait([
+        _loadGamificationData(),
+        _loadUnlockData(),
+      ]).timeout(const Duration(seconds: 5));
+    } catch (e) {
+      // Handle timeout or any errors gracefully - show UI with defaults
+      if (mounted) {
+        setState(() {
+          _isLoadingUnlocks = false;
+        });
+      }
+    }
   }
 
   Future<void> _loadGamificationData() async {
     final streak = await StreakService.getCurrentStreak();
-    final level = await XPService.getCurrentLevel();
-    final progress = await XPService.getLevelProgress();
     final atRisk = await StreakService.isStreakAtRisk();
 
     if (mounted) {
       setState(() {
         _currentStreak = streak;
-        _currentLevel = level;
-        _levelProgress = progress;
         _streakAtRisk = atRisk;
       });
     }
@@ -98,6 +102,18 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: AppTheme.background,
         elevation: 0,
+        leadingWidth: 72, // Extra width for stats button
+        // Compact stats button on the left
+        leading: _CompactStatsButton(
+          streak: _currentStreak,
+          streakAtRisk: _streakAtRisk,
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const StatsScreen()),
+            ).then((_) => _loadAllData());
+          },
+        ),
         title: const Text(
           'Football IQ',
           style: TextStyle(
@@ -109,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           PopupMenuButton<String>(
             icon: const Icon(Icons.more_vert, color: AppTheme.textPrimary),
-            color: const Color(0xFF2A2A4E),
+            color: AppTheme.surface,
             onSelected: (value) {
               if (value == 'privacy') {
                 Navigator.push(
@@ -143,20 +159,6 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Gamification stats row
-                _GamificationHeader(
-                  streak: _currentStreak,
-                  level: _currentLevel,
-                  levelProgress: _levelProgress,
-                  streakAtRisk: _streakAtRisk,
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const StatsScreen()),
-                    ).then((_) => _loadAllData());
-                  },
-                ),
-                const SizedBox(height: 20),
                 const Text(
                   'Select Mode',
                   style: TextStyle(
@@ -176,18 +178,33 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 16),
                 Expanded(
                   child: _isLoadingUnlocks
-                      ? const Center(child: CircularProgressIndicator(color: AppTheme.highlight))
+                      ? const Center(child: CircularProgressIndicator(color: AppTheme.primaryGreen))
                       : ListView.builder(
                           itemCount: gameModes.length,
                           itemBuilder: (context, index) {
                             final mode = gameModes[index];
                             final isUnlocked = _unlockedModes[mode.id] ?? false;
                             final progress = _unlockProgress[mode.id] ?? 0.0;
-                            return _GameModeCard(
-                              mode: mode,
-                              isUnlocked: isUnlocked,
-                              unlockProgress: progress,
-                              onRefresh: _loadAllData,
+                            // Staggered entry animation for each card
+                            return TweenAnimationBuilder<double>(
+                              tween: Tween(begin: 0.0, end: 1.0),
+                              duration: Duration(milliseconds: 400 + (index * 80)),
+                              curve: Curves.easeOutCubic,
+                              builder: (context, value, child) {
+                                return Opacity(
+                                  opacity: value,
+                                  child: Transform.translate(
+                                    offset: Offset(0, 20 * (1 - value)),
+                                    child: child,
+                                  ),
+                                );
+                              },
+                              child: _GameModeCard(
+                                mode: mode,
+                                isUnlocked: isUnlocked,
+                                unlockProgress: progress,
+                                onRefresh: _loadAllData,
+                              ),
                             );
                           },
                         ),
@@ -455,7 +472,7 @@ class _GameModeCardState extends State<_GameModeCard>
                     Icon(Icons.bolt, size: 20),
                     SizedBox(width: 8),
                     Text(
-                      'Unlock All Modes - £2.49',
+                      'Unlock All Modes - £2.99',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -505,7 +522,8 @@ class _GameModeCardState extends State<_GameModeCard>
   @override
   Widget build(BuildContext context) {
     final isLocked = !widget.isUnlocked;
-    final accentColor = isLocked ? AppTheme.textMuted : widget.mode.color;
+    final accentColor = widget.mode.color;
+    final displayColor = isLocked ? accentColor.withValues(alpha: 0.5) : accentColor;
 
     return GestureDetector(
       onTapDown: _onTapDown,
@@ -519,32 +537,21 @@ class _GameModeCardState extends State<_GameModeCard>
           animation: _glowAnimation,
           builder: (context, child) {
             return Container(
-              margin: const EdgeInsets.only(bottom: 12),
+              margin: const EdgeInsets.only(bottom: 14),
               decoration: BoxDecoration(
-                // Gradient from accent color on left to dark surface on right
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: isLocked
-                      ? [AppTheme.surface, AppTheme.surface]
-                      : [
-                          Color.lerp(accentColor, AppTheme.surface, 0.85)!,
-                          AppTheme.surface,
-                        ],
-                  stops: const [0.0, 0.4],
-                ),
-                borderRadius: BorderRadius.circular(12),
+                color: AppTheme.surface,
+                borderRadius: BorderRadius.circular(AppTheme.radiusXL),
                 border: Border.all(
                   color: isLocked
-                      ? AppTheme.textMuted.withValues(alpha: 0.15)
-                      : accentColor.withValues(alpha: _isPressed ? 0.4 : 0.3),
+                      ? AppTheme.glassBorder
+                      : displayColor.withValues(alpha: 0.3),
                   width: 1,
                 ),
-                boxShadow: [
+                boxShadow: isLocked ? null : [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: _isPressed ? 0.2 : 0.4),
-                    blurRadius: _isPressed ? 4 : 10,
-                    offset: Offset(0, _isPressed ? 1 : 4),
+                    color: displayColor.withValues(alpha: _isPressed ? 0.1 : 0.2),
+                    blurRadius: _isPressed ? 4 : 12,
+                    offset: Offset(0, _isPressed ? 2 : 4),
                   ),
                 ],
               ),
@@ -552,135 +559,118 @@ class _GameModeCardState extends State<_GameModeCard>
             );
           },
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Row(
-              children: [
-                // Left accent stripe - thicker for more impact
-                Container(
-                  width: 5,
-                  height: 84,
-                  decoration: BoxDecoration(
-                    color: accentColor,
-                    boxShadow: isLocked ? null : [
-                      BoxShadow(
-                        color: accentColor.withValues(alpha: 0.4),
-                        blurRadius: 8,
-                        offset: const Offset(2, 0),
+            borderRadius: BorderRadius.circular(AppTheme.radiusXL),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  // Icon container with gradient for unlocked
+                  Container(
+                    width: 56,
+                    height: 56,
+                    decoration: BoxDecoration(
+                      gradient: isLocked ? null : LinearGradient(
+                        colors: [displayColor, displayColor.withValues(alpha: 0.7)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
-                    ],
+                      color: isLocked ? displayColor.withValues(alpha: 0.15) : null,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Icon(
+                      widget.mode.icon,
+                      color: isLocked ? displayColor : Colors.white,
+                      size: 26,
+                    ),
                   ),
-                ),
-                // Main content
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
-                    child: Row(
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Icon container with accent color
-                        Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: accentColor.withValues(alpha: isLocked ? 0.08 : 0.2),
-                            borderRadius: BorderRadius.circular(10),
-                            border: isLocked ? null : Border.all(
-                              color: accentColor.withValues(alpha: 0.3),
-                              width: 1,
-                            ),
-                          ),
-                          child: Icon(
-                            widget.mode.icon,
+                        Text(
+                          widget.mode.name,
+                          style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w600,
                             color: isLocked
-                                ? AppTheme.textMuted
-                                : accentColor,
-                            size: 24,
+                                ? AppTheme.textSecondary
+                                : AppTheme.textPrimary,
                           ),
                         ),
-                        const SizedBox(width: 14),
-                        Expanded(
-                          child: Column(
+                        const SizedBox(height: 4),
+                        if (isLocked && !widget.mode.isPremiumOnly)
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                widget.mode.name,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: isLocked
-                                      ? AppTheme.textSecondary
-                                      : AppTheme.textPrimary,
-                                  letterSpacing: -0.2,
+                                _progressText ?? 'Locked',
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  color: AppTheme.textMuted,
                                 ),
                               ),
-                              const SizedBox(height: 2),
-                              if (isLocked && !widget.mode.isPremiumOnly)
-                                // Show unlock progress
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      _progressText ?? 'Locked',
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        color: AppTheme.textMuted,
-                                      ),
+                              const SizedBox(height: 6),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(4),
+                                child: SizedBox(
+                                  height: 4,
+                                  child: LinearProgressIndicator(
+                                    value: widget.unlockProgress,
+                                    backgroundColor: AppTheme.glassWhite,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      AppTheme.primaryGreen,
                                     ),
-                                    const SizedBox(height: 5),
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(2),
-                                      child: SizedBox(
-                                        height: 3,
-                                        child: LinearProgressIndicator(
-                                          value: widget.unlockProgress,
-                                          backgroundColor: AppTheme.elevated,
-                                          valueColor: AlwaysStoppedAnimation<Color>(
-                                            AppTheme.textSecondary,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              else if (isLocked && widget.mode.isPremiumOnly)
-                                Row(
-                                  children: [
-                                    Icon(Icons.star, color: AppTheme.gold, size: 13),
-                                    const SizedBox(width: 4),
-                                    Text(
-                                      'Premium',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: AppTheme.gold,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              else
-                                Text(
-                                  widget.mode.description,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: AppTheme.textSecondary,
                                   ),
                                 ),
+                              ),
                             ],
+                          )
+                        else if (isLocked && widget.mode.isPremiumOnly)
+                          Row(
+                            children: [
+                              const Icon(Icons.star, color: AppTheme.gold, size: 14),
+                              const SizedBox(width: 4),
+                              const Text(
+                                'Premium',
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: AppTheme.gold,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          )
+                        else
+                          Text(
+                            widget.mode.description,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              color: AppTheme.textSecondary,
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        Icon(
-                          isLocked ? Icons.lock_outline : Icons.chevron_right,
-                          color: isLocked
-                              ? AppTheme.textMuted
-                              : AppTheme.textSecondary,
-                          size: 20,
-                        ),
                       ],
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(width: 8),
+                  Container(
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      color: isLocked
+                          ? AppTheme.glassWhite
+                          : displayColor.withValues(alpha: 0.15),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(
+                      isLocked ? Icons.lock_outline : Icons.arrow_forward_rounded,
+                      color: isLocked ? AppTheme.textMuted : displayColor,
+                      size: 18,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -740,10 +730,14 @@ class _UnlockAllButtonState extends State<_UnlockAllButton>
           animation: _shimmerAnimation,
           builder: (context, child) {
             return Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: const [AppTheme.gold, Color(0xFFFFD700), AppTheme.gold],
+                  colors: const [
+                    AppTheme.primaryGreen,
+                    AppTheme.accentTeal,
+                    AppTheme.primaryGreen,
+                  ],
                   stops: [
                     0.0,
                     (_shimmerAnimation.value).clamp(0.0, 1.0),
@@ -752,13 +746,12 @@ class _UnlockAllButtonState extends State<_UnlockAllButton>
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(AppTheme.radiusPill),
                 boxShadow: [
                   BoxShadow(
-                    color: AppTheme.gold.withValues(alpha: _isPressed ? 0.2 : 0.5),
-                    blurRadius: _isPressed ? 6 : 14,
-                    offset: Offset(0, _isPressed ? 2 : 4),
-                    spreadRadius: _isPressed ? 0 : 1,
+                    color: AppTheme.primaryGreen.withValues(alpha: _isPressed ? 0.2 : 0.4),
+                    blurRadius: _isPressed ? 6 : 16,
+                    offset: Offset(0, _isPressed ? 2 : 6),
                   ),
                 ],
               ),
@@ -768,23 +761,23 @@ class _UnlockAllButtonState extends State<_UnlockAllButton>
           child: const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.bolt, color: Colors.black, size: 22),
+              Icon(Icons.bolt, color: AppTheme.textOnGreen, size: 22),
               SizedBox(width: 8),
               Text(
                 'Unlock All Modes',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: AppTheme.textOnGreen,
                 ),
               ),
-              SizedBox(width: 8),
+              SizedBox(width: 12),
               Text(
-                '£2.49',
+                '£2.99',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  color: Colors.black54,
+                  color: AppTheme.textOnGreen,
                 ),
               ),
             ],
@@ -1354,212 +1347,6 @@ class _GenericResultsScreenState extends State<GenericResultsScreen> {
   }
 }
 
-/// Gamification header showing streak and level with pulse animation when at risk
-class _GamificationHeader extends StatefulWidget {
-  final int streak;
-  final int level;
-  final double levelProgress;
-  final bool streakAtRisk;
-  final VoidCallback onTap;
-
-  const _GamificationHeader({
-    required this.streak,
-    required this.level,
-    required this.levelProgress,
-    required this.streakAtRisk,
-    required this.onTap,
-  });
-
-  @override
-  State<_GamificationHeader> createState() => _GamificationHeaderState();
-}
-
-class _GamificationHeaderState extends State<_GamificationHeader>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _pulseController;
-  late Animation<double> _pulseAnimation;
-  bool _isPressed = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _pulseController = AnimationController(
-      duration: const Duration(milliseconds: 1200),
-      vsync: this,
-    );
-    _pulseAnimation = Tween<double>(begin: 0.3, end: 0.7).animate(
-      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
-    );
-    if (widget.streakAtRisk) {
-      _pulseController.repeat(reverse: true);
-    }
-  }
-
-  @override
-  void didUpdateWidget(_GamificationHeader oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.streakAtRisk && !oldWidget.streakAtRisk) {
-      _pulseController.repeat(reverse: true);
-    } else if (!widget.streakAtRisk && oldWidget.streakAtRisk) {
-      _pulseController.stop();
-      _pulseController.reset();
-    }
-  }
-
-  @override
-  void dispose() {
-    _pulseController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapDown: (_) => setState(() => _isPressed = true),
-      onTapUp: (_) {
-        setState(() => _isPressed = false);
-        HapticService.tap();
-        widget.onTap();
-      },
-      onTapCancel: () => setState(() => _isPressed = false),
-      child: AnimatedScale(
-        scale: _isPressed ? 0.98 : 1.0,
-        duration: const Duration(milliseconds: 100),
-        child: AnimatedBuilder(
-          animation: _pulseAnimation,
-          builder: (context, child) {
-            return Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              decoration: BoxDecoration(
-                color: AppTheme.surface,
-                borderRadius: BorderRadius.circular(AppTheme.radiusMD),
-                border: widget.streakAtRisk
-                    ? Border.all(
-                        color: AppTheme.gold.withValues(alpha: _pulseAnimation.value),
-                        width: 1.5,
-                      )
-                    : null,
-                boxShadow: widget.streakAtRisk
-                    ? [
-                        BoxShadow(
-                          color: AppTheme.gold.withValues(alpha: _pulseAnimation.value * 0.3),
-                          blurRadius: 8,
-                          spreadRadius: 0,
-                        ),
-                      ]
-                    : null,
-              ),
-              child: child,
-            );
-          },
-          child: Row(
-            children: [
-              // Streak indicator
-              _StatPill(
-                icon: Icons.local_fire_department,
-                iconColor: widget.streak > 0 ? const Color(0xFFFF6B35) : AppTheme.textMuted,
-                value: '${widget.streak}',
-                label: 'day${widget.streak != 1 ? 's' : ''}',
-                isHighlighted: widget.streakAtRisk,
-              ),
-              const SizedBox(width: 16),
-              // Level indicator with progress
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Level ${widget.level}',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: AppTheme.textPrimary,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          XPService.getLevelTitle(widget.level),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: AppTheme.textSecondary,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 6),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(4),
-                      child: LinearProgressIndicator(
-                        value: widget.levelProgress,
-                        backgroundColor: AppTheme.elevated,
-                        valueColor: const AlwaysStoppedAnimation<Color>(AppTheme.highlight),
-                        minHeight: 6,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 12),
-              // Arrow to indicate tappable
-              const Icon(
-                Icons.chevron_right,
-                color: AppTheme.textMuted,
-                size: 20,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Small stat pill for the gamification header
-class _StatPill extends StatelessWidget {
-  final IconData icon;
-  final Color iconColor;
-  final String value;
-  final String label;
-  final bool isHighlighted;
-
-  const _StatPill({
-    required this.icon,
-    required this.iconColor,
-    required this.value,
-    required this.label,
-    this.isHighlighted = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, color: iconColor, size: 22),
-        const SizedBox(width: 4),
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: isHighlighted ? AppTheme.gold : AppTheme.textPrimary,
-          ),
-        ),
-        const SizedBox(width: 2),
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 12,
-            color: AppTheme.textMuted,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 /// Stats screen showing detailed progress
 class StatsScreen extends StatefulWidget {
   const StatsScreen({super.key});
@@ -1969,3 +1756,58 @@ class _StatCard extends StatelessWidget {
   }
 }
 
+/// Compact stats button for app bar - shows streak with fire icon
+class _CompactStatsButton extends StatelessWidget {
+  final int streak;
+  final bool streakAtRisk;
+  final VoidCallback onTap;
+
+  const _CompactStatsButton({
+    required this.streak,
+    required this.streakAtRisk,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        HapticService.tap();
+        onTap();
+      },
+      child: Container(
+        margin: const EdgeInsets.all(8),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: AppTheme.glassWhite,
+          borderRadius: BorderRadius.circular(AppTheme.radiusPill),
+          border: Border.all(
+            color: streakAtRisk
+                ? AppTheme.warning.withValues(alpha: 0.5)
+                : AppTheme.glassBorder,
+            width: 1,
+          ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.local_fire_department,
+              color: streak > 0 ? const Color(0xFFFF6B35) : AppTheme.textMuted,
+              size: 18,
+            ),
+            const SizedBox(width: 4),
+            Text(
+              '$streak',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: streakAtRisk ? AppTheme.warning : AppTheme.textPrimary,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

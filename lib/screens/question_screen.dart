@@ -75,7 +75,10 @@ class _QuestionScreenState extends State<QuestionScreen>
   }
 
   void _onTimerStatusChanged(AnimationStatus status) {
-    if (status == AnimationStatus.dismissed && !_answered && mounted) {
+    // CRITICAL: Check mounted FIRST to prevent setState after dispose crash
+    if (!mounted) return;
+
+    if (status == AnimationStatus.dismissed && !_answered) {
       // Time ran out - treat as wrong answer
       _handleTimeExpired();
     }
@@ -111,6 +114,8 @@ class _QuestionScreenState extends State<QuestionScreen>
 
   @override
   void dispose() {
+    // Stop timer before removing listener to prevent callback during dispose
+    _timerController.stop();
     _timerController.removeStatusListener(_onTimerStatusChanged);
     _timerController.dispose();
     _animController.dispose();
@@ -203,9 +208,11 @@ class _QuestionScreenState extends State<QuestionScreen>
     if (_answered) return;
 
     // Calculate time taken before stopping timer
-    final secondsRemaining = (_timerController.value * _questionTimeSeconds).ceil();
+    // Use floor for secondsRemaining to avoid rounding errors at boundaries
+    // e.g., 0.63 * 8 = 5.04 should give 5 seconds remaining, not 6
+    final secondsRemaining = (_timerController.value * _questionTimeSeconds).floor();
     final secondsTaken = _questionTimeSeconds - secondsRemaining;
-    final isFastAnswer = secondsTaken < _fastAnswerThreshold;
+    final isFastAnswer = secondsTaken <= _fastAnswerThreshold;
 
     // Stop the timer immediately
     _stopTimer();
@@ -246,7 +253,7 @@ class _QuestionScreenState extends State<QuestionScreen>
       return Scaffold(
         backgroundColor: AppTheme.background,
         body: const Center(
-          child: CircularProgressIndicator(color: Colors.white),
+          child: CircularProgressIndicator(color: AppTheme.primaryGreen),
         ),
       );
     }
@@ -259,13 +266,13 @@ class _QuestionScreenState extends State<QuestionScreen>
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.close, color: Colors.white),
+          icon: const Icon(Icons.close, color: AppTheme.textPrimary),
           onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),
         ),
         title: Text(
           'Question ${_currentIndex + 1}/${_questions.length}',
           style: const TextStyle(
-            color: Colors.white,
+            color: AppTheme.textPrimary,
             fontWeight: FontWeight.w600,
             letterSpacing: 0.5,
           ),
@@ -290,74 +297,106 @@ class _QuestionScreenState extends State<QuestionScreen>
                 builder: (context, value, child) {
                   return LinearProgressIndicator(
                     value: value,
-                    backgroundColor: Colors.white24,
+                    backgroundColor: AppTheme.glassWhite,
                     valueColor: AlwaysStoppedAnimation<Color>(widget.club.primaryColor),
                     minHeight: 4,
                   );
                 },
               ),
-              const SizedBox(height: 16),
-              // Timer bar with countdown
+              const SizedBox(height: 12),
+              // Timer bar with countdown - PROMINENT DESIGN
               AnimatedBuilder(
                 animation: _timerController,
                 builder: (context, child) {
                   final secondsRemaining = (_timerController.value * _questionTimeSeconds).ceil();
-                  final isLowTime = secondsRemaining <= 3;
+                  final isLowTime = secondsRemaining <= 5;
+                  final isCriticalTime = secondsRemaining <= 3;
 
-                  return Column(
-                    children: [
-                      // Timer progress bar
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        child: LinearProgressIndicator(
-                          value: _answered ? 0 : _timerController.value,
-                          backgroundColor: Colors.white12,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            isLowTime ? Colors.red : Colors.white70,
-                          ),
-                          minHeight: 6,
+                  // Pulse effect for low time - faster pulse as time gets more critical
+                  final pulseValue = isLowTime && !_answered
+                      ? 1.0 + (0.08 * (isCriticalTime ? 1.5 : 1.0) *
+                          ((DateTime.now().millisecondsSinceEpoch % 500) / 500.0 > 0.5 ? 1 : 0.7))
+                      : 1.0;
+
+                  // Color for timer - bright by default, urgent colors when low
+                  final timerColor = isCriticalTime
+                      ? AppTheme.incorrect
+                      : (isLowTime ? AppTheme.warning : widget.club.primaryColor);
+
+                  return Transform.scale(
+                    scale: pulseValue,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      decoration: BoxDecoration(
+                        color: timerColor.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: timerColor.withValues(alpha: 0.3),
+                          width: 1,
                         ),
                       ),
-                      const SizedBox(height: 8),
-                      // Timer text
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                      child: Column(
                         children: [
+                          // Timer text - centered and prominent
                           if (!_answered) ...[
-                            Icon(
-                              Icons.timer_outlined,
-                              size: 16,
-                              color: isLowTime ? Colors.red : Colors.white54,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              '00:${secondsRemaining.toString().padLeft(2, '0')}',
-                              style: TextStyle(
-                                color: isLowTime ? Colors.red : Colors.white54,
-                                fontSize: 14,
-                                fontWeight: isLowTime ? FontWeight.bold : FontWeight.normal,
-                                fontFeatures: const [FontFeature.tabularFigures()],
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  isCriticalTime ? Icons.warning_amber_rounded : Icons.timer,
+                                  size: 24,
+                                  color: timerColor,
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  '00:${secondsRemaining.toString().padLeft(2, '0')}',
+                                  style: TextStyle(
+                                    color: timerColor,
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                    fontFeatures: const [FontFeature.tabularFigures()],
+                                  ),
+                                ),
+                              ],
                             ),
                           ] else if (_timeExpired) ...[
-                            const Icon(
-                              Icons.timer_off_outlined,
-                              size: 16,
-                              color: Colors.red,
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.timer_off,
+                                  size: 24,
+                                  color: AppTheme.incorrect,
+                                ),
+                                SizedBox(width: 8),
+                                Text(
+                                  "Time's up!",
+                                  style: TextStyle(
+                                    color: AppTheme.incorrect,
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: 4),
-                            const Text(
-                              "Time's up!",
-                              style: TextStyle(
-                                color: Colors.red,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                          ] else ...[
+                            // Answered but not expired - show nothing or minimal
+                            const SizedBox(height: 24),
                           ],
+                          const SizedBox(height: 8),
+                          // Timer progress bar - thicker
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(6),
+                            child: LinearProgressIndicator(
+                              value: _answered ? 0 : _timerController.value,
+                              backgroundColor: AppTheme.glassWhite,
+                              valueColor: AlwaysStoppedAnimation<Color>(timerColor),
+                              minHeight: 10,
+                            ),
+                          ),
                         ],
                       ),
-                    ],
+                    ),
                   );
                 },
               ),
@@ -408,6 +447,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                           showResult: _answered,
                           onTap: () => _handleAnswer(index),
                           accentColor: widget.club.primaryColor,
+                          isTimeExpired: _timeExpired,
                         ),
                       );
                     },

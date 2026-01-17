@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/club.dart';
 import '../services/haptic_service.dart';
 import '../theme/app_theme.dart';
-import 'quiz_intro_screen.dart';
+import 'question_screen.dart';
 import 'paywall_screen.dart';
 
 class ClubSelectionScreen extends StatelessWidget {
@@ -16,13 +16,13 @@ class ClubSelectionScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: AppTheme.textPrimary),
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
           'Quiz Your Club',
           style: TextStyle(
-            color: Colors.white,
+            color: AppTheme.textPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -38,7 +38,7 @@ class ClubSelectionScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: AppTheme.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
@@ -46,7 +46,7 @@ class ClubSelectionScreen extends StatelessWidget {
               'Prove you know your team',
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.white70,
+                color: AppTheme.textSecondary,
               ),
             ),
             const SizedBox(height: 24),
@@ -89,20 +89,27 @@ class _ClubCard extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => QuizIntroScreen(club: club),
+              builder: (context) => QuestionScreen(club: club),
             ),
           );
         }
       },
       child: Container(
-        margin: const EdgeInsets.only(bottom: 16),
+        margin: const EdgeInsets.only(bottom: 14),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [club.primaryColor, club.primaryColor.withValues(alpha: 0.7)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(AppTheme.radiusXL),
+          boxShadow: [
+            BoxShadow(
+              color: club.primaryColor.withValues(alpha: 0.3),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
         child: Stack(
           children: [
@@ -112,16 +119,16 @@ class _ClubCard extends StatelessWidget {
                 children: [
                   // Club icon placeholder
                   Container(
-                    width: 60,
-                    height: 60,
+                    width: 56,
+                    height: 56,
                     decoration: BoxDecoration(
                       color: Colors.white.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(16),
                     ),
                     child: const Icon(
                       Icons.shield,
-                      color: Colors.white,
-                      size: 32,
+                      color: AppTheme.textPrimary,
+                      size: 28,
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -132,25 +139,34 @@ class _ClubCard extends StatelessWidget {
                         Text(
                           club.name,
                           style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w600,
+                            color: AppTheme.textPrimary,
                           ),
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          club.isLocked ? 'Premium' : 'Ready to play',
+                          club.isLocked ? 'Premium' : '10 Questions • Mixed Difficulty',
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 13,
                             color: Colors.white.withValues(alpha: 0.8),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Icon(
-                    club.isLocked ? Icons.lock : Icons.arrow_forward_ios,
-                    color: Colors.white,
+                  Container(
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.15),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(
+                      club.isLocked ? Icons.lock_outline : Icons.arrow_forward_rounded,
+                      color: AppTheme.textPrimary,
+                      size: 18,
+                    ),
                   ),
                 ],
               ),
@@ -160,7 +176,7 @@ class _ClubCard extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.black.withValues(alpha: 0.3),
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(AppTheme.radiusXL),
                   ),
                 ),
               ),

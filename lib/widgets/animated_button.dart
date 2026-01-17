@@ -3,27 +3,30 @@ import '../services/haptic_service.dart';
 import '../theme/app_theme.dart';
 
 /// Animated button with scale effect, shadow, and haptic feedback
-/// Design principle: Subtle, satisfying press feedback with depth
 class AnimatedButton extends StatefulWidget {
   final Widget child;
   final VoidCallback? onTap;
   final Color? backgroundColor;
+  final Gradient? gradient;
   final double? width;
   final double? height;
   final BorderRadius? borderRadius;
   final bool enableHaptic;
   final bool enableShadow;
+  final Border? border;
 
   const AnimatedButton({
     super.key,
     required this.child,
     this.onTap,
     this.backgroundColor,
+    this.gradient,
     this.width,
     this.height,
     this.borderRadius,
     this.enableHaptic = true,
     this.enableShadow = true,
+    this.border,
   });
 
   @override
@@ -62,6 +65,8 @@ class _AnimatedButtonState extends State<AnimatedButton>
 
   @override
   Widget build(BuildContext context) {
+    final shadowColor = widget.backgroundColor ?? AppTheme.primaryGreen;
+
     return GestureDetector(
       onTapDown: widget.onTap != null ? _onTapDown : null,
       onTapUp: widget.onTap != null ? _onTapUp : null,
@@ -76,13 +81,15 @@ class _AnimatedButtonState extends State<AnimatedButton>
           width: widget.width,
           height: widget.height,
           decoration: BoxDecoration(
-            color: widget.backgroundColor,
-            borderRadius: widget.borderRadius ?? BorderRadius.circular(AppTheme.radiusLG),
-            boxShadow: widget.enableShadow && widget.backgroundColor != null
+            color: widget.gradient == null ? widget.backgroundColor : null,
+            gradient: widget.gradient,
+            borderRadius: widget.borderRadius ?? BorderRadius.circular(AppTheme.radiusPill),
+            border: widget.border,
+            boxShadow: widget.enableShadow && (widget.backgroundColor != null || widget.gradient != null)
                 ? [
                     BoxShadow(
-                      color: widget.backgroundColor!.withValues(alpha: _isPressed ? 0.2 : 0.4),
-                      blurRadius: _isPressed ? 4 : 12,
+                      color: shadowColor.withValues(alpha: _isPressed ? 0.2 : 0.4),
+                      blurRadius: _isPressed ? 4 : 16,
                       offset: Offset(0, _isPressed ? 2 : 6),
                       spreadRadius: _isPressed ? 0 : 1,
                     ),
@@ -96,51 +103,64 @@ class _AnimatedButtonState extends State<AnimatedButton>
   }
 }
 
-/// Primary action button with animation
+/// Primary action button with gradient and pill shape
 class PrimaryButton extends StatelessWidget {
   final String text;
   final VoidCallback? onTap;
-  final Color backgroundColor;
+  final Color? backgroundColor;
+  final bool useGradient;
   final double? width;
   final double height;
+  final IconData? icon;
 
   const PrimaryButton({
     super.key,
     required this.text,
     this.onTap,
-    required this.backgroundColor,
+    this.backgroundColor,
+    this.useGradient = true,
     this.width,
     this.height = 56,
+    this.icon,
   });
 
   @override
   Widget build(BuildContext context) {
     return AnimatedButton(
       onTap: onTap,
-      backgroundColor: backgroundColor,
+      gradient: useGradient ? AppTheme.primaryGradient : null,
+      backgroundColor: useGradient ? null : (backgroundColor ?? AppTheme.primaryGreen),
       width: width ?? double.infinity,
       height: height,
-      borderRadius: BorderRadius.circular(AppTheme.radiusLG),
+      borderRadius: BorderRadius.circular(AppTheme.radiusPill),
       child: Center(
-        child: Text(
-          text,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (icon != null) ...[
+              Icon(icon, color: AppTheme.textOnGreen, size: 20),
+              const SizedBox(width: 8),
+            ],
+            Text(
+              text,
+              style: AppTheme.buttonText,
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-/// Secondary/outlined button with animation
+/// Secondary/outlined button with pill shape
 class SecondaryButton extends StatelessWidget {
   final String text;
   final VoidCallback? onTap;
   final double? width;
   final double height;
+  final IconData? icon;
+  final Color? borderColor;
 
   const SecondaryButton({
     super.key,
@@ -148,6 +168,8 @@ class SecondaryButton extends StatelessWidget {
     this.onTap,
     this.width,
     this.height = 56,
+    this.icon,
+    this.borderColor,
   });
 
   @override
@@ -156,22 +178,102 @@ class SecondaryButton extends StatelessWidget {
       onTap: onTap,
       width: width ?? double.infinity,
       height: height,
-      borderRadius: BorderRadius.circular(AppTheme.radiusLG),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: AppTheme.textMuted),
-          borderRadius: BorderRadius.circular(AppTheme.radiusLG),
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
+      borderRadius: BorderRadius.circular(AppTheme.radiusPill),
+      enableShadow: false,
+      border: Border.all(
+        color: borderColor ?? AppTheme.glassBorder,
+        width: 1.5,
+      ),
+      child: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (icon != null) ...[
+              Icon(icon, color: AppTheme.textPrimary, size: 20),
+              const SizedBox(width: 8),
+            ],
+            Text(
+              text,
+              style: AppTheme.buttonTextLight,
             ),
-          ),
+          ],
         ),
+      ),
+    );
+  }
+}
+
+/// Glass-style button (semi-transparent)
+class GlassButton extends StatelessWidget {
+  final String text;
+  final VoidCallback? onTap;
+  final double? width;
+  final double height;
+  final IconData? icon;
+
+  const GlassButton({
+    super.key,
+    required this.text,
+    this.onTap,
+    this.width,
+    this.height = 56,
+    this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedButton(
+      onTap: onTap,
+      backgroundColor: AppTheme.glassWhite,
+      width: width ?? double.infinity,
+      height: height,
+      borderRadius: BorderRadius.circular(AppTheme.radiusPill),
+      enableShadow: false,
+      border: Border.all(color: AppTheme.glassBorder),
+      child: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (icon != null) ...[
+              Icon(icon, color: AppTheme.textPrimary, size: 20),
+              const SizedBox(width: 8),
+            ],
+            Text(
+              text,
+              style: AppTheme.buttonTextLight,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Small icon button with gradient
+class GradientIconButton extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback? onTap;
+  final double size;
+
+  const GradientIconButton({
+    super.key,
+    required this.icon,
+    this.onTap,
+    this.size = 48,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedButton(
+      onTap: onTap,
+      gradient: AppTheme.primaryGradient,
+      width: size,
+      height: size,
+      borderRadius: BorderRadius.circular(size / 2),
+      child: Center(
+        child: Icon(icon, color: AppTheme.textOnGreen, size: size * 0.5),
       ),
     );
   }
