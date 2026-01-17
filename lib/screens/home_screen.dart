@@ -694,6 +694,7 @@ class _UnlockAllButtonState extends State<_UnlockAllButton>
   late AnimationController _shimmerController;
   late Animation<double> _shimmerAnimation;
   bool _isPressed = false;
+  String _priceText = '£2.99'; // Fallback price
 
   @override
   void initState() {
@@ -705,6 +706,16 @@ class _UnlockAllButtonState extends State<_UnlockAllButton>
     _shimmerAnimation = Tween<double>(begin: -1.0, end: 2.0).animate(
       CurvedAnimation(parent: _shimmerController, curve: Curves.easeInOut),
     );
+    _loadPrice();
+  }
+
+  Future<void> _loadPrice() async {
+    final packages = await PurchaseService.getPackages();
+    if (packages.isNotEmpty && mounted) {
+      setState(() {
+        _priceText = packages.first.storeProduct.priceString;
+      });
+    }
   }
 
   @override
@@ -758,12 +769,12 @@ class _UnlockAllButtonState extends State<_UnlockAllButton>
               child: child,
             );
           },
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.bolt, color: AppTheme.textOnGreen, size: 22),
-              SizedBox(width: 8),
-              Text(
+              const Icon(Icons.bolt, color: AppTheme.textOnGreen, size: 22),
+              const SizedBox(width: 8),
+              const Text(
                 'Unlock All Modes',
                 style: TextStyle(
                   fontSize: 16,
@@ -771,10 +782,10 @@ class _UnlockAllButtonState extends State<_UnlockAllButton>
                   color: AppTheme.textOnGreen,
                 ),
               ),
-              SizedBox(width: 12),
+              const SizedBox(width: 12),
               Text(
-                '£2.99',
-                style: TextStyle(
+                _priceText,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: AppTheme.textOnGreen,
