@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -45,6 +46,7 @@ class _QuestionScreenState extends State<QuestionScreen>
   static const int _fastAnswerThreshold = 5; // Seconds for "fast answer" bonus
   bool _timeExpired = false;
   int _fastAnswerCount = 0; // Track fast correct answers for bonus XP
+  Timer? _nextQuestionTimer; // Cancellable timer for delayed navigation
 
   @override
   void initState() {
@@ -97,8 +99,8 @@ class _QuestionScreenState extends State<QuestionScreen>
     HapticService.incorrect();
     SoundService.incorrect();
 
-    // Move to next question after delay
-    Future.delayed(const Duration(milliseconds: 1200), () {
+    // Move to next question after delay (cancellable)
+    _nextQuestionTimer = Timer(const Duration(milliseconds: 1200), () {
       _moveToNextQuestion();
     });
   }
@@ -114,6 +116,8 @@ class _QuestionScreenState extends State<QuestionScreen>
 
   @override
   void dispose() {
+    // Cancel any pending navigation timer
+    _nextQuestionTimer?.cancel();
     // Stop timer before removing listener to prevent callback during dispose
     _timerController.stop();
     _timerController.removeStatusListener(_onTimerStatusChanged);
@@ -241,8 +245,8 @@ class _QuestionScreenState extends State<QuestionScreen>
       }
     });
 
-    // Wait a moment then move to next question
-    Future.delayed(const Duration(milliseconds: 1200), () {
+    // Wait a moment then move to next question (cancellable)
+    _nextQuestionTimer = Timer(const Duration(milliseconds: 1200), () {
       _moveToNextQuestion();
     });
   }

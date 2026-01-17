@@ -256,6 +256,7 @@ class _GameModeCardState extends State<_GameModeCard>
   double _scale = 1.0;
   bool _isPressed = false;
   String? _progressText;
+  String _priceText = '£2.99'; // Fallback price
   late AnimationController _glowController;
   late Animation<double> _glowAnimation;
 
@@ -274,6 +275,16 @@ class _GameModeCardState extends State<_GameModeCard>
       _glowController.repeat(reverse: true);
     }
     _loadProgressText();
+    _loadPrice();
+  }
+
+  Future<void> _loadPrice() async {
+    final packages = await PurchaseService.getPackages();
+    if (packages.isNotEmpty && mounted) {
+      setState(() {
+        _priceText = packages.first.storeProduct.priceString;
+      });
+    }
   }
 
   @override
@@ -466,14 +477,14 @@ class _GameModeCardState extends State<_GameModeCard>
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.bolt, size: 20),
-                    SizedBox(width: 8),
+                    const Icon(Icons.bolt, size: 20),
+                    const SizedBox(width: 8),
                     Text(
-                      'Unlock All Modes - £2.99',
-                      style: TextStyle(
+                      'Unlock All Modes - $_priceText',
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),

@@ -44,7 +44,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
     } catch (e) {
       if (mounted) {
         setState(() {
-          _errorMessage = 'Unable to load. Please try again.';
+          _errorMessage = 'Unable to load. Check your internet connection and try again.';
           _isLoading = false;
         });
       }
