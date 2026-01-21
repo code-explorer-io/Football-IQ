@@ -19,9 +19,9 @@
 | Priority | File | Purpose |
 |----------|------|---------|
 | 1 | `docs/CLAUDE_CONTEXT.md` | This file - quick context |
-| 2 | `DEV_SETUP.md` | Environment setup, Git troubleshooting, Flutter commands |
+| 2 | `SETUP.md` | Environment setup, Git troubleshooting, Flutter commands |
 | 3 | `docs/PHASE_STATUS.md` | Feature progress tracking |
-| 4 | `docs/VIBECODER_GUIDE.md` | Full Flutter → Play Store walkthrough |
+| 4 | `docs/FOOTBALL_IQ.md` | Master project document |
 
 **For architecture details:** Scan `lib/` folder structure and `pubspec.yaml` dependencies.
 
@@ -102,7 +102,7 @@ flutter devices        # List available emulators/devices
    git push
    ```
 
-**See `DEV_SETUP.md` for full troubleshooting guide.**
+**See `SETUP.md` for full troubleshooting guide.**
 
 ### Flutter Cache Issues
 ```cmd
@@ -171,4 +171,4 @@ flutter pub get
 
 ---
 
-*Last updated: December 30, 2024*
+*Last updated: January 21, 2026*

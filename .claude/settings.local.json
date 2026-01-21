@@ -78,7 +78,16 @@
       "Bash(git add:*)",
       "Bash(git commit -m \"$(cat <<''EOF''\nAdd AI Autonomous App Progression Playbook\n\nReusable framework for AI-assisted app development with 15 high-leverage\nprompts covering code health, ASO, content audits, user journeys, and\nsession continuity. Includes anti-patterns and recommended workflow.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n)\")",
       "Bash(/c/Flutter/flutter/bin/flutter analyze:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(if [ -d \"C:/Flutter/flutter\" ])",
+      "Bash(then echo \"Flutter directory exists at C:/Flutter/flutter\")",
+      "Bash(else echo \"Flutter directory not found at C:/Flutter/flutter\")",
+      "Bash(powershell.exe -NoProfile -Command \"C:\\\\Flutter\\\\flutter\\\\bin\\\\flutter.bat doctor -v\")",
+      "Bash(where.exe git)",
+      "Bash(powershell.exe -NoProfile -Command \"Get-Command git | Select-Object -ExpandProperty Source\")",
+      "Bash(/c/Program Files/Git/bin/git.exe --version)",
+      "Bash(nslookup:*)",
+      "Bash(netsh advfirewall show:*)"
     ]
   }
 }
