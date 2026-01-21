@@ -96,11 +96,11 @@ class _AnimatedButtonState extends State<AnimatedButton>
   }
 }
 
-/// Primary action button with animation
-class PrimaryButton extends StatelessWidget {
+/// Primary action button with animation and gradient (Dribbble-inspired)
+class PrimaryButton extends StatefulWidget {
   final String text;
   final VoidCallback? onTap;
-  final Color backgroundColor;
+  final Color? backgroundColor; // Optional - uses gradient if null
   final double? width;
   final double height;
 
@@ -108,26 +108,69 @@ class PrimaryButton extends StatelessWidget {
     super.key,
     required this.text,
     this.onTap,
-    required this.backgroundColor,
+    this.backgroundColor,
     this.width,
     this.height = 56,
   });
 
   @override
+  State<PrimaryButton> createState() => _PrimaryButtonState();
+}
+
+class _PrimaryButtonState extends State<PrimaryButton> {
+  double _scale = 1.0;
+
+  void _onTapDown(TapDownDetails details) {
+    setState(() => _scale = AppTheme.buttonPressedScale);
+  }
+
+  void _onTapUp(TapUpDetails details) {
+    setState(() => _scale = 1.0);
+    HapticService.tap();
+    widget.onTap?.call();
+  }
+
+  void _onTapCancel() {
+    setState(() => _scale = 1.0);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return AnimatedButton(
-      onTap: onTap,
-      backgroundColor: backgroundColor,
-      width: width ?? double.infinity,
-      height: height,
-      borderRadius: BorderRadius.circular(AppTheme.radiusLG),
-      child: Center(
-        child: Text(
-          text,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+    return GestureDetector(
+      onTapDown: widget.onTap != null ? _onTapDown : null,
+      onTapUp: widget.onTap != null ? _onTapUp : null,
+      onTapCancel: widget.onTap != null ? _onTapCancel : null,
+      child: AnimatedScale(
+        scale: _scale,
+        duration: AppTheme.animFast,
+        curve: Curves.easeOut,
+        child: Container(
+          width: widget.width ?? double.infinity,
+          height: widget.height,
+          decoration: BoxDecoration(
+            gradient: widget.backgroundColor == null
+                ? AppTheme.primaryGradient
+                : LinearGradient(
+                    colors: [widget.backgroundColor!, widget.backgroundColor!],
+                  ),
+            borderRadius: BorderRadius.circular(AppTheme.radiusLG),
+            boxShadow: [
+              BoxShadow(
+                color: (widget.backgroundColor ?? AppTheme.accent).withOpacity(0.3),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Center(
+            child: Text(
+              widget.text,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
           ),
         ),
       ),
@@ -135,8 +178,8 @@ class PrimaryButton extends StatelessWidget {
   }
 }
 
-/// Secondary/outlined button with animation
-class SecondaryButton extends StatelessWidget {
+/// Secondary/outlined button with animation (Dribbble-inspired)
+class SecondaryButton extends StatefulWidget {
   final String text;
   final VoidCallback? onTap;
   final double? width;
@@ -151,24 +194,51 @@ class SecondaryButton extends StatelessWidget {
   });
 
   @override
+  State<SecondaryButton> createState() => _SecondaryButtonState();
+}
+
+class _SecondaryButtonState extends State<SecondaryButton> {
+  double _scale = 1.0;
+
+  void _onTapDown(TapDownDetails details) {
+    setState(() => _scale = AppTheme.buttonPressedScale);
+  }
+
+  void _onTapUp(TapUpDetails details) {
+    setState(() => _scale = 1.0);
+    HapticService.tap();
+    widget.onTap?.call();
+  }
+
+  void _onTapCancel() {
+    setState(() => _scale = 1.0);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return AnimatedButton(
-      onTap: onTap,
-      width: width ?? double.infinity,
-      height: height,
-      borderRadius: BorderRadius.circular(AppTheme.radiusLG),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: AppTheme.textMuted),
-          borderRadius: BorderRadius.circular(AppTheme.radiusLG),
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
+    return GestureDetector(
+      onTapDown: widget.onTap != null ? _onTapDown : null,
+      onTapUp: widget.onTap != null ? _onTapUp : null,
+      onTapCancel: widget.onTap != null ? _onTapCancel : null,
+      child: AnimatedScale(
+        scale: _scale,
+        duration: AppTheme.animFast,
+        curve: Curves.easeOut,
+        child: Container(
+          width: widget.width ?? double.infinity,
+          height: widget.height,
+          decoration: BoxDecoration(
+            border: Border.all(color: AppTheme.accent, width: 2),
+            borderRadius: BorderRadius.circular(AppTheme.radiusLG),
+          ),
+          child: Center(
+            child: Text(
+              widget.text,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: AppTheme.accent,
+              ),
             ),
           ),
         ),

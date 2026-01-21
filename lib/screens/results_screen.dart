@@ -163,11 +163,14 @@ class _ResultsScreenState extends State<ResultsScreen>
       if (!mounted) return;
       _scoreAnimController.forward();
 
-      // Celebrate perfect score, new best, level up, or mode unlock with confetti
+      // Celebrate perfect score, new best, level up, or mode unlock (subtle confetti for perfect only)
       if (isPerfect || isNewBest || xpAward.leveledUp || unlockResult.didUnlock) {
         HapticService.celebrate();
         SoundService.levelUp();
-        _confettiController.play();
+        // Only show confetti for perfect score (professional, not childish)
+        if (isPerfect) {
+          _confettiController.play();
+        }
       }
 
       // Track analytics (non-critical, fire and forget)
@@ -420,17 +423,17 @@ class _ResultsScreenState extends State<ResultsScreen>
                       ),
                     ),
                     const SizedBox(height: 20),
-                    // Animated score count-up
+                    // Animated score count-up (Enhanced - larger for Dribbble-inspired design)
                     AnimatedBuilder(
                       animation: _scoreAnimation,
                       builder: (context, child) {
                         return Text(
                           '${_scoreAnimation.value}/${widget.totalQuestions}',
                           style: const TextStyle(
-                            fontSize: 56,
+                            fontSize: AppTheme.fontSizeXXXL,
                             fontWeight: FontWeight.bold,
                             color: AppTheme.textPrimary,
-                            letterSpacing: -1,
+                            letterSpacing: -2,
                           ),
                         );
                       },
@@ -724,21 +727,20 @@ class _ResultsScreenState extends State<ResultsScreen>
               ),
             ),
           ),
-          // Confetti overlay
+          // Confetti overlay (subtle for professional look)
           Align(
             alignment: Alignment.topCenter,
             child: ConfettiWidget(
               confettiController: _confettiController,
               blastDirectionality: BlastDirectionality.explosive,
-              particleDrag: 0.05,
-              emissionFrequency: 0.05,
-              numberOfParticles: 20,
-              gravity: 0.1,
+              particleDrag: 0.06,
+              emissionFrequency: 0.08,
+              numberOfParticles: 12, // Reduced from 20 for subtle effect
+              gravity: 0.15,
               shouldLoop: false,
               colors: const [
                 AppTheme.gold,
-                AppTheme.correct,
-                AppTheme.highlight,
+                AppTheme.accent,
                 Colors.white,
               ],
             ),

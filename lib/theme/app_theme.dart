@@ -3,15 +3,20 @@ import 'package:flutter/material.dart';
 /// Football IQ App Theme
 /// Design principle: "Premium pub quiz" - confident, restrained, adult
 class AppTheme {
-  // Core Dark Theme Colors
-  static const Color background = Color(0xFF1A1A2E);
-  static const Color surface = Color(0xFF16213E);
-  static const Color elevated = Color(0xFF0F3460);
+  // Core Dark Theme Colors (Updated from Dribbble research)
+  static const Color background = Color(0xFF2D3E50);  // Softer dark blue-grey
+  static const Color surface = Color(0xFF34495E);     // Slightly lighter surface
+  static const Color elevated = Color(0xFF3D5368);    // Elevated elements
 
   // Text Hierarchy (avoiding pure white for eye comfort)
-  static const Color textPrimary = Color(0xFFF0F0F0);
-  static const Color textSecondary = Color(0xFFB8B8B8);
-  static const Color textMuted = Color(0xFF6B6B6B);
+  static const Color textPrimary = Color(0xFFECF0F1);  // Slightly warmer white
+  static const Color textSecondary = Color(0xFFBDC3C7); // Better contrast
+  static const Color textMuted = Color(0xFF95A5A6);     // Lighter muted
+
+  // Accent Colors (New - Primary green from Dribbble research)
+  static const Color accent = Color(0xFF4ADE80);       // Bright grass green
+  static const Color accentDark = Color(0xFF16A34A);   // Darker green (selected)
+  static const Color accentLight = Color(0xFF86EFAC);  // Light green (hover)
 
   // Feedback Colors (desaturated for dark mode)
   static const Color correct = Color(0xFF2ECC71);
@@ -32,26 +37,38 @@ class AppTheme {
   static const Color survivalMode = Color(0xFFD63031);
   static const Color iconicMoments = Color(0xFF0984E3);
 
-  // Typography Scale
-  static const double fontSizeXL = 32.0;   // Score reveals
-  static const double fontSizeLG = 24.0;   // Screen titles, verdicts
-  static const double fontSizeMD = 20.0;   // Question text
-  static const double fontSizeBody = 18.0; // Answer options
-  static const double fontSizeSM = 16.0;   // Secondary text
-  static const double fontSizeXS = 14.0;   // Captions
-  static const double fontSizeXXS = 12.0;  // Labels
+  // Typography Scale (Enhanced for Dribbble-inspired design)
+  static const double fontSizeXXXL = 80.0;  // Mega scores (results screen)
+  static const double fontSizeXXL = 64.0;   // Big numbers (countdown, large scores)
+  static const double fontSizeXL = 48.0;    // Large headings
+  static const double fontSizeLG = 32.0;    // Section headings
+  static const double fontSizeMD = 24.0;    // Subheadings
+  static const double fontSizeBody = 18.0;  // Body text
+  static const double fontSizeSM = 16.0;    // Secondary text
+  static const double fontSizeXS = 14.0;    // Captions
+  static const double fontSizeXXS = 12.0;   // Labels
 
   // Animation Durations
   static const Duration animFast = Duration(milliseconds: 100);
   static const Duration animNormal = Duration(milliseconds: 300);
   static const Duration animSlow = Duration(milliseconds: 500);
 
-  // Border Radius
-  static const double radiusSM = 8.0;
-  static const double radiusMD = 12.0;
-  static const double radiusLG = 16.0;
+  // Border Radius (Updated for rounder, modern look)
+  static const double radiusSM = 12.0;
+  static const double radiusMD = 16.0;
+  static const double radiusLG = 20.0;
   static const double radiusXL = 24.0;
   static const double radiusRound = 100.0;
+
+  // Spacing System (Standardized)
+  static const double spaceXXS = 4.0;
+  static const double spaceXS = 8.0;
+  static const double spaceS = 12.0;
+  static const double spaceM = 16.0;
+  static const double spaceL = 24.0;
+  static const double spaceXL = 32.0;
+  static const double spaceXXL = 48.0;
+  static const double spaceXXXL = 64.0;
 
   // Shadows for elevated elements
   static List<BoxShadow> get elevatedShadow => [
@@ -76,6 +93,40 @@ class AppTheme {
     end: Alignment.bottomRight,
   );
 
+  // Primary green gradient for buttons
+  static const LinearGradient primaryGradient = LinearGradient(
+    colors: [accent, accentDark],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  // Subtle background gradient
+  static LinearGradient subtleGradient(Color color) => LinearGradient(
+    colors: [color, color.withValues(alpha: 0.8)],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  );
+
+  // Primary button decoration with gradient
+  static BoxDecoration primaryButtonDecoration({bool selected = false}) => BoxDecoration(
+    gradient: primaryGradient,
+    borderRadius: BorderRadius.circular(radiusLG),
+    boxShadow: [
+      BoxShadow(
+        color: accent.withOpacity(0.3),
+        blurRadius: 12,
+        offset: const Offset(0, 4),
+      ),
+    ],
+  );
+
+  // Secondary button decoration (outlined)
+  static BoxDecoration secondaryButtonDecoration({bool selected = false}) => BoxDecoration(
+    border: Border.all(color: accent, width: 2),
+    borderRadius: BorderRadius.circular(radiusLG),
+    color: Colors.transparent,
+  );
+
   // Answer button states
   static BoxDecoration answerButtonDecoration({
     required bool answered,
@@ -83,9 +134,13 @@ class AppTheme {
     required bool isSelected,
   }) {
     Color bgColor;
+    Border? border;
 
     if (!answered) {
       bgColor = Colors.white.withValues(alpha: 0.1);
+      if (isSelected) {
+        border = Border.all(color: accent, width: 2);
+      }
     } else if (isCorrectAnswer) {
       bgColor = correct;
     } else if (isSelected) {
@@ -96,29 +151,45 @@ class AppTheme {
 
     return BoxDecoration(
       color: bgColor,
-      borderRadius: BorderRadius.circular(radiusMD),
+      border: border,
+      borderRadius: BorderRadius.circular(radiusLG),
     );
   }
 
   // Text Styles
+  static const TextStyle headlineXXXL = TextStyle(
+    fontSize: fontSizeXXXL,
+    fontWeight: FontWeight.bold,
+    color: textPrimary,
+    letterSpacing: -2.0,
+  );
+
+  static const TextStyle headlineXXL = TextStyle(
+    fontSize: fontSizeXXL,
+    fontWeight: FontWeight.bold,
+    color: textPrimary,
+    letterSpacing: -1.5,
+  );
+
   static const TextStyle headlineXL = TextStyle(
     fontSize: fontSizeXL,
     fontWeight: FontWeight.bold,
     color: textPrimary,
-    letterSpacing: -0.5,
+    letterSpacing: -1.0,
   );
 
   static const TextStyle headlineLG = TextStyle(
     fontSize: fontSizeLG,
     fontWeight: FontWeight.bold,
     color: textPrimary,
-    letterSpacing: -0.3,
+    letterSpacing: -0.5,
   );
 
   static const TextStyle headlineMD = TextStyle(
     fontSize: fontSizeMD,
     fontWeight: FontWeight.bold,
     color: textPrimary,
+    letterSpacing: -0.3,
   );
 
   static const TextStyle bodyLG = TextStyle(

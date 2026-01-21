@@ -296,72 +296,83 @@ class _QuestionScreenState extends State<QuestionScreen>
                   );
                 },
               ),
-              const SizedBox(height: 16),
-              // Timer bar with countdown
+              const SizedBox(height: AppTheme.spaceL),
+              // Enhanced timer with large countdown (Dribbble-inspired)
               AnimatedBuilder(
                 animation: _timerController,
                 builder: (context, child) {
                   final secondsRemaining = (_timerController.value * _questionTimeSeconds).ceil();
-                  final isLowTime = secondsRemaining <= 3;
+                  final isLowTime = secondsRemaining <= 5;
+                  final isCritical = secondsRemaining <= 3;
 
                   return Column(
                     children: [
+                      // Large countdown number
+                      if (!_answered)
+                        TweenAnimationBuilder<double>(
+                          key: ValueKey(secondsRemaining),
+                          tween: Tween(begin: 0.8, end: 1.0),
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.elasticOut,
+                          builder: (context, scale, child) {
+                            return Transform.scale(
+                              scale: scale,
+                              child: Text(
+                                '$secondsRemaining',
+                                style: TextStyle(
+                                  fontSize: AppTheme.fontSizeXXL,
+                                  fontWeight: FontWeight.bold,
+                                  color: isCritical
+                                      ? Colors.red
+                                      : isLowTime
+                                          ? Colors.orange
+                                          : AppTheme.accent,
+                                  fontFeatures: const [FontFeature.tabularFigures()],
+                                  shadows: isCritical
+                                      ? [
+                                          BoxShadow(
+                                            color: Colors.red.withOpacity(0.5),
+                                            blurRadius: 20,
+                                            spreadRadius: 5,
+                                          ),
+                                        ]
+                                      : null,
+                                ),
+                              ),
+                            );
+                          },
+                        )
+                      else if (_timeExpired)
+                        Text(
+                          "Time's up!",
+                          style: TextStyle(
+                            fontSize: AppTheme.fontSizeLG,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red,
+                          ),
+                        ),
+                      const SizedBox(height: AppTheme.spaceM),
                       // Timer progress bar
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
+                        borderRadius: BorderRadius.circular(AppTheme.radiusSM),
                         child: LinearProgressIndicator(
                           value: _answered ? 0 : _timerController.value,
                           backgroundColor: Colors.white12,
                           valueColor: AlwaysStoppedAnimation<Color>(
-                            isLowTime ? Colors.red : Colors.white70,
+                            isCritical
+                                ? Colors.red
+                                : isLowTime
+                                    ? Colors.orange
+                                    : AppTheme.accent,
                           ),
-                          minHeight: 6,
+                          minHeight: 8,
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      // Timer text
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          if (!_answered) ...[
-                            Icon(
-                              Icons.timer_outlined,
-                              size: 16,
-                              color: isLowTime ? Colors.red : Colors.white54,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              '00:${secondsRemaining.toString().padLeft(2, '0')}',
-                              style: TextStyle(
-                                color: isLowTime ? Colors.red : Colors.white54,
-                                fontSize: 14,
-                                fontWeight: isLowTime ? FontWeight.bold : FontWeight.normal,
-                                fontFeatures: const [FontFeature.tabularFigures()],
-                              ),
-                            ),
-                          ] else if (_timeExpired) ...[
-                            const Icon(
-                              Icons.timer_off_outlined,
-                              size: 16,
-                              color: Colors.red,
-                            ),
-                            const SizedBox(width: 4),
-                            const Text(
-                              "Time's up!",
-                              style: TextStyle(
-                                color: Colors.red,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ],
                       ),
                     ],
                   );
                 },
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppTheme.spaceXL),
               // Question text with animation
               Expanded(
                 flex: 2,
@@ -372,7 +383,13 @@ class _QuestionScreenState extends State<QuestionScreen>
                       position: _slideAnimation,
                       child: Text(
                         question.question,
-                        style: AppTheme.questionText,
+                        style: const TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: AppTheme.textPrimary,
+                          height: 1.3,
+                          letterSpacing: -0.3,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                     ),

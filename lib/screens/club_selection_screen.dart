@@ -51,7 +51,14 @@ class ClubSelectionScreen extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Expanded(
-              child: ListView.builder(
+              child: GridView.builder(
+                padding: EdgeInsets.zero,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: AppTheme.spaceM,
+                  mainAxisSpacing: AppTheme.spaceM,
+                  childAspectRatio: 0.85,
+                ),
                 itemCount: clubs.length,
                 itemBuilder: (context, index) {
                   final club = clubs[index];
@@ -95,63 +102,68 @@ class _ClubCard extends StatelessWidget {
         }
       },
       child: Container(
-        margin: const EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [club.primaryColor, club.primaryColor.withValues(alpha: 0.7)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(AppTheme.radiusMD),
+          boxShadow: AppTheme.elevatedShadow,
         ),
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Row(
+              padding: const EdgeInsets.all(AppTheme.spaceM),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Club icon placeholder
+                  // Club icon
                   Container(
                     width: 60,
                     height: 60,
                     decoration: BoxDecoration(
                       color: Colors.white.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(AppTheme.radiusSM),
                     ),
                     child: const Icon(
                       Icons.shield,
                       color: Colors.white,
-                      size: 32,
+                      size: 36,
                     ),
                   ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          club.name,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          club.isLocked ? 'Premium' : 'Ready to play',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.white.withValues(alpha: 0.8),
-                          ),
-                        ),
-                      ],
+                  const SizedBox(height: AppTheme.spaceM),
+                  // Club name
+                  Text(
+                    club.name,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      height: 1.2,
                     ),
                   ),
-                  Icon(
-                    club.isLocked ? Icons.lock : Icons.arrow_forward_ios,
-                    color: Colors.white,
+                  const SizedBox(height: AppTheme.spaceXS),
+                  // Status
+                  Text(
+                    club.isLocked ? 'Premium' : 'Ready to play',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.white.withValues(alpha: 0.8),
+                    ),
                   ),
+                  if (club.isLocked)
+                    Padding(
+                      padding: const EdgeInsets.only(top: AppTheme.spaceXS),
+                      child: Icon(
+                        Icons.lock,
+                        color: Colors.white.withValues(alpha: 0.8),
+                        size: 18,
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -160,7 +172,7 @@ class _ClubCard extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.black.withValues(alpha: 0.3),
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(AppTheme.radiusMD),
                   ),
                 ),
               ),
