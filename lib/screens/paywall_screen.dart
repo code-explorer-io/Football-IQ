@@ -118,33 +118,33 @@ class _PaywallScreenState extends State<PaywallScreen> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
           child: Column(
             children: [
-              // Header
+              // Header - Reduced spacing for better fit
               const Icon(
                 Icons.star,
-                size: 64,
+                size: 56,
                 color: AppTheme.gold,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
               const Text(
                 'Unlock Everything',
                 style: TextStyle(
-                  fontSize: 28,
+                  fontSize: 26,
                   fontWeight: FontWeight.bold,
                   color: AppTheme.textPrimary,
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 6),
               const Text(
                 'One-time purchase. No subscriptions.',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 15,
                   color: AppTheme.textSecondary,
                 ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 24),
 
               // Benefits list
               Expanded(
@@ -252,19 +252,19 @@ class _PaywallScreenState extends State<PaywallScreen> {
 
   Widget _buildBenefitItem(IconData icon, String title, String subtitle) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(bottom: 16),
       child: Row(
         children: [
           Container(
-            width: 48,
-            height: 48,
+            width: 44,
+            height: 44,
             decoration: BoxDecoration(
               color: AppTheme.gold.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(10),
             ),
-            child: Icon(icon, color: AppTheme.gold),
+            child: Icon(icon, color: AppTheme.gold, size: 22),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 14),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -272,7 +272,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 Text(
                   title,
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: 15,
                     fontWeight: FontWeight.bold,
                     color: AppTheme.textPrimary,
                   ),
@@ -280,7 +280,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 Text(
                   subtitle,
                   style: const TextStyle(
-                    fontSize: 14,
+                    fontSize: 13,
                     color: AppTheme.textSecondary,
                   ),
                 ),

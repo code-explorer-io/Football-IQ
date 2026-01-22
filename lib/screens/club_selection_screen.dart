@@ -57,7 +57,7 @@ class ClubSelectionScreen extends StatelessWidget {
                   crossAxisCount: 2,
                   crossAxisSpacing: AppTheme.spaceM,
                   mainAxisSpacing: AppTheme.spaceM,
-                  childAspectRatio: 0.85,
+                  childAspectRatio: 0.95, // Increased from 0.85 to fix overflow
                 ),
                 itemCount: clubs.length,
                 itemBuilder: (context, index) {
@@ -114,14 +114,14 @@ class _ClubCard extends StatelessWidget {
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.all(AppTheme.spaceM),
+              padding: const EdgeInsets.all(12),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Club icon
                   Container(
-                    width: 60,
-                    height: 60,
+                    width: 52,
+                    height: 52,
                     decoration: BoxDecoration(
                       color: Colors.white.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(AppTheme.radiusSM),
@@ -129,10 +129,10 @@ class _ClubCard extends StatelessWidget {
                     child: const Icon(
                       Icons.shield,
                       color: Colors.white,
-                      size: 36,
+                      size: 28,
                     ),
                   ),
-                  const SizedBox(height: AppTheme.spaceM),
+                  const SizedBox(height: 10),
                   // Club name
                   Text(
                     club.name,
@@ -140,28 +140,28 @@ class _ClubCard extends StatelessWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
-                      height: 1.2,
+                      height: 1.15,
                     ),
                   ),
-                  const SizedBox(height: AppTheme.spaceXS),
+                  const SizedBox(height: 4),
                   // Status
                   Text(
                     club.isLocked ? 'Premium' : 'Ready to play',
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 10,
                       color: Colors.white.withValues(alpha: 0.8),
                     ),
                   ),
                   if (club.isLocked)
-                    Padding(
-                      padding: const EdgeInsets.only(top: AppTheme.spaceXS),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 4),
                       child: Icon(
                         Icons.lock,
-                        color: Colors.white.withValues(alpha: 0.8),
-                        size: 18,
+                        color: Colors.white70,
+                        size: 14,
                       ),
                     ),
                 ],

@@ -41,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Map<String, bool> _unlockedModes = {};
   Map<String, double> _unlockProgress = {};
   bool _isLoadingUnlocks = true;
+  String _premiumPrice = '£2.49'; // Default fallback
 
   @override
   void initState() {
@@ -54,7 +55,21 @@ class _HomeScreenState extends State<HomeScreen> {
     await Future.wait([
       _loadGamificationData(),
       _loadUnlockData(),
+      _loadPremiumPrice(),
     ]);
+  }
+
+  Future<void> _loadPremiumPrice() async {
+    try {
+      final packages = await PurchaseService.getPackages();
+      if (packages.isNotEmpty && mounted) {
+        setState(() {
+          _premiumPrice = packages.first.storeProduct.priceString;
+        });
+      }
+    } catch (e) {
+      // Keep default price if fetch fails
+    }
   }
 
   Future<void> _loadGamificationData() async {
@@ -197,6 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8, bottom: 4),
                     child: _UnlockAllButton(
+                      price: _premiumPrice,
                       onTap: () async {
                         final purchased = await Navigator.push<bool>(
                           context,
@@ -449,13 +465,13 @@ class _GameModeCardState extends State<_GameModeCard>
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.bolt, size: 20),
-                    SizedBox(width: 8),
-                    Text(
-                      'Unlock All Modes - £2.49',
+                    const Icon(Icons.bolt, size: 20),
+                    const SizedBox(width: 8),
+                    const Text(
+                      'Unlock All Modes',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -692,8 +708,9 @@ class _GameModeCardState extends State<_GameModeCard>
 /// Premium unlock button at bottom of home screen with shimmer effect
 class _UnlockAllButton extends StatefulWidget {
   final VoidCallback onTap;
+  final String price;
 
-  const _UnlockAllButton({required this.onTap});
+  const _UnlockAllButton({required this.onTap, required this.price});
 
   @override
   State<_UnlockAllButton> createState() => _UnlockAllButtonState();
@@ -765,12 +782,12 @@ class _UnlockAllButtonState extends State<_UnlockAllButton>
               child: child,
             );
           },
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.bolt, color: Colors.black, size: 22),
-              SizedBox(width: 8),
-              Text(
+              const Icon(Icons.bolt, color: Colors.black, size: 22),
+              const SizedBox(width: 8),
+              const Text(
                 'Unlock All Modes',
                 style: TextStyle(
                   fontSize: 16,
@@ -778,10 +795,10 @@ class _UnlockAllButtonState extends State<_UnlockAllButton>
                   color: Colors.black,
                 ),
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Text(
-                '£2.49',
-                style: TextStyle(
+                widget.price,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: Colors.black54,

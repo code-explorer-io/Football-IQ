@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'screens/splash_screen.dart';
+import 'screens/home_screen.dart';
 import 'services/purchase_service.dart';
 import 'services/sound_service.dart';
 
@@ -30,7 +30,7 @@ class FootballIQApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const SplashScreen(),
+      home: const HomeScreen(),
     );
   }
 }

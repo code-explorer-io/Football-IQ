@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Flutter: Run on Phone",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
+            "deviceId": "RFCY20CE9DF"
+        },
+        {
+            "name": "Flutter: Run on Phone (Release)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "deviceId": "RFCY20CE9DF"
+        },
+        {
+            "name": "Flutter: Run on Phone (Profile)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile",
+            "deviceId": "RFCY20CE9DF"
+        }
+    ]
+}

@@ -16,7 +16,7 @@ import 'purchase_service.dart';
 class UnlockService {
   // DEV MODE: Set to true to unlock all modes for testing
   // IMPORTANT: Must be false for production release!
-  static const bool devModeUnlockAll = false;
+  static const bool devModeUnlockAll = true; // TEMPORARILY ENABLED FOR TESTING
 
   static const String _keyClubQuizzesCompleted = 'unlock_club_quizzes_completed';
   static const String _keyBestSurvivalStreak = 'unlock_best_survival_streak';

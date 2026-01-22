@@ -22,7 +22,7 @@ class Club {
   bool get isLocked => !isFree && !PurchaseService.isPremium;
 }
 
-// Predefined clubs - 10 Premier League teams
+// Predefined clubs - 6 Premier League teams (reduced for better UX - no scrolling)
 final List<Club> clubs = [
   // Free club
   Club(
@@ -69,33 +69,5 @@ final List<Club> clubs = [
     secondaryColor: const Color(0xFFFFFFFF), // White
     dataFile: 'assets/data/chelsea.json',
   ),
-  Club(
-    id: 'tottenham',
-    name: 'Tottenham Hotspur',
-    primaryColor: const Color(0xFF132257), // Navy
-    secondaryColor: const Color(0xFFFFFFFF), // White
-    dataFile: 'assets/data/tottenham.json',
-  ),
-  // Fan favorites
-  Club(
-    id: 'newcastle',
-    name: 'Newcastle United',
-    primaryColor: const Color(0xFF241F20), // Black
-    secondaryColor: const Color(0xFFFFFFFF), // White
-    dataFile: 'assets/data/newcastle.json',
-  ),
-  Club(
-    id: 'aston_villa',
-    name: 'Aston Villa',
-    primaryColor: const Color(0xFF670E36), // Claret
-    secondaryColor: const Color(0xFF95BFE5), // Sky blue
-    dataFile: 'assets/data/aston_villa.json',
-  ),
-  Club(
-    id: 'everton',
-    name: 'Everton',
-    primaryColor: const Color(0xFF003399), // Royal blue
-    secondaryColor: const Color(0xFFFFFFFF), // White
-    dataFile: 'assets/data/everton.json',
-  ),
+  // Removed: Tottenham, Newcastle, Aston Villa, Everton (for cleaner 3x2 grid with no scrolling)
 ];
